@@ -1,0 +1,25 @@
+<div class="post">
+    <h3><a href="{{ post.url }}">{{ page.title }}</a></h3>
+  
+    <div class="body">
+        {{ content }}
+    </div>
+    
+    <div class="meta">    
+        <ul>
+          Published: {{ page.date | date_to_string }}<br/>
+        </ul>
+	<ul class="list-category list-linear">
+	  <li class="list-head">category: </li>
+			{% assign categories_list = page.categories %}
+			{% include JB/categories_list %}
+	</ul>
+	<ul class="list-tag list-linear">
+		<li class="list-head">tags: </li>
+			{% assign tags_list = page.tags %}
+			{% include JB/tags_list %}
+	</ul>
+    </div>
+
+    {% include JB/comments %}
+</div>
