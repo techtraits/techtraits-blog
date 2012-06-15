@@ -14,43 +14,46 @@ When learning a new language its always difficult to google the meaning of opera
 
 
 Record is a compound data type in erlang which gives named access to the elements it contains similar to a struct in c. To use records we must fust define their structure:
-<pre lang="erlang">-record(record_name, {element_mame=optional_default_value}).</pre>
+
+    -record(record_name, {element_mame=optional_default_value}).
+
 
 for example:
 <pre lang="erlang">-record(car, {model,year,color=blue}).</pre>
 &nbsp;
 <h3 style="text-align: left;">Initializing Records</h3>
 
-
 To initialize we use the aforementioned hash sign as a prefix to the statement. Notice that I can choose not to supply values for the elements, elements with default values will have those assigned others will remain undefined.
-<pre lang="erlang">Car1 = #car{model=civic,year=2007,color=green},
-Car2 = #car{model=mazda,color=green}.
 
-</pre>
+    Car1 = #car{model=civic,year=2007,color=green},
+    Car2 = #car{model=mazda,color=green}.
+
 &nbsp;
 <h3>Accessing Records</h3>
 
 
 To access records we use our trusty hash operator again and use the element name to retrieve data:
-<pre lang="erlang">Car1 = #car{model=civic,year=2007,color=green},
-Car2 = #car{model=mazda,color=green},
-Car1Model = Car1#car.model.</pre>
+
+    Car1 = #car{model=civic,year=2007,color=green},
+    Car2 = #car{model=mazda,color=green},
+    Car1Model = Car1#car.model.
 &nbsp;&nbsp;
 <h3>Updating Records</h3>
 
 
 
 Updating records is much like initializing except that any elements that we do not specify values for will retain retain previous values.
-<pre lang="erlang">Car1 = #car{model=civic,year=2007,color=green},
-Car2 = #car{model=mazda,color=green},
-Car3 = Car2#car{year=2003}.</pre>
+
+    Car1 = #car{model=civic,year=2007,color=green},
+    Car2 = #car{model=mazda,color=green},
+    Car3 = Car2#car{year=2003}.
 
 
 &nbsp;
 <h3>Further Reading</h3>
 
-<a href="http://www.erlang.org/doc/reference_manual/records.html">Reference Manual</a>
-<a href="http://www.erlang.org/doc/programming_examples/records.html">Examples</a>
+* [Reference Manual](http://www.erlang.org/doc/reference_manual/records.html)
+* [Examples](http://www.erlang.org/doc/programming_examples/records.html)
 
-&nbsp;
-&nbsp;
+
+
