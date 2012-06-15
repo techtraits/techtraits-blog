@@ -1,0 +1,376 @@
+
+<!doctype html>  
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]--> 
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]--> 
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]--> 
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]--> 
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]--> 
+<head> 
+  <meta charset="utf-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+ 
+  <title>Using method interceptors with Guice</title> 
+  <meta name="author" content="Name Lastname" />
+  <link href='http://fonts.googleapis.com/css?family=Lato:light,regular,bold'
+  rel='stylesheet' type='text/css'>
+  <link href="/assets/themes/jamesyu/css/
+reset.css" media="screen" rel="stylesheet" type="text/css" /> 
+  <link href="/assets/themes/jamesyu/css/highlight.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/assets/themes/jamesyu/css/main.css" media="screen" rel="stylesheet" type="text/css" /> 
+  <link rel="alternate" type="application/rss+xml" href="/atom.xml" title="RSS feed">
+</head> 
+ 
+    <body> 
+        <div id="header">
+            <div class="inner">
+                <ul>
+                    <li><a href="http://twitter.com/username">Follow Me</a></li>
+                    <li><a href="/about.html">About Me</a></li>
+                </ul>
+                <h1><a href="/">Name Lastname</a></h1>
+                <h2></h2>
+            </div>
+        </div>
+                
+        <div id="content">
+            <div class="inner">
+                
+<div class="post">
+    <h3><a href="">Using method interceptors with Guice</a></h3>
+  
+    <div class="body">
+        <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+The &lt;a href=&quot;http://code.google.com/p/google-guice/&quot; title=&quot;Guice&quot; target=&quot;_blank&quot;&gt;Guice&lt;/a&gt; dependency injection library from Google comes with a whole host of added goodies including Method interception. I have been somewhat obsessed with code quality of late and wanted to use method interception to this end. This article talks about using method interceptors to inspect the parameters for a method and implement boiler plate checks such as null parameters without code repetition. As a simple example I will be implementing a check for null arguments. 
+&lt;!--more--&gt;
+&lt;h3&gt;Source code&lt;/h3&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+As a starting point of this implementation I will be using the sample code from an earlier article &lt;strong&gt;&lt;a href=&quot;http://www.techtraits.ca/five-minute-guide-to-setting-up-a-java-webserver/&quot; title=&quot;Setting up a webservice using Guice &amp; Sitebricks&quot;&gt;Setting up a webservice using Guice &amp; Sitebricks&lt;/a&gt;&lt;/strong&gt; which can be downloaded &lt;a href=&quot;http://www.techtraits.ca/wp-content/uploads/2011/06/helloworld.zip&quot; title=&quot;Source Code&quot;&gt;here&lt;/a&gt;. The completed project code can be downloaded at &lt;a href=&apos;http://www.techtraits.ca/wp-content/uploads/2011/11/methodinterceptor.zip&apos;&gt;MethodInterceptor.zip&lt;/a&gt;.The source code for this project is released under the &lt;a href=&apos;http://www.techtraits.ca/wp-content/uploads/2011/11/Licensing.txt&apos;&gt;BSD License&lt;/a&gt;.
+
+&lt;h3&gt;Defining the annotation&lt;/h3&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+
+In order to mark the methods for which we wish to ensure non-null parameters we will define a custom Annotation &quot;NotNull&quot;. The code for defining an annotation is shown below. We are defining that this is a &lt;font color=&quot;green&quot;&gt;Runtime&lt;/font&gt; annotation using the &lt;font color=&quot;green&quot;&gt;@Retention&lt;/font&gt; meta annotation. Similarly we use the &lt;font color=&quot;green&quot;&gt;@Target&lt;/font&gt; meta annotation to define that this annotation can only be applied to methods. 
+
+&lt;pre lang=&quot;java&quot;&gt;
+package com.flybynight.helloworld;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD })
+public @interface NotNull {
+
+}
+&lt;/pre&gt;
+
+&lt;h3&gt;Defining the method interceptor&lt;/h3&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+In order to create our method interceptor we create a class to implement the &lt;font color=&quot;green&quot;&gt;org.aopalliance.intercept.MethodInterceptor&lt;/font&gt; interface and override the &lt;font color=&quot;green&quot;&gt;invoke&lt;/font&gt; method. We get an instance of the &lt;font color=&quot;green&quot;&gt;org.aopalliance.intercept.MethodInvocation&lt;/font&gt; class passed into the invoke method as a parameter. we can then query the getArguments method of the MethodInvocation class to retrieve all of the arguments. As shown in the code below we then traverse the list of arguments and check if they are null. We could implement any number of validation checks on the arguments at this point. If any of the validations fail we would throw an exception with details of the faliure. 
+
+&lt;pre lang=&quot;java&quot;&gt;
+package com.flybynight.helloworld;
+
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
+
+public class NotNullInterceptor implements MethodInterceptor {
+
+	@Override
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		Object[] args = invocation.getArguments();
+		for (int i = 0; i &lt; args.length; i++) {
+			if (args[i] == null) {
+				String argType = invocation.getMethod().getParameterTypes()[i].getCanonicalName();
+				throw new NullPointerException(&quot;Argument &quot; + i + &quot; of Type &quot; + argType + &quot; should never be null.&quot;);
+
+			}
+		}
+		return invocation.proceed();
+	}
+
+}
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Configure interception&lt;/h3&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+In order for the interceptor to be invoked we must configure guice to link the annotation to the interceptor. We do this in the GuiceCreater class as part of the bind function of the sitebricks module. We use the &lt;font color=&quot;green&quot;&gt;bindInterceptor&lt;/font&gt; call to link all elements (Matchers) annotated with our &lt;font color=&quot;green&quot;&gt;NotNull&lt;/font&gt; annotation to our interceptor class &lt;font color=&quot;green&quot;&gt;NotNullInterceptor&lt;/font&gt;. 
+
+&lt;pre lang=&quot;java&quot;&gt;
+bindInterceptor(Matchers.any(), Matchers.annotatedWith(NotNull.class), new NotNullInterceptor());
+&lt;/pre&gt;
+
+&lt;h3&gt;Testing the code&lt;/h3&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+Now all that is left is to take our interceptor for a spin. Create a &lt;font color=&quot;green&quot;&gt;doSomething(String something)&lt;/font&gt; method in the HelloWorld sitebrick (HelloWorld.java). and annotate the method with the NotNull. Also call the method with a null parameter. See code below. 
+
+
+&lt;pre lang=&quot;java&quot;&gt;
+package com.flybynight.helloworld.sitebricks;
+
+import com.flybynight.helloworld.NotNull;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import com.google.sitebricks.At;
+import com.google.sitebricks.http.Get;
+
+@At(&quot;/helloworld&quot;)
+public class HelloWorld {
+	
+	@Inject
+	@Named(&quot;message&quot;)
+	String messageString;
+
+	public String getMessage() {
+		
+		doSomething(&quot;Some&quot;); //Should Pass
+		doSomething(null); //Will fail
+    	return this.messageString;		
+	}
+
+	@NotNull
+	public void doSomething(String something) {
+
+	}
+}
+
+&lt;/pre&gt;
+
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+Now compile the code using mvn clean install and run it using mvn jetty:run (See &lt;a href=&quot;http://www.techtraits.ca/five-minute-guide-to-setting-up-a-java-webserver/&quot; title=&quot;Setting up a webservice using Guice &amp; Sitebricks&quot;&gt;&quot;Setting up a webservice using Guice &amp; Sitebricks&quot;&lt;/a&gt; for details). To run the code browse to http://localhost:8080/helloworld. 
+&lt;pre lang=&quot;bash&quot;&gt;
+Problem accessing /helloworld. Reason:
+
+    Exception [NullPointerException - &quot;Argument 0 of Type java.lang.String should never be null.&quot;] thrown by event method [public void com.flybynight.helloworld.sitebricks.HelloWorld.get()]
+
+at com.flybynight.helloworld.NotNullInterceptor.invoke(NotNullInterceptor.java:15)
+(See below for entire trace.)
+.....
+&lt;/pre&gt;
+
+&lt;h3&gt;Conclusions&lt;/h3&gt;
+Method interceptors can be useful for a variety of things and a lot of boiler plate code can be written once and hidden away within interceptors. There are other solutions available for the null argument check we can implement a whole host of project specific or domain specific annotations and validation checks. 
+
+&lt;h3&gt;External Links&lt;/h3&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+&lt;ul&gt;
+	&lt;li&gt;&lt;a href=&quot;http://code.google.com/p/google-guice/&quot; title=&quot;Guice&quot; target=&quot;_blank&quot;&gt;Google Guice&lt;/a&gt;&lt;/li&gt;
+
+&lt;/ul&gt;</pre>
+    </div>
+    
+    <div class="meta">    
+        <ul>
+          Published: 27 Nov 2011<br/>
+        </ul>
+	<ul class="list-category list-linear">
+	  <li class="list-head">category: </li>
+			
+			
+
+
+  
+    
+  
+
+
+	</ul>
+	<ul class="list-tag list-linear">
+		<li class="list-head">tags: </li>
+			
+			
+
+
+  
+    
+  
+
+
+
+	</ul>
+    </div>
+
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    var disqus_identifier = '664 http://username.github.com/?p=664';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+</div>
+
+
+            </div>
+        </div>
+        
+        <div id="footer" class="clearfix">
+            <div class="inner">
+                <div class="archives">
+                    <h3>Archives</h3>
+            
+                    <table>
+                    
+                        <tr>
+                            <td class="date">10 Mar 2012</td>
+                            <td><a href="/2012/03/10/jackson-optimization-using-non-default-for-fun-and-profit">Jackson Optimization, Using Non-Default for fun and profit</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">14 Feb 2012</td>
+                            <td><a href="/2012/02/14/really-really-async-aws-sdk">Really Really Async AWS SDK</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Feb 2012</td>
+                            <td><a href="/2012/02/11/erlang-list-manipulation-using-comprehensions">Erlang: List Manipulation using comprehensions</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">03 Feb 2012</td>
+                            <td><a href="/2012/02/03/java-optimizaiton">Java Optimizaiton, Why is my application so slow?</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">17 Jan 2012</td>
+                            <td><a href="/2012/01/17/regular-expressions-in-elipse-find">Regular Expressions in Elipse Find</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">16 Jan 2012</td>
+                            <td><a href="/2012/01/16/capturing-java-stack-strace-using-jstack">Capturing Java Stack Strace Using JStack</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">17 Dec 2011</td>
+                            <td><a href="/2011/12/17/creating-executable-jars-with-maven">Creating executable jars with Maven</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">04 Dec 2011</td>
+                            <td><a href="/2011/12/04/custum-pmd-rule-for-private-injected-fields">Custom PMD Rule for Private Injected fields</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">27 Nov 2011</td>
+                            <td><a href="/2011/11/27/using-method-interceptors-with-guice">Using method interceptors with Guice</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">20 Nov 2011</td>
+                            <td><a href="/2011/11/20/using-custom-serializers-with-jackson">Using Custom Serializers with Jackson</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">05 Nov 2011</td>
+                            <td><a href="/2011/11/05/custom-pmd-rules-using-xpath">Custom PMD Rules using XPath</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">31 Oct 2011</td>
+                            <td><a href="/2011/10/31/writting-pretty-code-with-pmd">Writing pretty code with PMD</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">31 Oct 2011</td>
+                            <td><a href="/2011/10/31/thanks-i-needed-that">Thanks, I needed that</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">16 Oct 2011</td>
+                            <td><a href="/2011/10/16/jsonkit">iPhone SDK: Integrating with Json using Jsonkit</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">10 Oct 2011</td>
+                            <td><a href="/2011/10/10/iphonesdk-nsuserdefaults">iPhoneSDK: NSUserDefaults</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">02 Oct 2011</td>
+                            <td><a href="/2011/10/02/using-cachedump-to-debug-memcached">Using cachedump to debug memcached</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">02 Oct 2011</td>
+                            <td><a href="/2011/10/02/iphone-sdk-tabbars">IPhone SDK: TabBars</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">09 Sep 2011</td>
+                            <td><a href="/2011/09/09/compiling-protocol-buffers-from-maven">Compiling Protocol Buffers from Maven</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">05 Sep 2011</td>
+                            <td><a href="/2011/09/05/running-nexus-sontaype-over-jetty">Running Nexus Sontaype over Jetty</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Aug 2011</td>
+                            <td><a href="/2011/08/12/implementing-jackson-views">Implementing Jackson Views</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">27 Jul 2011</td>
+                            <td><a href="/2011/07/27/polymorphic-json-serialization-using-jackson">Polymorphic JSON Serialization using Jackson</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">25 Jun 2011</td>
+                            <td><a href="/2011/06/25/five-minute-guide-to-setting-up-a-java-webserver">Setting up a webservice using Guice & Sitebricks</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Jun 2011</td>
+                            <td><a href="/2011/06/12/iphone-sdk-hello-world">IPhone SDK Hello World</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Jun 2011</td>
+                            <td><a href="/2011/06/12/iphone-sdk-hello-world">IPhone SDK Hello World</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Jun 2011</td>
+                            <td><a href="/2011/06/11/records-in-erlang">Records in erlang</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Jun 2011</td>
+                            <td><a href="/2011/06/11/records-in-erlang">Records in erlang</a></td>
+                        </tr>
+                    
+                    </table>
+                </div>
+                <div class="about">
+                    <h3><a href="/about.html">About Me</a></h3>
+                    
+                    <a href="/about.html"><img src="/assets/themes/jamesyu/images/me_small.png" alt="ME" /></a>
+                    <div>
+                        This is yet a short description of myself. Try to keep it short. <a href="/about.html">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body> 
+</html>
+

@@ -1,0 +1,343 @@
+
+<!doctype html>  
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]--> 
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]--> 
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]--> 
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]--> 
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]--> 
+<head> 
+  <meta charset="utf-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+ 
+  <title>Really Really Async AWS SDK</title> 
+  <meta name="author" content="Name Lastname" />
+  <link href='http://fonts.googleapis.com/css?family=Lato:light,regular,bold'
+  rel='stylesheet' type='text/css'>
+  <link href="/assets/themes/jamesyu/css/
+reset.css" media="screen" rel="stylesheet" type="text/css" /> 
+  <link href="/assets/themes/jamesyu/css/highlight.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/assets/themes/jamesyu/css/main.css" media="screen" rel="stylesheet" type="text/css" /> 
+  <link rel="alternate" type="application/rss+xml" href="/atom.xml" title="RSS feed">
+</head> 
+ 
+    <body> 
+        <div id="header">
+            <div class="inner">
+                <ul>
+                    <li><a href="http://twitter.com/username">Follow Me</a></li>
+                    <li><a href="/about.html">About Me</a></li>
+                </ul>
+                <h1><a href="/">Name Lastname</a></h1>
+                <h2></h2>
+            </div>
+        </div>
+                
+        <div id="content">
+            <div class="inner">
+                
+<div class="post">
+    <h3><a href="">Really Really Async AWS SDK</a></h3>
+  
+    <div class="body">
+        <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+Like much of the world I use Amazon services and the Aws SDK (Java in our case) to support our scalable web service. In an effort to maximize the number of users we could support per machine we use a asynchronous request processing architecture using &lt;a href=&quot;http://docs.codehaus.org/display/JETTY/Continuations&quot; title=&quot;Contiuations&quot; target=&quot;_blank&quot;&gt;jetty continuations&lt;/a&gt;. In such a setup we needed an asynchronous AWS SDK. Now you might say the AWS SDK already provides asynchronous an API, and you would be right. However, the asynchronous AWS still return a future and require the calling code to poll the future and look at responses once it is done. We wanted a really really asynchronous API which we could say &quot;Hey do X, and when you are done do Y if there is an error Z but no matter what happens don&apos;t bother me again&quot;. Since there was no such API we decided to implement it ourselves and you can find it &lt;a href=&quot;https://github.com/techtraits/aws-sdk-for-java&quot; title=&quot;Tech traits Aws SDK for Java&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;. 
+
+
+&lt;!--more--&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+The use case I describe above is facetious but its remarkably useful. For example say your server has to save something to &lt;a href=&quot;http://aws.amazon.com/dynamodb/&quot; title=&quot;DynamoDB&quot; target=&quot;_blank&quot;&gt;DynamoDB&lt;/a&gt;. You callputItemAsync and get a future object back. The SDK uses an internal thread pool to get a thread and uses that thread to send a blocking http call to Amazon. Once that is done the internal thread sets the done field of the future to true. In the meantime you own code is periodically checking (or waiting) for the future to complete.
+
+&lt;pre lang=&quot;java&quot;&gt;
+Future&lt;PutItemResult&gt; future = awssdk.putItemAsync(putItemRequest)
+while(future.isDone() == false) {
+        //Twiddle my thumbs.
+}
+PutItemResult result = future.get();
+//No errors, cool lets ignore the result
+&lt;/pre&gt;</pre><pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+You should begin to see the problem here. There are two threads blocked doing nothing (or one blocked and one polling) while they could be doing meaningful work. Furthermore for a lot of times we don&apos;t even really care about the response from Amazon other than to log an error if needed. There is no reason why the rest of the request should wait for a put item to complete its not like we are retrieving information we need later. To get around this issue we added the &lt;a href=&quot;https://github.com/techtraits/aws-sdk-for-java/blob/master/src/main/java/com/amazonaws/AsyncServiceHandler.java&quot; target=&quot;_blank&quot;&gt;AsyncServiceHandler.java&lt;/a&gt;. 
+
+&lt;pre lang=&quot;java&quot;&gt; 
+awssdk.putItemAsync(putItemRequest,new AsyncServiceHandler&lt;PutItemResult, 
+                PutItemRequest&gt;() {
+
+        @Override
+        public void handleResult(PutItemResult arg0, PutItemRequest arg1) {
+                //Do something here if you must  
+        }
+
+        @Override
+        public void handleException(Exception arg0) {
+                //Log an exception and retry if you want    
+        }
+
+        @Override
+        public void handleException(AmazonClientException arg0) {
+                //Log an exception and retry if you want
+        }
+
+        @Override
+        public void handleException(AmazonServiceException arg0) {
+                //Log an exception and retry if you want
+        }
+    });
+&lt;/pre&gt;</pre><p style='text-align: justify;'>
+In this implementation you get the same great feature but with 0% thumb twiddling. The internal thread still blocks when making the request to Amazon but once its done it just calls the result or error handlers as needed. Your main thread never check request status. </p><p style='text-align: justify;'>
+As a side bar you may ask why did we implement three error case handlers, and if you look at it closely they are all in the same inheritance tree. AmazonServiceException is a child of AmazonClientException which a child of  Exception. The AmazonServiceException has a much cleaner interface to find out what went wrong if the error was server side, AmazonClientException will catch server side as well as client side errors but its much more difficult finding out what happened in case of server side errors. And we define a handler for the plain old exception class to catch any other errors that may happen. We could have used if (arg0 instanceOf AmazonServiceException) to check the error type but that is just gross.  
+</p><pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+Do I hear anyone ask &quot;How do I get this awesome new API?&quot; well we have finished the implementation for DynamoDB and will integrate with the rest of the services very soon. We have already submitted a patch to Amazon hopefully this code or something similar will be in the master branch soon. Until then you can build and deploy the code as follows:
+
+&lt;pre lang=&quot;bash&quot;&gt;
+git clone git@github.com:techtraits/aws-sdk-for-java.git
+cd aws-sdk-for-java
+#Some hacking see below
+mvn clean install
+#Copy to your nexus repo
+&lt;/pre&gt;
+
+The hacking required is to edit the pom.xml file as follows:
+
+&lt;ul&gt;
+ 	&lt;li&gt;
+ 	Change the version from &amp;lt;version&amp;gt;1.3.2&amp;lt;/version&amp;gt; to something like &amp;lt;version&amp;gt;1.3.2_hacked&amp;lt;/version&amp;gt;&lt;/li&gt;
+	&lt;li&gt; You should also delete the gpg signing plugin unless you really really want signed code
+&lt;pre lang=&quot;bash&quot;&gt;
+      &lt;plugins&gt;
+        &lt;plugin&gt;
+          &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+          &lt;artifactId&gt;maven-gpg-plugin&lt;/artifactId&gt;
+          &lt;version&gt;1.4&lt;/version&gt;
+          &lt;executions&gt;
+            &lt;execution&gt;
+              &lt;id&gt;sign-artifacts&lt;/id&gt;
+              &lt;phase&gt;verify&lt;/phase&gt;
+              &lt;goals&gt;
+                &lt;goal&gt;sign&lt;/goal&gt;
+              &lt;/goals&gt;
+            &lt;/execution&gt;
+          &lt;/executions&gt;
+        &lt;/plugin&gt;
+      &lt;/plugins&gt;
+&lt;/pre&gt;
+&lt;/li&gt;
+	&lt;li&gt;And you are all set just deploy the compiled jar to your maven repo&lt;/li&gt;
+	&lt;li&gt;In true cooking show fashion &lt;a href=&apos;http://www.techtraits.com/wp-content/uploads/2012/02/aws-java-sdk-1.3.2_edited.jar&apos;&gt;here&lt;/a&gt; is one I built earlier&lt;/li&gt;
+
+
+ 	&lt;/ul&gt;</pre>
+    </div>
+    
+    <div class="meta">    
+        <ul>
+          Published: 14 Feb 2012<br/>
+        </ul>
+	<ul class="list-category list-linear">
+	  <li class="list-head">category: </li>
+			
+			
+
+
+  
+    
+  
+
+
+	</ul>
+	<ul class="list-tag list-linear">
+		<li class="list-head">tags: </li>
+			
+			
+
+
+  
+    
+  
+
+
+
+	</ul>
+    </div>
+
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    var disqus_identifier = '930 http://username.github.com/?p=930';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+</div>
+
+
+            </div>
+        </div>
+        
+        <div id="footer" class="clearfix">
+            <div class="inner">
+                <div class="archives">
+                    <h3>Archives</h3>
+            
+                    <table>
+                    
+                        <tr>
+                            <td class="date">10 Mar 2012</td>
+                            <td><a href="/2012/03/10/jackson-optimization-using-non-default-for-fun-and-profit">Jackson Optimization, Using Non-Default for fun and profit</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">14 Feb 2012</td>
+                            <td><a href="/2012/02/14/really-really-async-aws-sdk">Really Really Async AWS SDK</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Feb 2012</td>
+                            <td><a href="/2012/02/11/erlang-list-manipulation-using-comprehensions">Erlang: List Manipulation using comprehensions</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">03 Feb 2012</td>
+                            <td><a href="/2012/02/03/java-optimizaiton">Java Optimizaiton, Why is my application so slow?</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">17 Jan 2012</td>
+                            <td><a href="/2012/01/17/regular-expressions-in-elipse-find">Regular Expressions in Elipse Find</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">16 Jan 2012</td>
+                            <td><a href="/2012/01/16/capturing-java-stack-strace-using-jstack">Capturing Java Stack Strace Using JStack</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">17 Dec 2011</td>
+                            <td><a href="/2011/12/17/creating-executable-jars-with-maven">Creating executable jars with Maven</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">04 Dec 2011</td>
+                            <td><a href="/2011/12/04/custum-pmd-rule-for-private-injected-fields">Custom PMD Rule for Private Injected fields</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">27 Nov 2011</td>
+                            <td><a href="/2011/11/27/using-method-interceptors-with-guice">Using method interceptors with Guice</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">20 Nov 2011</td>
+                            <td><a href="/2011/11/20/using-custom-serializers-with-jackson">Using Custom Serializers with Jackson</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">05 Nov 2011</td>
+                            <td><a href="/2011/11/05/custom-pmd-rules-using-xpath">Custom PMD Rules using XPath</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">31 Oct 2011</td>
+                            <td><a href="/2011/10/31/writting-pretty-code-with-pmd">Writing pretty code with PMD</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">31 Oct 2011</td>
+                            <td><a href="/2011/10/31/thanks-i-needed-that">Thanks, I needed that</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">16 Oct 2011</td>
+                            <td><a href="/2011/10/16/jsonkit">iPhone SDK: Integrating with Json using Jsonkit</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">10 Oct 2011</td>
+                            <td><a href="/2011/10/10/iphonesdk-nsuserdefaults">iPhoneSDK: NSUserDefaults</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">02 Oct 2011</td>
+                            <td><a href="/2011/10/02/using-cachedump-to-debug-memcached">Using cachedump to debug memcached</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">02 Oct 2011</td>
+                            <td><a href="/2011/10/02/iphone-sdk-tabbars">IPhone SDK: TabBars</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">09 Sep 2011</td>
+                            <td><a href="/2011/09/09/compiling-protocol-buffers-from-maven">Compiling Protocol Buffers from Maven</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">05 Sep 2011</td>
+                            <td><a href="/2011/09/05/running-nexus-sontaype-over-jetty">Running Nexus Sontaype over Jetty</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Aug 2011</td>
+                            <td><a href="/2011/08/12/implementing-jackson-views">Implementing Jackson Views</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">27 Jul 2011</td>
+                            <td><a href="/2011/07/27/polymorphic-json-serialization-using-jackson">Polymorphic JSON Serialization using Jackson</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">25 Jun 2011</td>
+                            <td><a href="/2011/06/25/five-minute-guide-to-setting-up-a-java-webserver">Setting up a webservice using Guice & Sitebricks</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Jun 2011</td>
+                            <td><a href="/2011/06/12/iphone-sdk-hello-world">IPhone SDK Hello World</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Jun 2011</td>
+                            <td><a href="/2011/06/12/iphone-sdk-hello-world">IPhone SDK Hello World</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Jun 2011</td>
+                            <td><a href="/2011/06/11/records-in-erlang">Records in erlang</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Jun 2011</td>
+                            <td><a href="/2011/06/11/records-in-erlang">Records in erlang</a></td>
+                        </tr>
+                    
+                    </table>
+                </div>
+                <div class="about">
+                    <h3><a href="/about.html">About Me</a></h3>
+                    
+                    <a href="/about.html"><img src="/assets/themes/jamesyu/images/me_small.png" alt="ME" /></a>
+                    <div>
+                        This is yet a short description of myself. Try to keep it short. <a href="/about.html">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body> 
+</html>
+

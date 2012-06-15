@@ -1,0 +1,317 @@
+
+<!doctype html>  
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]--> 
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]--> 
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]--> 
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]--> 
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]--> 
+<head> 
+  <meta charset="utf-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+ 
+  <title>IPhone SDK Hello World</title> 
+  <meta name="author" content="Name Lastname" />
+  <link href='http://fonts.googleapis.com/css?family=Lato:light,regular,bold'
+  rel='stylesheet' type='text/css'>
+  <link href="/assets/themes/jamesyu/css/
+reset.css" media="screen" rel="stylesheet" type="text/css" /> 
+  <link href="/assets/themes/jamesyu/css/highlight.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/assets/themes/jamesyu/css/main.css" media="screen" rel="stylesheet" type="text/css" /> 
+  <link rel="alternate" type="application/rss+xml" href="/atom.xml" title="RSS feed">
+</head> 
+ 
+    <body> 
+        <div id="header">
+            <div class="inner">
+                <ul>
+                    <li><a href="http://twitter.com/username">Follow Me</a></li>
+                    <li><a href="/about.html">About Me</a></li>
+                </ul>
+                <h1><a href="/">Name Lastname</a></h1>
+                <h2></h2>
+            </div>
+        </div>
+                
+        <div id="content">
+            <div class="inner">
+                
+<div class="post">
+    <h3><a href="">IPhone SDK Hello World</a></h3>
+  
+    <div class="body">
+        <hr /><p style='text-align: justify;'>This is a tutorial for beginners to the IPhone SDK and includes instructions on creating a basic HelloWorld program. The program demonstrates the use of Views, Labels and UIButtons. I will be using the 4.3 SDK so some features may not be available in the earlier version.</p><!--more--><h3 style='text-align: justify;'><a href='http://www.techtraits.ca/wp-content/uploads/2011/06/projecttype.png'><img alt='' class='alignright size-full wp-image-84' height='340' src='http://www.techtraits.ca/wp-content/uploads/2011/06/projecttype.png' title='projecttype' width='500' /></a></h3><h3>Source Code</h3><a href='http://www.techtraits.ca/wp-content/uploads/2011/06/HelloWorld.zip'>HelloWorld Source Project</a><p style='text-align: justify;' /><h3 style='text-align: justify;'>Step 1: Download XCode and the SDK</h3><p style='text-align: justify;'>The first thing we need to do is to download the development tools namely <a href='http://developer.apple.com/tools/xcode/'>XCode</a> and the <a href='http://developer.apple.com/devcenter/ios'>SDK</a>. To download either of these you will need to register for the Apple ID and Apple developer Connection (ADC). Install both these tools, the procedure to do so is fairly trivial so I am not going into details.</p><h3 style='text-align: justify;'>Step 2: Create a new Project</h3><p style='text-align: justify;'>Now we have the tools we need to start coding but before we do we need to create a new project. <strong>Select File &gt; New Project</strong> or <strong>Apple Key + Shift + N</strong> to bring up the new project menu. Select the <strong>Applications </strong>item of the <strong>IPhone OS</strong> section from the menu on the left, and select <strong>View Based Application </strong>from the icons on the right. When prompted enter a project name, I have used HelloWorld in the sample code.</p><p style='text-align: justify;' /><h3>Step: 3 Update the settings</h3><p style='text-align: justify;'>Once you compete the wizard creates the project you will be taken to the main settings page. Here you can setup the device orientation settings and the application icon. (By dragging a properly sized png file into the correct box).</p><p style='text-align: justify;'>When you create a project you will see a window similar to the one shown in the image on the right. There are four source files in the<strong> </strong>package; <a href='http://www.techtraits.ca/wp-content/uploads/2011/06/menu.png'><img alt='' class='alignright size-full wp-image-88' height='239' src='http://www.techtraits.ca/wp-content/uploads/2011/06/menu.png' title='menu' width='260' /></a>
+HelloWorldAppDelegate.h
+HelloWorldAppDelegate.m
+HelloWorldViewController.h
+HelloWorldViewController.m</p>
+<p>I am ignoring the xib files for now because for this tutorial I will be adding the interface elements directly and not through the interface builder. I would like to highlight some important parts of the auto-generated code so open the HelloWorldAppDelegate.h file and note that it contains a reference to a UIWindow object (Line 17) which controls all the user interaction for this application and will manage all other interface components. It also contains a reference to HelloWorldViewController (Line 19) which we will see later manages our one sample view.</p>
+
+<p>In the source file for the application delegate (HelloWorldAppDelegate.m) we find an auto generated <strong>applicationDidFinishLaunching</strong> method. This, as the name suggests, invoked when the application has been loaded and in this method we will add our HelloWorldViewController object to the UIWindow and make it visible. <pre lang='objc'>self.window.rootViewController = self.viewController;
+[self.window makeKeyAndVisible];</pre> The IPhone SDK UI follows the <a href='http://en.wikipedia.org/wiki/Model-view-controller'>Model View Controller (MVC)</a> design pattern and hence each <em>view </em>has a corrsponding View Controller Object. XCode has automatically created a view for us, (its defined in the HelloWorldViewController.xib file you can see it by double clicking it in the side menu) and linked it to HelloWorldViewController. We now need to add controls to the view handle the generated events. Note we can add controls via a GUI interface called the Interface Builder but I am using the programmatic way for this tutorial.</p>
+<a name='Step_3(3A)_Adding_Controls_and_Handler_to_header_file' /><h3>Step 3: Adding Controls and Handler to header file</h3>
+<p>Open the HelloWorldViewController.h file and add declarations for a button, a label and a view within the curly braces delimiting the HelloWorldViewController interface declaration add the following lines. <pre lang='objc'>IBOutlet UIButton *button;
+IBOutlet UILabel *label;
+IBOutlet UIView *myView;</pre> We are defining a view to display a button and label to go in the view. After the curly braces add a method declaration to accept the click event of the button and also properties to access the  UI elements; myButton, myLabel and myView. Also add properties for these  Your entire code should look something like this: <h3><a href='http://www.techtraits.ca/wp-content/uploads/2011/06/mainsettings.png'><img alt='' class='alignright size-full wp-image-85' height='730' src='http://www.techtraits.ca/wp-content/uploads/2011/06/mainsettings.png' title='mainsettings' width='531' /></a></h3> <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
+&lt;pre lang=&quot;objc&quot;&gt;//
+//  HelloWorldViewController.h
+//  HelloWorld
+//</pre></p>
+
+<h1 id='import_'>import <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
+&lt;UIKit/UIKit.h&gt;</pre></h1>
+
+<p>IBOutlet UIButton <em>button; IBOutlet UILabel</em>label; IBOutlet UIView <em>myView;    } -(IBAction)handleEvent:(id)sender; @property (nonatomic, retain) IBOutlet UIButton</em>button; @property (nonatomic, retain) IBOutlet UILabel <em>label; @property (nonatomic, retain) IBOutlet UIView</em>myView;</p>
+<h3>Step 4: Adding Controls</h3>
+<p>Add a <strong>synthesize</strong> call for each of the three UI elements to create the getter and setters after the @implementation HelloWorldViewController line in the HelloWorldViewController.m file as shown below. <pre lang='objc'>@synthesize button;
+@synthesize label;
+@synthesize myView;</pre> Now find the comment saying &#8220;Implement loadView if you want to create a view hierarchy programmatically.&#8221; and un-comment the loadView method that follows this line. Add the following lines to the method to create a button and label; <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
+&lt;pre lang=&quot;objc&quot;&gt;@synthesize button;
+- (void)loadView
+{
+    // create and configure the view
+    CGRect cgRct = CGRectMake(0.0, 0.0, 480, 320); //define size and position of view
+    myView = [[UIView alloc] initWithFrame:cgRct]; //initialize the view
+    myView.autoresizesSubviews = YES;              //allow it to tweak size of elements in view
+    self.view = myView;</pre></p>
+
+<pre><code>// create a UIButton (UIButtonTypeRoundedRect) and play arround with settings
+button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+button.frame = CGRectMake(100, 100, 100, 50); // size and position of button
+[button setTitle:@&quot;Add&quot; forState:UIControlStateNormal];
+button.backgroundColor = [UIColor clearColor];
+button.adjustsImageWhenHighlighted = YES;
+
+//Add action handler and set current class as target
+[button addTarget:self action:@selector(action:) forControlEvents:UIControlEventTouchUpInside];
+
+//Display Button
+[self.view addSubview:button];
+
+//create a label
+cgRct = CGRectMake(100, 170, 100, 50); //define size and position of label
+label = [[UILabel alloc] initWithFrame:cgRct];
+label.text = @&quot;Hello World&quot;;
+
+//Display Label
+[self.view addSubview:label];</code></pre>
+
+<p>}&lt;/pre&gt; Click the <strong>Run</strong> button to check your interface is drawn correctly It should look something like to screen shot below.</p>
+<a href='http://www.techtraits.ca/wp-content/uploads/2011/06/button.png'><img alt='' class='alignleft size-full wp-image-98' height='73' src='http://www.techtraits.ca/wp-content/uploads/2011/06/button.png' title='button' width='264' /></a>
+<p>&#160; <h3>Step 5: Handling Actions</h3> We have already told the button to send an event (action) to the current class (self) in case of an <strong>UIControlEventTouchUpInside </strong>event but there is no handler defined to accept the event. We define a handler method in the class by adding the method shown below. It is doing two things, changing the text property of the label and adding a message to the log file. <pre lang='objc'>-(void)action:(id)sender
+{
+    NSLog(@"UIButton was clicked");
+    label.text = @"Bye World";
+}</pre> Now click the Build and Go button again and click the button. The text of the label should change.</p>
+    </div>
+    
+    <div class="meta">    
+        <ul>
+          Published: 12 Jun 2011<br/>
+        </ul>
+	<ul class="list-category list-linear">
+	  <li class="list-head">category: </li>
+			
+			
+
+
+  
+    
+  
+
+
+	</ul>
+	<ul class="list-tag list-linear">
+		<li class="list-head">tags: </li>
+			
+			
+
+
+  
+    
+  
+
+
+
+	</ul>
+    </div>
+
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    var disqus_identifier = '80 http://username.github.com/?p=80';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+</div>
+
+
+            </div>
+        </div>
+        
+        <div id="footer" class="clearfix">
+            <div class="inner">
+                <div class="archives">
+                    <h3>Archives</h3>
+            
+                    <table>
+                    
+                        <tr>
+                            <td class="date">10 Mar 2012</td>
+                            <td><a href="/2012/03/10/jackson-optimization-using-non-default-for-fun-and-profit">Jackson Optimization, Using Non-Default for fun and profit</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">14 Feb 2012</td>
+                            <td><a href="/2012/02/14/really-really-async-aws-sdk">Really Really Async AWS SDK</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Feb 2012</td>
+                            <td><a href="/2012/02/11/erlang-list-manipulation-using-comprehensions">Erlang: List Manipulation using comprehensions</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">03 Feb 2012</td>
+                            <td><a href="/2012/02/03/java-optimizaiton">Java Optimizaiton, Why is my application so slow?</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">17 Jan 2012</td>
+                            <td><a href="/2012/01/17/regular-expressions-in-elipse-find">Regular Expressions in Elipse Find</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">16 Jan 2012</td>
+                            <td><a href="/2012/01/16/capturing-java-stack-strace-using-jstack">Capturing Java Stack Strace Using JStack</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">17 Dec 2011</td>
+                            <td><a href="/2011/12/17/creating-executable-jars-with-maven">Creating executable jars with Maven</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">04 Dec 2011</td>
+                            <td><a href="/2011/12/04/custum-pmd-rule-for-private-injected-fields">Custom PMD Rule for Private Injected fields</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">27 Nov 2011</td>
+                            <td><a href="/2011/11/27/using-method-interceptors-with-guice">Using method interceptors with Guice</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">20 Nov 2011</td>
+                            <td><a href="/2011/11/20/using-custom-serializers-with-jackson">Using Custom Serializers with Jackson</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">05 Nov 2011</td>
+                            <td><a href="/2011/11/05/custom-pmd-rules-using-xpath">Custom PMD Rules using XPath</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">31 Oct 2011</td>
+                            <td><a href="/2011/10/31/writting-pretty-code-with-pmd">Writing pretty code with PMD</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">31 Oct 2011</td>
+                            <td><a href="/2011/10/31/thanks-i-needed-that">Thanks, I needed that</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">16 Oct 2011</td>
+                            <td><a href="/2011/10/16/jsonkit">iPhone SDK: Integrating with Json using Jsonkit</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">10 Oct 2011</td>
+                            <td><a href="/2011/10/10/iphonesdk-nsuserdefaults">iPhoneSDK: NSUserDefaults</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">02 Oct 2011</td>
+                            <td><a href="/2011/10/02/using-cachedump-to-debug-memcached">Using cachedump to debug memcached</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">02 Oct 2011</td>
+                            <td><a href="/2011/10/02/iphone-sdk-tabbars">IPhone SDK: TabBars</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">09 Sep 2011</td>
+                            <td><a href="/2011/09/09/compiling-protocol-buffers-from-maven">Compiling Protocol Buffers from Maven</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">05 Sep 2011</td>
+                            <td><a href="/2011/09/05/running-nexus-sontaype-over-jetty">Running Nexus Sontaype over Jetty</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Aug 2011</td>
+                            <td><a href="/2011/08/12/implementing-jackson-views">Implementing Jackson Views</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">27 Jul 2011</td>
+                            <td><a href="/2011/07/27/polymorphic-json-serialization-using-jackson">Polymorphic JSON Serialization using Jackson</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">25 Jun 2011</td>
+                            <td><a href="/2011/06/25/five-minute-guide-to-setting-up-a-java-webserver">Setting up a webservice using Guice & Sitebricks</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Jun 2011</td>
+                            <td><a href="/2011/06/12/iphone-sdk-hello-world">IPhone SDK Hello World</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Jun 2011</td>
+                            <td><a href="/2011/06/12/iphone-sdk-hello-world">IPhone SDK Hello World</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Jun 2011</td>
+                            <td><a href="/2011/06/11/records-in-erlang">Records in erlang</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Jun 2011</td>
+                            <td><a href="/2011/06/11/records-in-erlang">Records in erlang</a></td>
+                        </tr>
+                    
+                    </table>
+                </div>
+                <div class="about">
+                    <h3><a href="/about.html">About Me</a></h3>
+                    
+                    <a href="/about.html"><img src="/assets/themes/jamesyu/images/me_small.png" alt="ME" /></a>
+                    <div>
+                        This is yet a short description of myself. Try to keep it short. <a href="/about.html">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body> 
+</html>
+

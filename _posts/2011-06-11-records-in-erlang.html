@@ -1,0 +1,66 @@
+--- 
+layout: post
+title: Records in erlang
+tags: 
+- erlang
+- Programming
+- records
+status: publish
+type: post
+published: true
+meta: 
+  _edit_last: "1"
+  _efficient_related_posts: "a:1:{i:0;a:4:{s:2:\"ID\";s:3:\"895\";s:10:\"post_title\";s:46:\"Erlang: List Manipulation using comprehensions\";s:7:\"matches\";s:1:\"1\";s:9:\"permalink\";s:72:\"http://www.techtraits.com/erlang-list-manipulation-using-comprehensions/\";}}"
+  _relation_threshold: "1"
+---
+<hr />
+
+When learning a new language its always difficult to google the meaning of operators. I ran into this problem when reading erlang source and trying to figure out what the hash sign does. Searching for "erlang hash" would always lead to articles about computing MD5 hashes in erlang. I had to resort to asking the question on stack overflow.So for the sake of the next person who googles this "What does the hash operator do in erlang?"
+<!--more-->
+&nbsp;
+<h3 style="text-align: left;">Defining Records</h3>
+
+
+Record is a compound data type in erlang which gives named access to the elements it contains similar to a struct in c. To use records we must fust define their structure:
+<pre lang="erlang">-record(record_name, {element_mame=optional_default_value}).
+
+for example:
+-record(car, {model,year,color=blue}).
+
+</pre>
+&nbsp;
+<h3 style="text-align: left;">Initializing Records</h3>
+
+
+To initialize we use the aforementioned hash sign as a prefix to the statement. Notice that I can choose not to supply values for the elements, elements with default values will have those assigned others will remain undefined.
+<pre lang="erlang">Car1 = #car{model=civic,year=2007,color=green},
+Car2 = #car{model=mazda,color=green}.
+
+</pre>
+&nbsp;
+<h3>Accessing Records</h3>
+
+
+To access records we use our trusty hash operator again and use the element name to retrieve data:
+<pre lang="erlang">Car1 = #car{model=civic,year=2007,color=green},
+Car2 = #car{model=mazda,color=green},
+Car1Model = Car1#car.model.</pre>
+&nbsp;&nbsp;
+<h3>Updating Records</h3>
+
+
+
+Updating records is much like initializing except that any elements that we do not specify values for will retain retain previous values.
+<pre lang="erlang">Car1 = #car{model=civic,year=2007,color=green},
+Car2 = #car{model=mazda,color=green},
+Car3 = Car2#car{year=2003}.</pre>
+
+
+&nbsp;
+<h3>Further Reading</h3>
+
+<a href="http://www.erlang.org/doc/reference_manual/records.html">Reference Manual</a>
+<a href="http://www.erlang.org/doc/programming_examples/records.html">Examples</a>
+
+&nbsp;
+&nbsp;

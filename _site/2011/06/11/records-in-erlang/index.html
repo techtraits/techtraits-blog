@@ -1,0 +1,279 @@
+
+<!doctype html>  
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]--> 
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]--> 
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]--> 
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]--> 
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]--> 
+<head> 
+  <meta charset="utf-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+ 
+  <title>Records in erlang</title> 
+  <meta name="author" content="Name Lastname" />
+  <link href='http://fonts.googleapis.com/css?family=Lato:light,regular,bold'
+  rel='stylesheet' type='text/css'>
+  <link href="/assets/themes/jamesyu/css/
+reset.css" media="screen" rel="stylesheet" type="text/css" /> 
+  <link href="/assets/themes/jamesyu/css/highlight.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/assets/themes/jamesyu/css/main.css" media="screen" rel="stylesheet" type="text/css" /> 
+  <link rel="alternate" type="application/rss+xml" href="/atom.xml" title="RSS feed">
+</head> 
+ 
+    <body> 
+        <div id="header">
+            <div class="inner">
+                <ul>
+                    <li><a href="http://twitter.com/username">Follow Me</a></li>
+                    <li><a href="/about.html">About Me</a></li>
+                </ul>
+                <h1><a href="/">Name Lastname</a></h1>
+                <h2></h2>
+            </div>
+        </div>
+                
+        <div id="content">
+            <div class="inner">
+                
+<div class="post">
+    <h3><a href="">Records in erlang</a></h3>
+  
+    <div class="body">
+        <hr />
+<p>When learning a new language its always difficult to google the meaning of operators. I ran into this problem when reading erlang source and trying to figure out what the hash sign does. Searching for &#8220;erlang hash&#8221; would always lead to articles about computing MD5 hashes in erlang. I had to resort to asking the question on stack overflow.So for the sake of the next person who googles this &#8220;What does the hash operator do in erlang?&#8221; <!--more--> &#160; <h3 style='text-align: left;'>Defining Records</h3></p>
+
+<p>Record is a compound data type in erlang which gives named access to the elements it contains similar to a struct in c. To use records we must fust define their structure: <pre lang='erlang'>-record(record_name, {element_mame=optional_default_value}).</pre></p>
+
+<p>for example: <pre lang='erlang'>-record(car, {model,year,color=blue}).</pre> &#160; <h3 style='text-align: left;'>Initializing Records</h3></p>
+
+<p>To initialize we use the aforementioned hash sign as a prefix to the statement. Notice that I can choose not to supply values for the elements, elements with default values will have those assigned others will remain undefined. <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
+&lt;pre lang=&quot;erlang&quot;&gt;Car1 = #car{model=civic,year=2007,color=green},
+Car2 = #car{model=mazda,color=green}.</pre></p>
+<pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
+&lt;/pre&gt;</pre>
+<p>&#160; <h3>Accessing Records</h3></p>
+
+<p>To access records we use our trusty hash operator again and use the element name to retrieve data: <pre lang='erlang'>Car1 = #car{model=civic,year=2007,color=green},
+Car2 = #car{model=mazda,color=green},
+Car1Model = Car1#car.model.</pre> &#160;&#160; <h3>Updating Records</h3></p>
+
+<p>Updating records is much like initializing except that any elements that we do not specify values for will retain retain previous values. <pre lang='erlang'>Car1 = #car{model=civic,year=2007,color=green},
+Car2 = #car{model=mazda,color=green},
+Car3 = Car2#car{year=2003}.</pre></p>
+
+<p>&#160; <h3>Further Reading</h3></p>
+<a href='http://www.erlang.org/doc/reference_manual/records.html'>Reference Manual</a><a href='http://www.erlang.org/doc/programming_examples/records.html'>Examples</a>
+<p>&#160; &#160;</p>
+    </div>
+    
+    <div class="meta">    
+        <ul>
+          Published: 11 Jun 2011<br/>
+        </ul>
+	<ul class="list-category list-linear">
+	  <li class="list-head">category: </li>
+			
+			
+
+
+  
+    
+  
+
+
+	</ul>
+	<ul class="list-tag list-linear">
+		<li class="list-head">tags: </li>
+			
+			
+
+
+  
+    
+  
+
+
+
+	</ul>
+    </div>
+
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    var disqus_identifier = '34 http://username.github.com/?p=34';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+</div>
+
+
+            </div>
+        </div>
+        
+        <div id="footer" class="clearfix">
+            <div class="inner">
+                <div class="archives">
+                    <h3>Archives</h3>
+            
+                    <table>
+                    
+                        <tr>
+                            <td class="date">10 Mar 2012</td>
+                            <td><a href="/2012/03/10/jackson-optimization-using-non-default-for-fun-and-profit">Jackson Optimization, Using Non-Default for fun and profit</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">14 Feb 2012</td>
+                            <td><a href="/2012/02/14/really-really-async-aws-sdk">Really Really Async AWS SDK</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Feb 2012</td>
+                            <td><a href="/2012/02/11/erlang-list-manipulation-using-comprehensions">Erlang: List Manipulation using comprehensions</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">03 Feb 2012</td>
+                            <td><a href="/2012/02/03/java-optimizaiton">Java Optimizaiton, Why is my application so slow?</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">17 Jan 2012</td>
+                            <td><a href="/2012/01/17/regular-expressions-in-elipse-find">Regular Expressions in Elipse Find</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">16 Jan 2012</td>
+                            <td><a href="/2012/01/16/capturing-java-stack-strace-using-jstack">Capturing Java Stack Strace Using JStack</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">17 Dec 2011</td>
+                            <td><a href="/2011/12/17/creating-executable-jars-with-maven">Creating executable jars with Maven</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">04 Dec 2011</td>
+                            <td><a href="/2011/12/04/custum-pmd-rule-for-private-injected-fields">Custom PMD Rule for Private Injected fields</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">27 Nov 2011</td>
+                            <td><a href="/2011/11/27/using-method-interceptors-with-guice">Using method interceptors with Guice</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">20 Nov 2011</td>
+                            <td><a href="/2011/11/20/using-custom-serializers-with-jackson">Using Custom Serializers with Jackson</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">05 Nov 2011</td>
+                            <td><a href="/2011/11/05/custom-pmd-rules-using-xpath">Custom PMD Rules using XPath</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">31 Oct 2011</td>
+                            <td><a href="/2011/10/31/writting-pretty-code-with-pmd">Writing pretty code with PMD</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">31 Oct 2011</td>
+                            <td><a href="/2011/10/31/thanks-i-needed-that">Thanks, I needed that</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">16 Oct 2011</td>
+                            <td><a href="/2011/10/16/jsonkit">iPhone SDK: Integrating with Json using Jsonkit</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">10 Oct 2011</td>
+                            <td><a href="/2011/10/10/iphonesdk-nsuserdefaults">iPhoneSDK: NSUserDefaults</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">02 Oct 2011</td>
+                            <td><a href="/2011/10/02/using-cachedump-to-debug-memcached">Using cachedump to debug memcached</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">02 Oct 2011</td>
+                            <td><a href="/2011/10/02/iphone-sdk-tabbars">IPhone SDK: TabBars</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">09 Sep 2011</td>
+                            <td><a href="/2011/09/09/compiling-protocol-buffers-from-maven">Compiling Protocol Buffers from Maven</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">05 Sep 2011</td>
+                            <td><a href="/2011/09/05/running-nexus-sontaype-over-jetty">Running Nexus Sontaype over Jetty</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Aug 2011</td>
+                            <td><a href="/2011/08/12/implementing-jackson-views">Implementing Jackson Views</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">27 Jul 2011</td>
+                            <td><a href="/2011/07/27/polymorphic-json-serialization-using-jackson">Polymorphic JSON Serialization using Jackson</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">25 Jun 2011</td>
+                            <td><a href="/2011/06/25/five-minute-guide-to-setting-up-a-java-webserver">Setting up a webservice using Guice & Sitebricks</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Jun 2011</td>
+                            <td><a href="/2011/06/12/iphone-sdk-hello-world">IPhone SDK Hello World</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Jun 2011</td>
+                            <td><a href="/2011/06/12/iphone-sdk-hello-world">IPhone SDK Hello World</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Jun 2011</td>
+                            <td><a href="/2011/06/11/records-in-erlang">Records in erlang</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Jun 2011</td>
+                            <td><a href="/2011/06/11/records-in-erlang">Records in erlang</a></td>
+                        </tr>
+                    
+                    </table>
+                </div>
+                <div class="about">
+                    <h3><a href="/about.html">About Me</a></h3>
+                    
+                    <a href="/about.html"><img src="/assets/themes/jamesyu/images/me_small.png" alt="ME" /></a>
+                    <div>
+                        This is yet a short description of myself. Try to keep it short. <a href="/about.html">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body> 
+</html>
+

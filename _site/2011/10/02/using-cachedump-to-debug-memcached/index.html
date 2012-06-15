@@ -1,0 +1,324 @@
+
+<!doctype html>  
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]--> 
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]--> 
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]--> 
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]--> 
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]--> 
+<head> 
+  <meta charset="utf-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+ 
+  <title>Using cachedump to debug memcached</title> 
+  <meta name="author" content="Name Lastname" />
+  <link href='http://fonts.googleapis.com/css?family=Lato:light,regular,bold'
+  rel='stylesheet' type='text/css'>
+  <link href="/assets/themes/jamesyu/css/
+reset.css" media="screen" rel="stylesheet" type="text/css" /> 
+  <link href="/assets/themes/jamesyu/css/highlight.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/assets/themes/jamesyu/css/main.css" media="screen" rel="stylesheet" type="text/css" /> 
+  <link rel="alternate" type="application/rss+xml" href="/atom.xml" title="RSS feed">
+</head> 
+ 
+    <body> 
+        <div id="header">
+            <div class="inner">
+                <ul>
+                    <li><a href="http://twitter.com/username">Follow Me</a></li>
+                    <li><a href="/about.html">About Me</a></li>
+                </ul>
+                <h1><a href="/">Name Lastname</a></h1>
+                <h2></h2>
+            </div>
+        </div>
+                
+        <div id="content">
+            <div class="inner">
+                
+<div class="post">
+    <h3><a href="">Using cachedump to debug memcached</a></h3>
+  
+    <div class="body">
+        <pre class='markdown-html-error' style='border: solid 3px red; background-color: pink'>REXML could not parse this XML/HTML: 
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+If you are using &lt;a href=&quot;http://http://memcached.org/&quot; title=&quot;memcached&quot; target=&quot;_blank&quot;&gt;memcahced&lt;/a&gt; for caching it will be is sometimes necessary to check the state of the cache. There is no way to dump all keys stored in a memcached server but using cache dump we can retrieve about a megabyte of data which is often sufficient for debugging.
+&lt;!--more--&gt;
+To retrieve the keys first telnet to your server:
+&lt;pre lang=&quot;bash&quot;&gt;
+telnet localhost 11211
+&lt;/pre&gt;
+
+Use the stats command to get stats about the different slabs of keys in your server. The number after &quot;items:&quot; is a slab id and memecached will store your stats in several slabs. 
+
+&lt;pre lang=&quot;bash&quot;&gt;
+stats items
+STAT items:1:number 1
+STAT items:1:age 3430476
+STAT items:1:evicted 0
+STAT items:1:evicted_nonzero 0
+STAT items:1:evicted_time 0
+STAT items:1:outofmemory 0
+STAT items:1:tailrepairs 0
+STAT items:1:reclaimed 113
+STAT items:2:number 4
+STAT items:2:age 555952
+STAT items:2:evicted 0
+STAT items:2:evicted_nonzero 0
+STAT items:2:evicted_time 0
+STAT items:2:outofmemory 0
+STAT items:2:tailrepairs 0
+STAT items:2:reclaimed 12
+STAT items:3:number 4
+STAT items:3:age 2894457
+STAT items:3:evicted 0
+STAT items:3:evicted_nonzero 0
+STAT items:3:evicted_time 0
+STAT items:3:outofmemory 0
+STAT items:3:tailrepairs 0
+STAT items:3:reclaimed 4
+STAT items:4:number 2
+STAT items:4:age 3411747
+STAT items:4:evicted 0
+STAT items:4:evicted_nonzero 0
+STAT items:4:evicted_time 0
+STAT items:4:outofmemory 0
+STAT items:4:tailrepairs 0
+STAT items:4:reclaimed 9
+STAT items:8:number 18
+STAT items:8:age 1330321
+STAT items:8:evicted 0
+STAT items:8:evicted_nonzero 0
+STAT items:8:evicted_time 0
+STAT items:8:outofmemory 0
+STAT items:8:tailrepairs 0
+STAT items:8:reclaimed 1
+STAT items:10:number 11
+STAT items:10:age 3238392
+STAT items:10:evicted 0
+STAT items:10:evicted_nonzero 0
+STAT items:10:evicted_time 0
+STAT items:10:outofmemory 0
+STAT items:10:tailrepairs 0
+STAT items:10:reclaimed 0
+END
+&lt;/pre&gt;
+
+To get the keys stored in each slab use the cachedump command. In the command shown below we are retrieving a maximum of hundred keys from the 4th slab.
+&lt;pre lang=&quot;bash&quot;&gt;
+stats cachedump 4 100 
+&lt;/pre&gt;
+
+That&apos;s it, happy debugging. </pre>
+    </div>
+    
+    <div class="meta">    
+        <ul>
+          Published: 02 Oct 2011<br/>
+        </ul>
+	<ul class="list-category list-linear">
+	  <li class="list-head">category: </li>
+			
+			
+
+
+  
+    
+  
+
+
+	</ul>
+	<ul class="list-tag list-linear">
+		<li class="list-head">tags: </li>
+			
+			
+
+
+  
+    
+  
+
+
+
+	</ul>
+    </div>
+
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    var disqus_identifier = '451 http://username.github.com/?p=451';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+</div>
+
+
+            </div>
+        </div>
+        
+        <div id="footer" class="clearfix">
+            <div class="inner">
+                <div class="archives">
+                    <h3>Archives</h3>
+            
+                    <table>
+                    
+                        <tr>
+                            <td class="date">10 Mar 2012</td>
+                            <td><a href="/2012/03/10/jackson-optimization-using-non-default-for-fun-and-profit">Jackson Optimization, Using Non-Default for fun and profit</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">14 Feb 2012</td>
+                            <td><a href="/2012/02/14/really-really-async-aws-sdk">Really Really Async AWS SDK</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Feb 2012</td>
+                            <td><a href="/2012/02/11/erlang-list-manipulation-using-comprehensions">Erlang: List Manipulation using comprehensions</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">03 Feb 2012</td>
+                            <td><a href="/2012/02/03/java-optimizaiton">Java Optimizaiton, Why is my application so slow?</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">17 Jan 2012</td>
+                            <td><a href="/2012/01/17/regular-expressions-in-elipse-find">Regular Expressions in Elipse Find</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">16 Jan 2012</td>
+                            <td><a href="/2012/01/16/capturing-java-stack-strace-using-jstack">Capturing Java Stack Strace Using JStack</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">17 Dec 2011</td>
+                            <td><a href="/2011/12/17/creating-executable-jars-with-maven">Creating executable jars with Maven</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">04 Dec 2011</td>
+                            <td><a href="/2011/12/04/custum-pmd-rule-for-private-injected-fields">Custom PMD Rule for Private Injected fields</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">27 Nov 2011</td>
+                            <td><a href="/2011/11/27/using-method-interceptors-with-guice">Using method interceptors with Guice</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">20 Nov 2011</td>
+                            <td><a href="/2011/11/20/using-custom-serializers-with-jackson">Using Custom Serializers with Jackson</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">05 Nov 2011</td>
+                            <td><a href="/2011/11/05/custom-pmd-rules-using-xpath">Custom PMD Rules using XPath</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">31 Oct 2011</td>
+                            <td><a href="/2011/10/31/writting-pretty-code-with-pmd">Writing pretty code with PMD</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">31 Oct 2011</td>
+                            <td><a href="/2011/10/31/thanks-i-needed-that">Thanks, I needed that</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">16 Oct 2011</td>
+                            <td><a href="/2011/10/16/jsonkit">iPhone SDK: Integrating with Json using Jsonkit</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">10 Oct 2011</td>
+                            <td><a href="/2011/10/10/iphonesdk-nsuserdefaults">iPhoneSDK: NSUserDefaults</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">02 Oct 2011</td>
+                            <td><a href="/2011/10/02/using-cachedump-to-debug-memcached">Using cachedump to debug memcached</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">02 Oct 2011</td>
+                            <td><a href="/2011/10/02/iphone-sdk-tabbars">IPhone SDK: TabBars</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">09 Sep 2011</td>
+                            <td><a href="/2011/09/09/compiling-protocol-buffers-from-maven">Compiling Protocol Buffers from Maven</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">05 Sep 2011</td>
+                            <td><a href="/2011/09/05/running-nexus-sontaype-over-jetty">Running Nexus Sontaype over Jetty</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Aug 2011</td>
+                            <td><a href="/2011/08/12/implementing-jackson-views">Implementing Jackson Views</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">27 Jul 2011</td>
+                            <td><a href="/2011/07/27/polymorphic-json-serialization-using-jackson">Polymorphic JSON Serialization using Jackson</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">25 Jun 2011</td>
+                            <td><a href="/2011/06/25/five-minute-guide-to-setting-up-a-java-webserver">Setting up a webservice using Guice & Sitebricks</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Jun 2011</td>
+                            <td><a href="/2011/06/12/iphone-sdk-hello-world">IPhone SDK Hello World</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">12 Jun 2011</td>
+                            <td><a href="/2011/06/12/iphone-sdk-hello-world">IPhone SDK Hello World</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Jun 2011</td>
+                            <td><a href="/2011/06/11/records-in-erlang">Records in erlang</a></td>
+                        </tr>
+                    
+                        <tr>
+                            <td class="date">11 Jun 2011</td>
+                            <td><a href="/2011/06/11/records-in-erlang">Records in erlang</a></td>
+                        </tr>
+                    
+                    </table>
+                </div>
+                <div class="about">
+                    <h3><a href="/about.html">About Me</a></h3>
+                    
+                    <a href="/about.html"><img src="/assets/themes/jamesyu/images/me_small.png" alt="ME" /></a>
+                    <div>
+                        This is yet a short description of myself. Try to keep it short. <a href="/about.html">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body> 
+</html>
+
