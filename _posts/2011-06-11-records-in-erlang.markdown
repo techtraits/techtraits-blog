@@ -37,10 +37,8 @@ To access records we use our trusty hash operator again and use the element name
     Car1 = #car{model=civic,year=2007,color=green},
     Car2 = #car{model=mazda,color=green},
     Car1Model = Car1#car.model.
-&nbsp;&nbsp;
+
 <h3>Updating Records</h3>
-
-
 
 Updating records is much like initializing except that any elements that we do not specify values for will retain retain previous values.
 
