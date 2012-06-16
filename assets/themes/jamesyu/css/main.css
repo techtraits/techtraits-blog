@@ -5,8 +5,9 @@ html {
 
 body {
   text-align: center;
-  font-family: "chaparral-pro-1","chaparral-pro-2", Georgia, serif; 
-  font-size: 22px; line-height: 1.45; 
+  font-family: "chaparral-pro-1","chaparral-pro-2", Georgia, serif;
+  /* font-family: 'Lato'; */
+  font-size: 22px;
   color: #333; }
 
 #header {
@@ -108,6 +109,7 @@ body {
 
 #footer {
   font-family: chaparral-pro-1, chaparral-pro-2, Georgia, serif;
+  font-size: 18px;
   background: #2B3844;
   padding: 25px;
   color: #ffffff; }
