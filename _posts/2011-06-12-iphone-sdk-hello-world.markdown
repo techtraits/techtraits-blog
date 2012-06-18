@@ -4,6 +4,8 @@ title: IPhone SDK Hello World
 wordpress_id: 80
 wordpress_url: http://www.techtraits.ca/?p=80
 date: 2011-06-12 18:44:32 +00:00
+categories: 
+- Programming
 tags:
 - Objective C
 - code
