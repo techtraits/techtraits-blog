@@ -4,6 +4,11 @@ title: Polymorphic JSON Serialization using Jackson
 wordpress_id: 217
 wordpress_url: http://www.techtraits.ca/?p=217
 date: 2011-07-28 03:32:28 +00:00
+tags:
+- Java
+- code
+- Jackson
+- JSON
 ---
 <p style="text-align: justify;">JSON is a lightweight language independent data-interchange format which is one of the common ways of encoding data over HTTP. This articles goes over the use of the <a href="http://jackson.codehaus.org/">Jackson</a> library to serialize and deserialize Java object to JSON.</p>
 

@@ -4,6 +4,10 @@ title: Records in erlang
 wordpress_id: 34
 wordpress_url: http://www.techtraits.ca/?p=34
 date: 2011-06-11 23:49:10 +00:00
+tags:
+- erlang
+- code
+- records
 ---
 <hr />
 <p style="text-align: justify;">
@@ -24,7 +28,6 @@ for example:
 {% highlight erlang %}
     -record(car, {model,year,color=blue}).
 {% endhighlight %}
-    
 &nbsp;
 <h3 style="text-align: left;">Initializing Records</h3>
 <p style="text-align: justify;">

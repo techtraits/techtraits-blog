@@ -4,6 +4,11 @@ title: "Erlang: List Manipulation using comprehensions"
 wordpress_id: 895
 wordpress_url: http://www.techtraits.com/?p=895
 date: 2012-02-11 23:06:06 +00:00
+tags:
+- erlang
+- code
+- comprehensions
+- list
 ---
 <p style="text-align: justify;">
 I have recently started working in Erlang and there are many things to like about the language, the data isolation, the functional paradigm and the raw speed. However, one thing that no one loves about erlang is its syntax. Even after a weeks of working on the language you will still be searching through the manual to decipher what the hell does this symbol do. Since its a symbol its really hard to google the right answer unless you already know what you are looking for.</p>

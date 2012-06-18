@@ -4,6 +4,11 @@ title: Really Really Async AWS SDK
 wordpress_id: 930
 wordpress_url: http://www.techtraits.com/?p=930
 date: 2012-02-15 00:14:00 +00:00
+tags:
+- java
+- code
+- aws
+- amazon
 ---
 <p style="text-align: justify;">
 Like much of the world I use Amazon services and the Aws SDK (Java in our case) to support our scalable web service. In an effort to maximize the number of users we could support per machine we use a asynchronous request processing architecture using <a href="http://docs.codehaus.org/display/JETTY/Continuations" title="Contiuations" target="_blank">jetty continuations</a>. In such a setup we needed an asynchronous AWS SDK. Now you might say the AWS SDK already provides asynchronous an API, and you would be right. However, the asynchronous AWS still return a future and require the calling code to poll the future and look at responses once it is done. We wanted a really really asynchronous API which we could say "Hey do X, and when you are done do Y if there is an error Z but no matter what happens don't bother me again". Since there was no such API we decided to implement it ourselves and you can find it <a href="https://github.com/techtraits/aws-sdk-for-java" title="Tech traits Aws SDK for Java" target="_blank">here</a></p>. 
