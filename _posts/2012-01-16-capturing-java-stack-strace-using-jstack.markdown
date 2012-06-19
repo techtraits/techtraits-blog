@@ -4,15 +4,33 @@ title: Capturing Java Stack Strace Using JStack
 wordpress_id: 749
 wordpress_url: http://www.techtraits.com/?p=749
 date: 2012-01-16 16:16:46 +00:00
+
+categories: 
+- System Admin
+tags:
+- Java
+- Optimization
+- JStack
+
 ---
-Recently I needed to profile a large distributed web app that was having performance problems. Although I had success using YourKit, it requires us to capture more specific details but it requires restarting a client with profiling enabled. The profiling adds its own overhead to the application and makes it harder to diagnose performance problems. This is where the JStack tool comes in, given the process id (PID) of any java process we can run jstack to capture a stack traces for all threads. An example of the output of the command is shown below. 
+
+<p style="text-align: justify;">
+Recently I needed to profile a large distributed web app that was having performance problems. Although I had success using YourKit, it requires us to capture more specific details but it requires restarting a client with profiling enabled. The profiling adds its own overhead to the application and makes it harder to diagnose performance problems. This is where the JStack tool comes in, given the process id (PID) of any java process we can run jstack to capture a stack traces for all threads. An example of the output of the command is shown below. </p>
+
 <!--more-->
-<pre lang="bash">
+
+{% highlight bash %}
 jstack 19012 > thread_dump
 cat thread_dump
-</pre>
+{% endhighlight %}
+&nbsp;
 
-<pre lang="bash">
+
+
+
+
+{% highlight bash %}
+
 Full thread dump OpenJDK Client VM (19.0-b09 mixed mode, sharing):
 
 "Attach Listener" daemon prio=10 tid=0x0a482400 nid=0x5105 waiting on condition [0x00000000]
@@ -65,4 +83,6 @@ Full thread dump OpenJDK Client VM (19.0-b09 mixed mode, sharing):
         at org.eclipse.jetty.util.thread.QueuedThreadPool.access$600(QueuedThreadPool.java:38)
         at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:558)
         at java.lang.Thread.run(Thread.java:636)
-</pre>
+{% endhighlight %}
+
+
