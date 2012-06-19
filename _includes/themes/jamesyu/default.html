@@ -35,7 +35,20 @@ reset.css" media="screen" rel="stylesheet" type="text/css" />
                 
         <div id="content">
             <div class="inner">
+              <div id="inner-left">
                 {{ content }}
+              </div>
+              <div id="inner-right">
+                <div class="about">
+                    <h3><a href="{{ BASE_PATH }}/about.html">About</a></h3>
+                    
+                    <a href="{{ BASE_PATH }}/about.html"><img src="{{ ASSET_PATH }}/images/me_small.png" alt="ME" /></a>
+                    <div>
+                        This is yet a short description of the site. Try to keep it short. <a href="{{ BASE_PATH }}/about.html">Read more</a>
+                    </div>
+                </div>
+              </div>
+              <div style="clear:both;"></div>
             </div>
         </div>
         
@@ -53,14 +66,7 @@ reset.css" media="screen" rel="stylesheet" type="text/css" />
                     {% endfor %}
                     </table>
                 </div>
-                <div class="about">
-                    <h3><a href="{{ BASE_PATH }}/about.html">About</a></h3>
-                    
-                    <a href="{{ BASE_PATH }}/about.html"><img src="{{ ASSET_PATH }}/images/me_small.png" alt="ME" /></a>
-                    <div>
-                        This is yet a short description of the site. Try to keep it short. <a href="{{ BASE_PATH }}/about.html">Read more</a>
-                    </div>
-                </div>
+                
             </div>
         </div>
         

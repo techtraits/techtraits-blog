@@ -8,7 +8,7 @@ body {
   font-family: "chaparral-pro-1","chaparral-pro-2", Georgia, serif;
   /* font-family: 'Lato'; */
   font-size: 22px;
-  color: #333; }
+  /*color: #333; */ }
 
 #header {
   font-family: 'Lato';
@@ -18,7 +18,7 @@ body {
   color: #ffffff; }
   #header .inner {
     text-align: left;
-    width: 865px;
+    width: 940px;
     margin: auto; }
   #header ul {
     float: right;
@@ -47,11 +47,27 @@ body {
 
 #content .inner {
    text-align: left;
-   width: 725px;
-   margin: auto; }
+   width: 940px;
+   margin: auto; 
+   background-color: #FFFFFF;
+}
+#content .inner #inner-left {
+   width: 680px;
+   display: block;
+   position: relative;
+   float: left;
+}
 
+#content .inner #inner-right {
+    width: 220px;
+    display: block;
+    position: relative;
+    float: right;
+} 
 .post {
-  margin-bottom: 55px; }
+  margin-bottom: 55px;
+  width: 100%; }
+
   .post h3, .post h4, .post h5 {
     font-size: 29px;
     font-family: 'Lato';
