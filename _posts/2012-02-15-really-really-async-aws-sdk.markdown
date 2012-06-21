@@ -4,6 +4,7 @@ title: Really Really Async AWS SDK
 wordpress_id: 930
 wordpress_url: http://www.techtraits.com/?p=930
 date: 2012-02-15 00:14:00 +00:00
+author: usman
 categories: 
 - Programming
 tags:

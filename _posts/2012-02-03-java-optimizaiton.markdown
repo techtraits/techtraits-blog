@@ -4,6 +4,13 @@ title: Java Optimizaiton, Why is my application so slow?
 wordpress_id: 808
 wordpress_url: http://www.techtraits.com/?p=808
 date: 2012-02-03 19:57:36 +00:00
+author: usman
+categories: 
+- Software Management
+tags:
+- Java
+- Optimization
+- JStack
 ---
 <p style="text-align: justify;">
 

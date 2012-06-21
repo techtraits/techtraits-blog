@@ -4,6 +4,7 @@ title: "iPhoneSDK: NSUserDefaults"
 wordpress_id: 457
 wordpress_url: http://www.techtraits.ca/?p=457
 date: 2011-10-10 19:10:55 +00:00
+author: usman
 categories: 
 - Programming
 tags:
