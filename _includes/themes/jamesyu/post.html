@@ -2,7 +2,7 @@
 <div class="post">
     <h3><a href="{{ post.url }}">{{ page.title }}</a></h3>
       <div class="byline">
-    	by <a href="/{{ author.display_name }}.html">{{ author.display_name }}</a> on {{ page.date | date_to_string }}
+    	by <a href="/{{ author.name }}.html">{{ author.display_name }}</a> on {{ page.date | date_to_string }}
       </div>
     <div class="body">
         {{ content }}
