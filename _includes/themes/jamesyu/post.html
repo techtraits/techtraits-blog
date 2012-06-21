@@ -1,11 +1,46 @@
+{% assign author = site.authors[page.author] %}
 <div class="post">
     <h3><a href="{{ post.url }}">{{ page.title }}</a></h3>
       <div class="byline">
-    	by AUTHOR on {{ page.date | date_to_string }}
+    	by <a href="/{{ author.name }}.html">{{ author.display_name }}</a> on {{ page.date | date_to_string }}
       </div>
     <div class="body">
-        {{ content }}
+        <div id="content">
+            <div class="inner">
+              <div id="inner-left">
+                {{ content }}
+              </div>
+              <div id="inner-right">
+                <div class="right-section">
+                  <div class="about">
+                   <!-- <h3><a href="{{ BASE_PATH }}/about.html">About</a></h3>-->
+                    
+                    <a href="{{ BASE_PATH }}/about.html"><img src="{{ ASSET_PATH }}/images/me_small.png" alt="ME" /></a>
+                    <div>
+                        This is yet a short description of the site. Try to keep it short. <a href="{{ BASE_PATH }}/about.html">Read more</a>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="right-section">
+                   <div class="archives">
+                    <h3>Related Posts</h3>
+            
+                    <table id="related-posts">
+                    {% for post in site.posts %}
+                        <tr>
+                       <!--     <td class="date">{{ post.date | date_to_string }}</td>-->
+                            <td><a class="side-post-list-item"  href="{{ post.url }}">{{ post.title }}</a></td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div>  
+               </div>
+              </div>
+              <div style="clear:both;"></div>
+            </div>
+        </div>
     </div>
+
     
     <div class="meta">    
         <ul>
@@ -22,6 +57,7 @@
 			{% include JB/tags_list %}
 	</ul>
     </div>
+    
 
     {% include JB/comments %}
 </div>

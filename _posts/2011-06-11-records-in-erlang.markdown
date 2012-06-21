@@ -4,6 +4,7 @@ title: Records in erlang
 wordpress_id: 34
 wordpress_url: http://www.techtraits.ca/?p=34
 date: 2011-06-11 23:49:10 +00:00
+author: usman
 categories: 
 - Programming
 tags:
