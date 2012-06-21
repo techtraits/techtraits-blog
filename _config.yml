@@ -11,19 +11,21 @@ pygments: true
 #
 title : Tech Traits
 tagline: 
-author :
-  name : Usman Ismail
-  email : usman@techtraits.com
-  github : usmanismail
-  twitter : username
-  feedburner : feedname
-author :
-  name : Bilal Sheikh
-  email : bilal@techtraits.com
-  github : bilal
-  twitter : mbsheikh
-  feedburner : feedname
-
+authors:
+  usman:
+    name: Usman Ismail
+    display_name: Usman
+    gravatar: 62b57726dde0fa4568fa73b135680bd5
+    email: usman@techtraits.com
+    github: usmanismail
+    twitter: username
+  bilal:
+    name: Bilal Sheikh
+    display_name: Bilal
+    email: bilal@techtraits.com
+    github: bilal
+    twitter: mbsheikh
+    
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
 # Most places will/should use BASE_PATH to make the urls
