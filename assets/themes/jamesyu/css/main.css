@@ -4,7 +4,7 @@ html {
   padding: 0 0 0 0; }
 
 body {
-  text-align: center;
+  text-align: justify;
   font-family: "chaparral-pro-1","chaparral-pro-2", Georgia, serif;
   /* font-family: 'Lato'; */
   font-size: 100%;
@@ -112,7 +112,8 @@ table#related-posts
     font-size: 17p */
   .post .body p {
     margin-bottom: 1em;
-    color: #444; }
+    color: #444;
+    text-align: justify; }
   .post ul, .post ol {
     margin-bottom: 1em; }
   .post ul li, .post ol li {
