@@ -3,6 +3,7 @@ layout: post
 title: Compiling Protocol Buffers from Maven
 wordpress_id: 289
 wordpress_url: http://www.techtraits.ca/?p=289
+author: usman
 date: 2011-09-09 19:46:43 +00:00
 categories: 
 - Build Management

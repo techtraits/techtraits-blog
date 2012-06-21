@@ -4,6 +4,7 @@ title: "iPhone SDK: Integrating with Json using Jsonkit"
 wordpress_id: 460
 wordpress_url: http://www.techtraits.ca/?p=460
 date: 2011-10-16 19:47:20 +00:00
+author: usman
 categories: 
 - Programming
 tags:

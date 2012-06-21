@@ -4,6 +4,7 @@ title: Jackson Optimization, Using Non-Default for fun and profit
 wordpress_id: 978
 wordpress_url: http://www.techtraits.com/?p=978
 date: 2012-03-10 16:12:25 +00:00
+author: usman
 categories: 
 - Programming
 tags:

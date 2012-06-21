@@ -4,7 +4,7 @@ title: Custom PMD Rule for Private Injected fields
 wordpress_id: 700
 wordpress_url: http://www.techtraits.ca/?p=700
 date: 2011-12-04 23:51:05 +00:00
-
+author: usman
 categories: 
 - Programming
 tags:

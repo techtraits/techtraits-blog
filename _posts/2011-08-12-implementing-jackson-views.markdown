@@ -3,6 +3,7 @@ layout: post
 title: Implementing Jackson Views
 wordpress_id: 231
 wordpress_url: http://www.techtraits.ca/?p=231
+author: usman
 date: 2011-08-12 19:42:53 +00:00
 categories: 
 - Programming
