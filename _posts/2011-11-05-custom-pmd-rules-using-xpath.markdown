@@ -57,7 +57,7 @@ Before we start defining our rules we need a sandbox in which to quickly test ou
 The forward slash defines a child query, For example <font color="green">/TypeDeclaration</font> defines that we want to match a child of the root node which is of type "TypeDeclaration". We can also use multiple slashes in a query to search for a set of child relation ships. For example the query below will match will both field declarations in the code above. </p>
 
 {% highlight xml %}
-	/TypeDeclaration/ClassOrInterfaceDeclaration/ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/FieldDeclaration
+/TypeDeclaration/ClassOrInterfaceDeclaration/ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/FieldDeclaration
 {% endhighlight %}
 &nbsp;
 
