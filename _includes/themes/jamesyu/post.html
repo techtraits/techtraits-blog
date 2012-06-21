@@ -1,9 +1,22 @@
 {% assign author = site.authors[page.author] %}
 <div class="post">
     <h3><a href="{{ post.url }}">{{ page.title }}</a></h3>
-      <div class="byline">
-    	by <a href="/{{ author.name }}.html">{{ author.display_name }}</a> on {{ page.date | date_to_string }}
-      </div>
+    <aside class="meta">
+			<a
+				class="github"
+				href="https://github.com/organizations/techtraits"
+				title="Follow Techtraits on GitHub"
+			>GitHub</a>
+			<img
+				class="avatar"
+				href="/{{ author.name }}.html"
+				src="http://www.gravatar.com/avatar/{{ author.gravatar }}.png"
+				width="40"
+				height="40"
+			>
+			<span class="author"><strong>{{ author.display_name }}</strong></span>
+			<span class="date">{{ page.date | date_to_string }}</span>
+		</aside>
     <div class="body">
         <div id="content">
             <div class="inner">
