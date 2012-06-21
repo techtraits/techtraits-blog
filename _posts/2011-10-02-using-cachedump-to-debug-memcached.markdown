@@ -4,18 +4,30 @@ title: Using cachedump to debug memcached
 wordpress_id: 451
 wordpress_url: http://www.techtraits.ca/?p=451
 date: 2011-10-02 22:23:27 +00:00
+categories: 
+- Debugging
+tags:
+- Memcached
 ---
 <p style="text-align: justify;">
-If you are using <a href="http://http://memcached.org/" title="memcached" target="_blank">memcahced</a> for caching it will be is sometimes necessary to check the state of the cache. There is no way to dump all keys stored in a memcached server but using cache dump we can retrieve about a megabyte of data which is often sufficient for debugging.
+
+If you are using <a href="http://http://memcached.org/" title="memcached" target="_blank">memcahced</a> for caching it will be is sometimes necessary to check the state of the cache. There is no way to dump all keys stored in a memcached server but using cache dump we can retrieve about a megabyte of data which is often sufficient for debugging.</p>
+
 <!--more-->
+
 To retrieve the keys first telnet to your server:
-<pre lang="bash">
+
+{% highlight bash %}
 telnet localhost 11211
-</pre>
+{% endhighlight %}
+&nbsp;
 
+<p style="text-align: justify;">
 Use the stats command to get stats about the different slabs of keys in your server. The number after "items:" is a slab id and memecached will store your stats in several slabs. 
+</p>
 
-<pre lang="bash">
+
+{% highlight bash %}
 stats items
 STAT items:1:number 1
 STAT items:1:age 3430476
@@ -66,11 +78,21 @@ STAT items:10:outofmemory 0
 STAT items:10:tailrepairs 0
 STAT items:10:reclaimed 0
 END
-</pre>
+{% endhighlight %}
+&nbsp;
 
-To get the keys stored in each slab use the cachedump command. In the command shown below we are retrieving a maximum of hundred keys from the 4th slab.
-<pre lang="bash">
+
+
+<p style="text-align: justify;">
+To get the keys stored in each slab use the cachedump command. In the command shown below we are retrieving a maximum of hundred keys from the 4th slab.</p>
+
+
+{% highlight bash %}
 stats cachedump 4 100 
-</pre>
+{% endhighlight %}
+&nbsp;
+
+
 
 That's it, happy debugging. 
+
