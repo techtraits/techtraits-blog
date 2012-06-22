@@ -6,15 +6,14 @@ html {
 body {
   text-align: justify;
   font-family: "chaparral-pro-1","chaparral-pro-2", Georgia, serif;
-  /* font-family: 'Lato'; */
+  background: url("/assets/images/body.gif") repeat scroll 0 0 #F4F4F4;
   font-size: 100%;
   /*color: #333; */ }
 
 #header {
   font-family: 'Lato';
   padding: 25px;
-  background: #2B3844;
-  margin-bottom: 45px;
+  /*background: #2B3844;*/
   color: #ffffff; }
   #header .inner {
     text-align: left;
@@ -45,20 +44,34 @@ body {
     #header h2 img {
       margin-left: 3px; }
 
-#content .inner {
+#content {
    text-align: left;
    width: 940px;
    margin: auto; 
+   /*background-color: #FFFFFF;*/
+}
+
+
+.inner-left{
+	width: 680px;
+}
+
+#content .inner-content{
+	width: 680p;
+	padding: 20px;
+   border: 1px solid rgba(0, 0, 0, 0.1);
+   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.05);
+   border-radius: 10px;
    background-color: #FFFFFF;
 }
-#content .inner #inner-left {
-   width: 680px;
+#content .inner #left-inner {
    display: block;
    position: relative;
    float: left;
+   
 }
 
-#content .inner #inner-right {
+#content .inner #right-inner {
     width: 220px;
     display: block;
     position: relative;
@@ -136,12 +149,29 @@ table#related-posts
       position: relative;
       top: -3px; }
   .post .meta {
-    margin-top: 25px;
-    border-top: 3px double #ddd;
+    background-color: #FFFFFF;
+  	padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.05);
+   border-radius: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
     padding-top: 25px;
     color: #999; }
     .post .meta .social {
       float: right; }
+    .post .meta .title-left {
+    	float: left;
+    }
+    .post .meta .title {
+    	float: left;
+    	width: 80%;
+    	padding-left: 20px;
+    	padding-top: 10px;
+    }
+    .post .meta .title-right {
+    	float: right;
+    }
   .post .highlight {
     border: 1px solid #ddd;
     background: #eee;
@@ -150,7 +180,7 @@ table#related-posts
 #footer {
   font-family: chaparral-pro-1, chaparral-pro-2, Georgia, serif;
   font-size: 18px;
-  background: #2B3844;
+  /*background: #2B3844;*/
   padding: 25px;
   color: #ffffff; }
   #footer .inner {
@@ -296,25 +326,23 @@ table.projects td.desc {
   margin-right: 0;
 }
 
-.post aside {
-    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    border-radius: 5px 5px 5px 5px;
-    padding: 10px;
-    height: 40px;
-}
-
 .post .meta a.github {
     background-image: url("/assets/images/buttons.png");
     display: block;
     float: right;
     height: 42px;
-    margin-left: 10px;
     text-indent: -999em;
     width: 42px;
     background-position: -323px 0;
     color: #F68B1F;
     text-decoration: underline;
+}
+
+.avatar {
+	width: 60px;
+	height: 60px;
+	border: 1px solid black;
+	padding: 5px;
 }
 
 

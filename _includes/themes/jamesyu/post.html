@@ -1,29 +1,35 @@
 {% assign author = site.authors[page.author] %}
 <div class="post">
-    <h3><a href="{{ post.url }}">{{ page.title }}</a></h3>
-    <aside class="meta">
-			<a
-				class="github"
-				href="https://github.com/organizations/techtraits"
-				title="Follow Techtraits on GitHub"
-			>GitHub</a>
-			<img
+
+    <div class="meta">
+			<div class="title-left"><img
 				class="avatar"
 				href="/{{ author.name }}.html"
 				src="http://www.gravatar.com/avatar/{{ author.gravatar }}.png"
 				width="40"
 				height="40"
-			>
-			<span class="author"><strong>{{ author.display_name }}</strong></span>
-			<span class="date">{{ page.date | date_to_string }}</span>
-		</aside>
+			></div>
+			<div class="title">
+				<h3><a href="{{ post.url }}">{{ page.title }}</a></h3></strong>
+				<span class="author">by <a href="/{{ author.name }}.html"><strong>{{ author.display_name }}</a></strong> on </span>
+				<span class="date">{{ page.date | date_to_string }}</span>
+			</div>	
+			<div class="title-right"><a
+				class="github"
+				href="https://github.com/organizations/techtraits"
+				title="Follow Techtraits on GitHub"
+			>GitHub</a></div>
+			<div style="clear:both;"></div>					
+		</div>
     <div class="body">
         <div id="content">
-            <div class="inner">
-              <div id="inner-left">
+            <div class="inner-content">
+              <div id="left-inner">
                 {{ content }}
               </div>
-              <div id="inner-right">
+               <div style="clear:both;"></div>
+            </div>
+            <div id="right-inner">
                 <div class="right-section">
                   <div class="about">
                    <!-- <h3><a href="{{ BASE_PATH }}/about.html">About</a></h3>-->
@@ -48,29 +54,9 @@
                     </table>
                 </div>  
                </div>
-              </div>
               <div style="clear:both;"></div>
             </div>
         </div>
     </div>
-
-    
-    <div class="meta">    
-        <ul>
-          Published: {{ page.date | date_to_string }}<br/>
-        </ul>
-	<ul class="list-category list-linear">
-	  <li class="list-head">category: </li>
-			{% assign categories_list = page.categories %}
-			{% include JB/categories_list %}
-	</ul>
-	<ul class="list-tag list-linear">
-		<li class="list-head">tags: </li>
-			{% assign tags_list = page.tags %}
-			{% include JB/tags_list %}
-	</ul>
-    </div>
-    
-
-    {% include JB/comments %}
+ {% include JB/comments %}
 </div>
