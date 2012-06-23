@@ -12,7 +12,7 @@ tags:
 - code
 - records
 ---
-<hr />
+
 <p style="text-align: justify;">
 When learning a new language its always difficult to google the meaning of operators. I ran into this problem when reading erlang source and trying to figure out what the hash sign does. Searching for "erlang hash" would always lead to articles about computing MD5 hashes in erlang. I had to resort to asking the question on stack overflow.So for the sake of the next person who googles this "What does the hash operator do in erlang?"
 </p>
