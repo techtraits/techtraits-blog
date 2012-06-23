@@ -34,7 +34,7 @@
                     <h3>Related Posts</h3>
             
                     <table id="related-posts">
-                    {% for post in site.posts limit:5 %}
+                    {% for post in site.related_posts limit:5 %}
                         <tr>
                        <!--     <td class="date">{{ post.date | date_to_string }}</td>-->
                             <td>{{ post.date | date_to_string }} |  <a class="side-post-list-item"  href="{{ post.url }}">{{ post.title }}</a></td>
