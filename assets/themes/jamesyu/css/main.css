@@ -21,8 +21,13 @@ body {
     margin: auto; }
   #header ul {
     float: right;
-    list-style-type: none; }
+    list-style-type: none;
+    margin-top: 25px;
+    
+  }
     #header ul li {
+      display: inline;
+      list-style-type: none;
       margin-top: 5px;
       margin-left: 18px;
       font-size: 100%;
@@ -179,11 +184,11 @@ table#related-posts
     font-size: 13px; }
 
 #footer {
-  font-family: chaparral-pro-1, chaparral-pro-2, Georgia, serif;
+  font-family: Lato;
   font-size: 18px;
   /*background: #2B3844;*/
   padding: 25px;
-  color: #ffffff; }
+  color: #494949; }
   #footer .inner {
     text-align: right;
     width: 940px;
