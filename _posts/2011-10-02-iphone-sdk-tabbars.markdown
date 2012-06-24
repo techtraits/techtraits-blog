@@ -12,7 +12,7 @@ This is a tutorial for beginners to the IPhone SDK and includes instructions on 
 
 <h3>Step 1: Read the Hello World tutorial</h3>
 
-If you are are unfamiliar with developing in Objective C and IPhone SDK please take a moment to go through the earlier tutorial [IPhone SDK Hello World](/2011/06/12/iphone-sdk-hello-world/). It also contains instructions on how to install XCode and the IPhone SDK.
+If you are are unfamiliar with developing in Objective C and IPhone SDK please take a moment to go through the earlier tutorial [IPhone SDK Hello World](/Programming/2011/06/12/iphone-sdk-hello-world). It also contains instructions on how to install XCode and the IPhone SDK.
 
 
 

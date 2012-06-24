@@ -25,7 +25,7 @@ To write our user interface we will be using the <a href="https://github.com/dha
 
 We will be using the <a href="http://code.google.com/p/google-guice/">Guice 3</a> (pronounced "Juice") injection framework to make the code much cleaner and simpler. Guice allows us to generate a lot of functionality using annotations instead of writing code ourselves.  
 
-To tie everything together we will be using <a href="http://maven.apache.org/download.html">Maven3</a>, which will manage all our dependencies as well as our build. That was a lot of technologies all at once and can sound scary if you are not familiar with them. Don't worry I will walk you through the process of integrating them. In addition you can download the [Sample Project](https://github.com/techtraits/iphone-sdk-helloworld) source code here and see the project running. 
+To tie everything together we will be using <a href="http://maven.apache.org/download.html">Maven3</a>, which will manage all our dependencies as well as our build. That was a lot of technologies all at once and can sound scary if you are not familiar with them. Don't worry I will walk you through the process of integrating them. In addition you can download the [Sample Project](https://github.com/techtraits/guice-server-example/tree/master/helloworld) source code here and see the project running. 
 
 <h3>Tools of the trade</h3>
 
