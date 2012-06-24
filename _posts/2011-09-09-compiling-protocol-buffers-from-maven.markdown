@@ -7,6 +7,7 @@ author: usman
 date: 2011-09-09 19:46:43 +00:00
 categories: 
 - Build Management
+- Maven
 tags:
 - Maven
 - Protocol Buffers

@@ -7,6 +7,7 @@ date: 2011-12-17 06:48:03 +00:00
 author: usman
 categories: 
 - Build Management
+- Maven
 tags:
 - Maven
 - Assembly Plugin
