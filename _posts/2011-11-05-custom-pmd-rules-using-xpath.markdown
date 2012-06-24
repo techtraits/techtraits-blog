@@ -202,7 +202,7 @@ Despite the length of this article note that we were able to create a small xml 
 
 <h3>Source Code</h3>
 
-[Here](https://github.com/techtraits/custom-pmd-rule-example) is the complete project with updated ruleset file and violation. Note that all code and other source provided here are licensed under the BSD License available <a [Here](/assets/Licensing.txt). 
+[Here](https://github.com/techtraits/custom-pmd-rule-example) is the complete project with updated ruleset file and violation. Note that all code and other source provided here are licensed under the [BSD License](/assets/Licensing.txt). 
 
 <h3>External Links</h3>
 

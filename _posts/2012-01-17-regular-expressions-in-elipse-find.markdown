@@ -12,10 +12,11 @@ tags:
 - Nexus
 - Sonatype
 ---
-<a href="http://www.techtraits.com/wp-content/uploads/2012/01/Screen-Shot-2012-01-17-at-11.22.40-AM1.png"><img class="alignright size-full wp-image-769" title="Screen Shot 2012-01-17 at 11.22.40 AM" src="http://www.techtraits.com/wp-content/uploads/2012/01/Screen-Shot-2012-01-17-at-11.22.40-AM1.png" alt="" width="295" height="431" /></a>
+
 
 <p style="text-align: justify;">This one is from the D'oh category, How many times have you realized you made a simple mistake in many many places. Sometimes a simple find and replace would suffice but often the matches are ever so slightly different. For example, in one of my projects we had code that had the following code and replacement (Obfuscated). Unfortunately foo and bar could be lots of different values so search and replace was useless. This is where regex replacement comes to the rescue.  <!--more--> Hit Ctrl + F to pull up the find menu and hit the Regular Expression check box shown. </p>
 
+![eclipsefind](/assets/images/eclipsefind.png)
 
 {% highlight xml %}
     //Initial 

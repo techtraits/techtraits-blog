@@ -22,9 +22,9 @@ One really useful task that one of my junior devs recently asked my help with wa
 
 <p style="text-align: justify;">
 
-As a starting point I will use code I wrote to go along with an earlier article <a href="http://www.techtraits.ca/five-minute-guide-to-setting-up-a-java-webserver/" target="_blank">Setting up a webservice using Guice & Sitebricks</a>. The code is available <a href="http://www.techtraits.ca/wp-content/uploads/2011/06/helloworld.zip" target="_blank">here</a>. First lets go and create our main class, Please add a Java class file at <font color="green">helloworld/src/main/java/com/flybynight/helloworld</font> and add the following code to let us know or jar was packed properly.</p> 
+As a starting point of this implementation I will be using the sample code from an earlier article [Setting up a webservice using Guice & Sitebricks](/Programming/Java/2011/06/25/Setting-up-a-webservice-using-Guice-Sitebricks/)</strong> which can be downloaded from [github](https://github.com/techtraits/guice-server-example). 
 
-
+First lets go and create our main class, Please add a Java class file at <font color="green">helloworld/src/main/java/com/flybynight/helloworld</font> and add the following code to let us know or jar was packed properly.</p> 
 
 {% highlight java %}
 package com.flybynight.helloworld;
@@ -105,12 +105,3 @@ We are almost done now the last step is to add the maven assembly plug-in defini
 
 Now to test your code run the <font color="green">mvn assembly:assembly</font> target to generate the execute the assembly plugin. You should now see the target/helloworld-exe.jar file. To test the jar run <font color="green">java -jar target/helloworld-exe.jar</font>. You should see "hello" printed to console.</p>
 
-
-
-<h3>Source code</h3>
-
-The source code for this project is released under the <a href='http://www.techtraits.ca/wp-content/uploads/2011/11/Licensing.txt'>BSD License</a> and can be downloaded at <a href='http://www.techtraits.com/wp-content/uploads/2011/12/helloworld.zip'>helloworld</a>.
-
-
-
-mvn assembly:assembly

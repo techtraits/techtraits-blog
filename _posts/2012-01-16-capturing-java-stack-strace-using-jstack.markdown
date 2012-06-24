@@ -25,10 +25,6 @@ cat thread_dump
 {% endhighlight %}
 &nbsp;
 
-
-
-
-
 {% highlight bash %}
 
 Full thread dump OpenJDK Client VM (19.0-b09 mixed mode, sharing):
