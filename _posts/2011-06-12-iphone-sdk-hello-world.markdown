@@ -19,16 +19,13 @@ tags:
 
 <!--more-->
 
-<h3 style="text-align: justify;"><a href="http://www.techtraits.ca/wp-content/uploads/2011/06/projecttype.png"><img class="alignright size-full wp-image-84" title="projecttype" src="http://www.techtraits.ca/wp-content/uploads/2011/06/projecttype.png" alt="" width="500" height="340" /></a></h3>
+![Project Type](/assets/images/projecttype.png)
 
 <h3>Source Code</h3>
 
-<a href="http://www.techtraits.ca/wp-content/uploads/2011/06/HelloWorld.zip">HelloWorld Source Project</a>
+[HelloWorld Source Project](https://github.com/techtraits/iphone-sdk-helloworld)
 
 <p style="text-align: justify;"></p>
-
-
-
 <h3 style="text-align: justify;">Step 1: Download XCode and the SDK</h3>
 
 <p style="text-align: justify;">The first thing we need to do is to download the development tools namely <a href="http://developer.apple.com/tools/xcode/">XCode</a> and the <a href="http://developer.apple.com/devcenter/ios">SDK</a>. To download either of these you will need to register for the Apple ID and Apple developer Connection (ADC). Install both these tools, the procedure to do so is fairly trivial so I am not going into details.</p>
@@ -47,15 +44,15 @@ tags:
 
 <p style="text-align: justify;">Once you compete the wizard creates the project you will be taken to the main settings page. Here you can setup the device orientation settings and the application icon. (By dragging a properly sized png file into the correct box).</p>
 
-![Menu](http://www.techtraits.ca/wp-content/uploads/2011/06/menu.png)
+![Menu](/assets/images/menu.png)
 
 <p style="text-align: justify;">When you create a project you will see a window similar to the one shown in the image on the right. There are four source files in the<strong> </strong>package; </p>
 
 {% highlight objectivec %}
-* HelloWorldAppDelegate.h
-* HelloWorldAppDelegate.m
-* HelloWorldViewController.h
-* HelloWorldViewController.m
+HelloWorldAppDelegate.h
+HelloWorldAppDelegate.m
+HelloWorldViewController.h
+HelloWorldViewController.m
 {% endhighlight %}
 
 
@@ -67,8 +64,8 @@ I am ignoring the xib files for now because for this tutorial I will be adding t
 In the source file for the application delegate (HelloWorldAppDelegate.m) we find an auto generated <strong>applicationDidFinishLaunching</strong> method. This, as the name suggests, invoked when the application has been loaded and in this method we will add our HelloWorldViewController object to the UIWindow and make it visible.</p>
 
 {% highlight objectivec %}
-    self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
+self.window.rootViewController = self.viewController;
+[self.window makeKeyAndVisible];
 {% endhighlight %}
 
 &nbsp;
@@ -84,24 +81,24 @@ Open the HelloWorldViewController.h file and add declarations for a button, a la
 </p>
     
 {% highlight objectivec %}
-    IBOutlet UIButton *button;
-    IBOutlet UILabel *label;
-    IBOutlet UIView *myView;
+IBOutlet UIButton *button;
+IBOutlet UILabel *label;
+IBOutlet UIView *myView;
 {% endhighlight %}
 
 <p style="text-align: justify;">
 We are defining a view to display a button and label to go in the view. After the curly braces add a method declaration to accept the click event of the button and also properties to access the  UI elements; myButton, myLabel and myView. Also add properties for these  Your entire code should look something like this:
 </p>
 
-![MainSettings](http://www.techtraits.ca/wp-content/uploads/2011/06/mainsettings.png)
+![MainSettings](/assets/images/mainsettings.png)
 
 {% highlight objectivec %}
-    //
-    //  HelloWorldViewController.h
-    //  HelloWorld
-    //
+//
+//  HelloWorldViewController.h
+//  HelloWorld
+//
 
-    #import <UIKit/UIKit.h>
+#import <UIKit/UIKit.h>
 
 	@interface HelloWorldViewController : UIViewController {
 
@@ -138,44 +135,44 @@ Now find the comment saying "Implement loadView if you want to create a view hie
 	@synthesize button;
 	- (void)loadView
 	{
-	    //create and configure the view
-	    //define size and position of view
-	    CGRect cgRct = CGRectMake(0.0, 0.0, 480, 320);
+	//create and configure the view
+	//define size and position of view
+	CGRect cgRct = CGRectMake(0.0, 0.0, 480, 320);
 
-	    //initialize the view
-        myView = [[UIView alloc] initWithFrame:cgRct]; 
-	    //allow it to tweak size of elements in view
+	//initialize the view
+	myView = [[UIView alloc] initWithFrame:cgRct]; 
+	//allow it to tweak size of elements in view
 
-	    myView.autoresizesSubviews = YES; 
-	    self.view = myView;
+	myView.autoresizesSubviews = YES; 
+	self.view = myView;
         
-	    // create a UIButton (UIButtonTypeRoundedRect) and play 
-	    // arround with settings
-	    button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	// create a UIButton (UIButtonTypeRoundedRect) and play 
+	// arround with settings
+	button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 	    
-	    // size and position of button
-	    button.frame = CGRectMake(100, 100, 100, 50); 
-	    [button setTitle:@"Add" forState:UIControlStateNormal];
-	    button.backgroundColor = [UIColor clearColor];
-	    button.adjustsImageWhenHighlighted = YES;
+	// size and position of button
+	button.frame = CGRectMake(100, 100, 100, 50); 
+	[button setTitle:@"Add" forState:UIControlStateNormal];
+	button.backgroundColor = [UIColor clearColor];
+	button.adjustsImageWhenHighlighted = YES;
 
-	    //Add action handler and set current class as target
-	    [button addTarget:self 
-	               action:@selector(action:) 
-	     forControlEvents:UIControlEventTouchUpInside];
+	//Add action handler and set current class as target
+	[button addTarget:self 
+               action:@selector(action:) 
+     forControlEvents:UIControlEventTouchUpInside];
 
-	    //Display Button
-		[self.view addSubview:button];
+    //Display Button
+	[self.view addSubview:button];
 
-	    //create a label
-	    //define size and position of label
-	    cgRct = CGRectMake(100, 170, 100, 50); 	    
-	    label = [[UILabel alloc] initWithFrame:cgRct];
-	    label.text = @"Hello World";
+    //create a label
+    //define size and position of label
+    cgRct = CGRectMake(100, 170, 100, 50); 	    
+    label = [[UILabel alloc] initWithFrame:cgRct];
+    label.text = @"Hello World";
 	
-	    //Display Label
-	    [self.view addSubview:label];
-	}
+    //Display Label
+    [self.view addSubview:label];
+}
 {% endhighlight %}
 
 &nbsp;
@@ -183,8 +180,8 @@ Now find the comment saying "Implement loadView if you want to create a view hie
 Click the <strong>Run</strong> button to check your interface is drawn correctly It should look something like to screen shot below.
 </p>
 
-![button](http://www.techtraits.ca/wp-content/uploads/2011/06/button.png)
-![phone](http://www.techtraits.ca/wp-content/uploads/2011/06/phone.png")
+![button](/assets/images/button.png)
+![phone](/assets/images/phone.png")
 
 
 <h3>Step 5: Handling Actions</h3>
