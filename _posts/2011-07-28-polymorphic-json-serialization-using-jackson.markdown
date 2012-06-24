@@ -164,11 +164,9 @@ Notice the fact that the class name is added as a property to the output JSON, a
 
 <h3>Source Code</h3>
 
-<p style="text-align: justify;">
+The source code shown here can bedDownloaded [Here](https://github.com/techtraits/jackson-seralization)
 
-The source code shown here can be <a href="http://www.techtraits.ca/wp-content/uploads/2011/07/jackson_serialization.zip">Downloaded Here</a>
-
-Note that all code and other source provided here are licensed under the BSD License available <a href='http://www.techtraits.ca/wp-content/uploads/2011/11/Licensing.txt'>Here</a>. </p>
+Note that all code and other source provided here are licensed under the [BSD License](/assets/Licensing.txt). 
 
 
 
