@@ -30,6 +30,8 @@ Java home: /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
 Default locale: en_US, platform encoding: MacRoman
 OS name: "mac os x", version: "10.6.8", arch: "x86_64", family: "mac"
 {% endhighlight %}
+&nbsp;
+
 
 <h3>Here's one I made earlier</h3>
 
@@ -39,6 +41,8 @@ If you would like to see the Web server we will be creating in action please dow
 mvn clean install
 mvn jetty:run-exploded
 {% endhighlight %}
+&nbsp;
+
 
 
 <h3 style="text-align: justify;">Step 1: Creating the maven project</h3>
@@ -53,6 +57,8 @@ mvn archetype:generate 								\
   -DarchetypeGroupId=org.apache.maven.archetypes 	\
   -Dversion=1.0-SNAPSHOT</pre>
 {% endhighlight %}
+&nbsp;
+
 
 
 In this command we are specifying the location of location of our project in the maven project namespace with the "<strong>groupId</strong>" parameter. It is standard to use the inverse of your web domain as your group id.  for example if you work on a project called helloworld for a company called flybynight  which is hosted at www.helloworld.flybynight.com, you might use com.flybynight.helloworld as your group id. The "<strong>artifactId</strong>" parameter is a unique identifier for your project e.g. helloworld. The "<strong>archetypeArtifactId</strong>" and "<strong>archetypeGroupId</strong>" tell maven that you want to create an application using the "<strong>maven-archetype-webapp</strong>" template which can be found in the "<strong>org.apache.maven.archetypes</strong>" group.
@@ -69,6 +75,8 @@ After running this command you will see a lot of console output which is generat
 [INFO] Final Memory: 7M/81M
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
+&nbsp;
+
 
 
 <h3>Step 2: Settings up the compiler</h3>
@@ -78,6 +86,8 @@ The first thing we want to tell maven is where we will put our source files whic
 {% highlight xml %}
 <sourceDirectory>src/main/java</sourceDirectory>
 {% endhighlight %}
+&nbsp;
+
 
 
 <h3>Step 3: Settings up the Jetty</h3>
@@ -96,6 +106,8 @@ We do that by adding a plugin tag with details of the jetty plugin in within the
 	</plugin>
 </plugins>
 {% endhighlight %}
+&nbsp;
+
 
 <h3>Step 4: Settings up the Jetty</h3>
 
@@ -119,6 +131,8 @@ We have now setup the framework to build and deploy our web server but we still 
     <scope>compile</scope>
 </dependency>
 {% endhighlight %}
+&nbsp;
+
 
 <h3>Step 5: Hooking up Guice</h3>
 
@@ -137,6 +151,8 @@ Now we must tell our application that we will be using Guice to intercept all ht
     <listener-class>com.flybynight.helloworld.GuiceCreator</listener-class>
 </listener>
 {% endhighlight %}
+&nbsp;
+
 
 <h3>Step 6: Creating the Html Content</h3>
 
@@ -150,6 +166,8 @@ Now lets create the html front end for our sitebrick; all files that are to be d
 </body>
 </html>
 {% endhighlight %}
+&nbsp;
+
 
 <h3>Step 7: Creating the sitebrick</h3>
 
@@ -158,6 +176,8 @@ Now lets create the bick which provides the definition of the message tag in our
 {% highlight bash %}
 mkdir -p src/main/java/com/flybynight/helloworld/sitebricks/
 {% endhighlight %}
+&nbsp;
+
 
 In that directory we will create the <strong>HelloWorld.java</strong> class, the code for which is shown below.  Note the "<strong>@At</strong>" annotation tells guice that this sitebrick should be served when the http request is for the "<strong>http://yourhostname/helloworld</strong>" url. The "<strong>getMessage</strong>" method is called by sitebrick to resolve the message parameter that we specified in the html as I mentioned earlier. 
 
@@ -175,6 +195,8 @@ public class HelloWorld {
 	}
 }
 {% endhighlight %}
+&nbsp;
+
 
 <h3>Step 8: Injecting a named proerpty</h3>
 
@@ -201,6 +223,8 @@ public class HelloWorld {
 	}
 }
 {% endhighlight %}
+&nbsp;
+
 
 <h3>Step 9: Configuring Guice Injection</h3>
 
@@ -235,6 +259,8 @@ public class GuiceCreator extends GuiceServletContextListener {
 	}
 }
 {% endhighlight %}
+&nbsp;
+
 
 <h3>Step 10: All done now lets run it</h3>
 
@@ -243,6 +269,8 @@ And were are done, now we just compile everything, make sure the current directo
 {% highlight bash %}
 mvn clean install
 {% endhighlight %}
+&nbsp;
+
 
 You will see a lot of console output regarding maven downloading dependencies and then eventually a build successful message. 
 
@@ -255,6 +283,8 @@ You will see a lot of console output regarding maven downloading dependencies an
 [INFO] Final Memory: 11M/81M
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
+&nbsp;
+
 
 Now tell maven to run the webserver using the jetty plugin we configured earlier: <pre lang="bash">mvn jetty:run-exploded</pre> You should see more maven console output followed by <pre lang="bash">[INFO] Started Jetty Server</pre> which means your server is running. Fireup a browser and hit <a href="http://localhost:8080/helloworld">http://localhost:8080/helloworld</a>
 
