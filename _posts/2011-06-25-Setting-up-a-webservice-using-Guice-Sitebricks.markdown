@@ -5,6 +5,15 @@ wordpress_id: 135
 wordpress_url: http://www.techtraits.ca/?p=135
 author: usman
 date: 2011-06-25 23:11:41 +00:00
+categories: 
+- Programming
+- Java
+tags:
+- Java
+- code
+- Guice
+- Sitebricks
+
 ---
 
 
