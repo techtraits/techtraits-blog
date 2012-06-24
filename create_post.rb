@@ -20,9 +20,9 @@ end
 title = ARGV[0]
 author = ARGV[1]
 categories = ARGV[2].dup
-categories.gsub!(',', "\n -");
+categories.gsub!(',', "\n- ");
 tags = ARGV[3].dup
-tags.gsub!(',', "\n -");
+tags.gsub!(',', "\n- ");
 
 # Get the filename and remove some unsupported characters
 # TODO probably need to make list of disallowed characters more complete 
