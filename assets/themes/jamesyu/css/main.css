@@ -185,14 +185,17 @@ table#related-posts
 
 #footer {
   font-family: Lato;
-  font-size: 18px;
+  font-size: 16px;
   /*background: #2B3844;*/
-  padding: 25px;
+  padding: 0px 0px 15px;;
   color: #494949; }
+  #footer .footer-left {
+      float:left;
+      font-size: 12px;
+  }
   #footer .inner {
-    text-align: right;
-    width: 940px;
-    margin: auto; }
+    float: right;
+    text-align: right; }
   #footer h3 {
     font-size: 24px;
     margin-bottom: 15px;
