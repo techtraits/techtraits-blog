@@ -295,7 +295,21 @@ You will see a lot of console output regarding maven downloading dependencies an
 &nbsp;
 
 
-Now tell maven to run the webserver using the jetty plugin we configured earlier: <pre lang="bash">mvn jetty:run-exploded</pre> You should see more maven console output followed by <pre lang="bash">[INFO] Started Jetty Server</pre> which means your server is running. Fireup a browser and hit <a href="http://localhost:8080/helloworld">http://localhost:8080/helloworld</a>
+Now tell maven to run the webserver using the jetty plugin we configured earlier: 
+
+{% highlight bash %}
+mvn jetty:run-exploded
+{% endhighlight %}
+&nbsp;
+
+You should see more maven console output followed by 
+
+{% highlight bash %}
+[INFO] Started Jetty Server
+{% endhighlight %}
+&nbsp;
+
+which means your server is running. Fireup a browser and hit <a href="http://localhost:8080/helloworld">http://localhost:8080/helloworld</a>
 
 <h3>Further Reading</h3>
 
