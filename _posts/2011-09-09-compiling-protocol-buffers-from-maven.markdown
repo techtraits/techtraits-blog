@@ -1,8 +1,6 @@
 --- 
 layout: post
 title: Compiling Protocol Buffers from Maven
-wordpress_id: 289
-wordpress_url: http://www.techtraits.ca/?p=289
 author: usman
 date: 2011-09-09 19:46:43 +00:00
 categories: 
@@ -42,7 +40,7 @@ Apache Maven 3.X.X ....
 &nbsp;
 
 
-<strong>Nexus Repository.</strong> You will need to setup a nexus repository in order to share the packaged, generated sources between developers. I have created a simple tutorial on setting up a Nexus repository. <a title="Setting up Nexus Repository " href="http://www.techtraits.ca/?p=315" target="_blank">Here</a>
+<strong>Nexus Repository.</strong> You will need to setup a nexus repository in order to share the packaged, generated sources between developers. I have created a simple tutorial on setting up a Nexus repository [Running Nexus Sontaype over Jetty](/Build%20Management/2011/09/05/running-nexus-sontaype-over-jetty)</a>
 
 <strong>Protocol Buffer Compiler.</strong> You will need to install the protocol buffer compiler which can be downloaded <a title="http://protobuf.googlecode.com/files/protobuf-2.4.1.tar.bz2" href="http://protobuf.googlecode.com/files/protobuf-2.4.1.tar.bz2">here</a>. Detailed installation instructions for the protocol buffer compiler can be found <a title="http://code.google.com/p/protobuf/source/browse/trunk/INSTALL.txt" href="http://code.google.com/p/protobuf/source/browse/trunk/INSTALL.txt" target="_blank">here</a>. However, the basic steps are to untar the package, browse to the directory in the terminal or cygwin and run the following commands.
 

@@ -163,7 +163,7 @@ Ok now that we have our XPath query lets create a rule set file, and add the cus
 
 
 
-You can append this rule to the pmd ruleset in my earlier tutorial <a href="http://www.techtraits.ca/writting-pretty-code-with-pmd/" title="Writing pretty code with PMD" target="_blank">Writing pretty code with PMD</a> which can be downloaded <a href="http://www.techtraits.ca/wp-content/uploads/2011/11/helloworld.zip" title="PMD Project" target="_blank">here</a>. When you run the compile you will get the following output: 
+You can append this rule to the pmd ruleset in my earlier tutorial [Writing pretty code with PMD](/Programming/2011/10/31/writting-pretty-code-with-pmd/) which can be downloaded [here](https://github.com/techtraits/pmd-example). When you run the compile you will get the following output: 
 
 {% highlight bash %}
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-pmd-plugin:2.5:check (default) on project 

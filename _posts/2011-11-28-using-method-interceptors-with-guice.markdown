@@ -147,7 +147,7 @@ public class HelloWorld {
 {% endhighlight %}
 &nbsp;
 
-Now compile the code using mvn clean install and run it using mvn jetty:run (See <a href="http://www.techtraits.ca/five-minute-guide-to-setting-up-a-java-webserver/" title="Setting up a webservice using Guice & Sitebricks">"Setting up a webservice using Guice & Sitebricks"</a> for details). To run the code browse to http://localhost:8080/helloworld. 
+Now compile the code using mvn clean install and run it using mvn jetty:run (See [Setting up a webservice using Guice & Sitebricks"](/Programming/Java/2011/06/25/Setting-up-a-webservice-using-Guice-Sitebricks/) for details). To run the code browse to http://localhost:8080/helloworld. 
 
 {% highlight bash %}
 Problem accessing /helloworld. Reason:

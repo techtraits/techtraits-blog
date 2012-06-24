@@ -44,7 +44,7 @@ OS name: "mac os x", version: "10.6.8", arch: "x86_64", family: "mac"
 
 <h3>Here's one I made earlier</h3>
 
-If you would like to see the Web server we will be creating in action please download the source here:<a href='http://www.techtraits.ca/wp-content/uploads/2011/06/helloworld1.zip'>HelloWorld.zp</a>. Unzip this project and browse to the helloworld directory in your command line  terminal, run the following command and skip to step 10.
+If you would like to see the Web server we will be creating in action please download the source from [github](https://github.com/techtraits/guice-server-example). You can clone this project and browse to the helloworld directory in your command line  terminal, run the following command and skip to step 10.
 
 {% highlight bash %}
 mvn clean install
