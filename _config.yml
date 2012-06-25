@@ -10,7 +10,7 @@ pygments: true
 # so be sure to set them if your theme uses them.
 #
 title : Tech Traits
-tagline: todo &#58; add an awesome tagline here
+tagline: add an awesome tagline here
 authors:
   usman:
     name: usman
