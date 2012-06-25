@@ -164,7 +164,7 @@ Notice the fact that the class name is added as a property to the output JSON, a
 
 <h3>Source Code</h3>
 
-The source code shown here can bedDownloaded [Here](https://github.com/techtraits/jackson-seralization)
+The source code shown here can bedDownloaded [Here](https://github.com/techtraits/jackson-serialization)
 
 Note that all code and other source provided here are licensed under the [BSD License](/assets/Licensing.txt). 
 

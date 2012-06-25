@@ -21,7 +21,7 @@ tags:
 
 <h3>Getting started</h3>
 
-As a starting point I will use the code in my earlier article [Polymorphic JSON Serialization using Jackson](/Programming/2011/07/27/polymorphic-json-serialization-using-jackson/) which can be downloaded at [gitbub](https://github.com/techtraits/jackson-seralization).
+As a starting point I will use the code in my earlier article [Polymorphic JSON Serialization using Jackson](/Programming/2011/07/27/polymorphic-json-serialization-using-jackson/) which can be downloaded at [gitbub](https://github.com/techtraits/jackson-serialization).
 
 In the source files you downloaded open Child1.java, look for the SerializeMe property. It is annotated with the JSON Property and will there for be serialized to an integer. What if we wanted to write the string representation of the integer rather than a number. i.e. If the  field value was 3 we would write it as "three". The first step is to annotate the property with the <font color="green">@JsonSerialize</font> and <font color="green">@JsonDeserialize</font> annotations and provide the custom classes we want to use for serialization and deserialization as shown below.   
 

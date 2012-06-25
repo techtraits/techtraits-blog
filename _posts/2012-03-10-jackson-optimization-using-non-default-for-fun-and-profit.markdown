@@ -101,13 +101,8 @@ This example also highlights one of the possible problems of the optimization, s
 
 <h3>External Links</h3>
 
-<p style="text-align: justify;">
+* <a href="http://jackson.codehaus.org/" title="Jackson" target="_blank">Jackson JSON Processor</a>
 
-<ul>	<li><a href="http://jackson.codehaus.org/" title="Jackson" target="_blank">Jackson JSON Processor</a></li>
-
-
-
-</ul>
 
 
 
