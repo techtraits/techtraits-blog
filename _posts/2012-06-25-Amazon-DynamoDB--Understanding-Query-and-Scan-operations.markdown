@@ -47,7 +47,7 @@ DynamoDB's data model and the QUERY and SCAN operations with some
 examples to better understand the strengths and limitations of DynamoDB. 
 </p>
 
-<h3><u>I) Data Model, API and Cost</u></h3>
+<h3><u>I) Quick Tour: Data Model, API and Cost</u></h3>
 &nbsp;
 
 <b>Tables, Items and Attributes</b>
@@ -56,22 +56,25 @@ examples to better understand the strengths and limitations of DynamoDB.
 DynamoDB's data model consists of tables, items and attributes. Each
 table is a collection of items and each item is a collection of
 attributes. An Attribute is simply a name-value pair, e.g.,
-<b>("userId"=1234)</b>. Consider for example a Users table where a
-simple user item may look like:</p>
+<b>("userId"=1234)</b> in a users table. Consider for example a Users table where a user item may look like:</p>
 
 {% highlight java %}
-User
-====
+Users
+=====
 "UserId"=1234
 "Name"="Bilal Sheikh"
-"Friends"={"4352", "4345", "5467", "9740", "2331"}
-"FacebookId"=600323223
+"Posts"= {"565", "345", "467", "740", "331"}
+"Friends"= {"2321", "2321", "3232", "6456", "3432"}
+"FacebookId"="600323223"
+"City"="Waterloo"
 
-UserAwards
-==========
-"UserId"=1234
+Posts
+=====
+"PostId"=345
 "DateTime"=1286751823
-"AwardId"=104
+"Title"="Jackson Optimization, Using Non-Default for fun and profit"
+"Text"="..."
+"AuthorId"="1234"
 
 {% endhighlight %}
 
@@ -81,15 +84,14 @@ UserAwards
 
 <p>Each table must have a primary key attribute which is specified
 when the table is created. The primary key attribute must have a value
-for all items and the value must be unique. In our user table,
-<b>UserId</b> will be the primary key attribute.</p>
+for all items and the value must be unique. In our User table,
+<b>UserId</b> is the primary key attribute.</p>
 
 <p>Instead of specifying a single attribute as the primary key, a
-composite primary key can be specified to collectively act as the
-primary key. One attribute acts as a hash index used for partitioning
-data while the other attribute acts as a range attribute with a range
-index. In our UserAward model a composite primary key of UserId and DateTime
-can specified where UserId will be the hash key and the UserAward
+composite primary key can be specified on two attributes. Hash index used for partitioning
+data is created for one of the attributes and a range index in created
+for the second attribute. In our Posts model a composite primary key of UserId and DateTime
+can be specified where UserId will be the hash key and DateTime
 will be the range key. Both attributes making up the composite
 key must have a value for all items.</p>
 
@@ -121,29 +123,38 @@ be found <a href="http://docs.amazonwebservices.com/amazondynamodb/latest/develo
 
 
 
-<h3><u>II) Our Example Usecase</u></h3>
+<h3><u>II) Example: A Social Blogging App</u></h3>
 &nbsp;
 
 <p style="text-align: justify;">
-Other than the typical get, set and update operations. With the above
-data model as a starting point, let's consider the following
-operations as the use case of our hypothetical application:
+We want to build our hypothetical social blogging application where
+people are encouraged to blog by pitting them against their friends
+and give out achievements to users based on the feedback by friends.
+Let us start with only two tables: Users and Posts as described above.
+We will modify the above tables and add new ones as we work through
+our application requirements. 
 
 <ol>
 <li>Get FacebookId given a userId. (<b>GET</b>).</li>
 <li>Get friends of a user given UserId. (<b>GET</b>).</li>
-<li>Get user's name given FacebookId. (<b>SCAN</b>).</li>
-<li>Make two users friends. (<b>2 * GET and 2 * PUT</b>).</li>
-<li>Remove a user from all users friend lists. (<b>SCAN</b>).</li>
-<li>Get all awards won by a user. (<b>QUERY</b>).</li>
+<li>Get user's info given FacebookId. (<b>SCAN</b>).</li>
+<li>Make two users friends. (<b>GET and PUT</b>).</li>
+<li>Get all posts by a user. (<b>GET</b>).</li>
 <li>Get all awards won by a user in a specific time period. (<b>QUERY</b>).</li>
-<li>Get all users who won a specific award in the last two days. (<b>SCAN</b>).</li>
+<li>Get all users who won a specific award in the last two days.
+(<b>SCAN</b>).</li>
+<li>Get all users in a city. (<b>SCAN</b>)</li>
+<li>Remove a user and all associations from our tables. (<b>SCAN</b>).</li>
 </ol>
 
+EXPLAIN ALL THE GET AND PUT CALLS. 
+We first explain the scan and query operations.The cost of these
+operations and then some workarounds for avoid doing scans and
+reducing the overhead in many cases. 
 
 
-UserId
-<h3><u>II) Query</u></h3>
+<h3><u>III) Query and Scan Operations</u></h3>
+&nbsp;
 
 <p style="text-align: justify;">
 A query operation works with a composite key where one attribute is
@@ -151,21 +162,23 @@ the hash key  and the second attribute making up the key is a range
 attribute.  
 </p>
 
-<h3><u>III) Scan</u></h3>
-
 <p style="text-align: justify;">
 Scan operation goes through the entire table and then filters out items
 not matching the criteria.
 </p>
 
+<b>Cost of Query and Scan Operations</b>
 
-<h5>Examples</h5>
-<h5>Cost of Query and Scan operations</h5>
 
-<h5>Workarounds</h5>
+
+<b>Avoiding Scan Operations</b>
+  1-1 mapping. 1-many and many-1. -- and code examples
 <h5>Ghost Records or Application Managed Indexes</h5>
-<h5>Perform bulk actions with single scans</h5>
-<h5>Duplicate tables to keep up with the provisioning</h5>
+
+<b>Reducing the overhead of Scan Operations</b>
+   1) Perform "bulk" actions with single scans.
+   2) Reducing page size
+   3) Isolate scan operations -- duplicate tables: "shadow tables"
 
 <h5>If still not enough go with less performant SimpleDB which offers
 query flexibility -- DynamoDB is Not the right choice </h5>
