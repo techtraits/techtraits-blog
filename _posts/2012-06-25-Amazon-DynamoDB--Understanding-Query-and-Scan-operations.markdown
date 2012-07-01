@@ -251,15 +251,20 @@ slow down other operations as other operations would have to wait for
 the scan operation to finish. In Section IV we look at ways to minimize
 the impact of scan operations on live response-time critical operations.</p>
 </li>
-
 </ol>
 
+When designing tables for DynamoDb we need to make sure that we don't
+use any scan operations and if some scan operations are necessary take
+suitable steps to isolate them and reduce the overhead on live
+operations. We cover table design for performance in the following
+section. 
 
-<h3>III) SocBlog: A Social Blogging App</h3>
+<h3>III) Table Design for Performance</h3>
 &nbsp;
 
 <p style="text-align: justify;">
-We want to build our hypothetical social blogging application where
+We want to build our hypothetical social blogging application
+(SocBlog) where
 people are encouraged to blog by peer feedback and achievements.
 Let us start with a very basic data model with only two tables: Users
 and Posts.</p>
@@ -277,6 +282,7 @@ Users
 Posts
 =====
 "PostId"=345
+"Version"=2
 "DateTime"=1286751823
 "Title"="Jackson Optimization, Using Non-Default for fun and profit"
 
@@ -293,35 +299,37 @@ Posts
 Facebook only and thus we need to store the FacebookId for each
 user.</p>
     <ol type="a">
-        <li>Get FacebookId given a userId. (<b>GET</b>).</li>
-        <li>Get user's info given FacebookId. (<b>SCAN</b>).</li>
+        <li>Get FacebookId given a userId.</li>
+        <li>Get user's info given FacebookId.</li>
+    </ol>
+</li>
+<li>
+<p style="text-align: justify;">Some user related requirements include
+getting all posts by a specific user and finding out the author of
+given post. </p>
+    <ol type="a">
+        <li>Get all posts by a user.</li>
+        <li>Get the author of a post given a PostId.</li>
     </ol>
 </li>
 <li>
 <p style="text-align: justify;">SocBlog would connect people by making
-them buddies. We need to support addition and removal of buddies. </p>
+them buddies. We need to support buddy addition and removal. </p>
     <ol type="a">
         <li>Get friends of a user given UserId. (<b>GET</b>).</li>
         <li>Make two users friends. (<b>GET and PUT</b>).</li>
     </ol>
 </li>
+
 <li>
-<p style="text-align: justify;">Most important features of
-SocBlog have to do with posts. For example, getting all new posts in
+<p style="text-align: justify;">Lastly, most important features of
+SocBlog have to do with posts and user search. For example, getting all new posts in
 the last k days and getting all posts in a certain category.</p>
     <ol type="a">
-        <li>Get all posts in the last K days. (<b>SCAN</b>).</li> 
+        <li>Get all posts with more than 5 versions.</li>
         <li>Get all posts in a certain category. (<b>SCAN</b>).</li> 
-    </ol>
-</li>
-<li>
-<p style="text-align: justify;">Lastly, some user related requirements include
-getting all posts by a specific user and getting all users in a
-specific city. Ability to remove users is also important. </p>
-    <ol type="a">
         <li>Get all users in a city. (<b>SCAN</b>)</li>
-        <li>Get all posts by a user. (<b>GET</b>).</li>
-        <li>Remove a user and all associations from our tables. (<b>SCAN</b>).</li>
+        <li>Get all posts in the last K days. (<b>SCAN</b>).</li> 
     </ol>
 </li>
 
@@ -329,18 +337,21 @@ specific city. Ability to remove users is also important. </p>
 
 <p style="text-align: justify;">
 We will modify the above tables and add new ones as we work through
-our application requirements.</p> 
+SocBlog requirements. To deal with the first requirement, we can start by simply adding
+FacebookId to Users table. This way we can easily get the FacebookId
+given a UserId. 
+</p>
+
+<b>Modeling One-to-One Mappings</b>
 
 <p style="text-align: justify;">
-We will look at all of the above requests and make modifications to
-our data model as needed. Getting the <b>FacebookId</b> of a user,
-given <b>UserId</b> is straight forward. Similarly, getting the list of
-friends or the list of post ids by a user (6) is also a single get operation. It is also easy
-to see that getting any attributes from Users table given FacebookId
-or City would require complete table scans because no index exists for
-these fields. Making two users involves getting the two users using a
-BatchGet request and then updating the two friend lists using a
-BatchPut request.
+UserId and FacebookId have a natural one-to-one mapping. Adding the
+FacebookId to the users table is not sufficient for our requirements.
+Since we would need to get the UserId based on a user's FacebookId
+let's say when the user signs in, this operation would still require a
+complete table scan. To model this in a way to avoid table scans,
+let's create a new ID table. The User table and the new ID table will
+look like:
 </p>
 
 
@@ -349,49 +360,91 @@ Users
 =====
 "UserId"=1234
 "Name"="Bilal Sheikh"
-"Posts"= {"565", "345", "467", "740", "331"}
-"Friends"= {"2321", "2321", "3232", "6456", "3432"}
 "FacebookId"="600323223"
 "City"="Waterloo"
 
-Posts
-=====
-"PostId"=345
-"DateTime"=1286751823
-"Title"="Jackson Optimization, Using Non-Default for fun and profit"
-"Text"="..."
-"Categories"={"Optimization", "Java"}
-"AuthorId"="1234"
+Id
+==
+"FacebookId"="600323223"
+"UserId"=1234
 
 {% endhighlight %}
 
+<p style="text-align: justify;">
+<ol type="a">
+        <li>Get FacebookId given a userId. (<b>GET</b>).</li>
+        <li>Get user's info given FacebookId. (<del>SCAN</del> <b>GET</b>).</li>
+    </ol>
+</li
+</p>
 
-<b>Avoiding Scan Operations</b>
 
-<b>Modeling One-to-One Mappings</b>
+<b>Modeling One-to-Many Mapping</b>
+
+<p style="text-align: justify;">
+UserId and FacebookId have a natural one-to-one mapping. Adding the
+FacebookId to the users table is not sufficient for our requirements.
+Since we would need to get the UserId based on a user's FacebookId
+let's say when the user signs in, this operation would still require a
+complete table scan. To model this in a way to avoid table scans,
+let's create a new ID table. The User table and the new ID table will
+look like:
+</p>
+
+<b>Modeling Many-to-Many Self Mapping</b>
+
+<p style="text-align: justify;">
+UserId and FacebookId have a natural one-to-one mapping. Adding the
+FacebookId to the users table is not sufficient for our requirements.
+Since we would need to get the UserId based on a user's FacebookId
+let's say when the user signs in, this operation would still require a
+complete table scan. To model this in a way to avoid table scans,
+let's create a new ID table. The User table and the new ID table will
+look like:
+</p>
 
 
+<b>Modeling Many-to-Many Mapping</b>
 
-<b>Modeling One-to-Many Mappings</b>
-
-
+<p style="text-align: justify;">
+UserId and FacebookId have a natural one-to-one mapping. Adding the
+FacebookId to the users table is not sufficient for our requirements.
+Since we would need to get the UserId based on a user's FacebookId
+let's say when the user signs in, this operation would still require a
+complete table scan. To model this in a way to avoid table scans,
+let's create a new ID table. The User table and the new ID table will
+look like:
+</p>
 
 <b>Modeling Many-to-One Mapping</b>
 
-<b>Avoiding Scan Operations</b>
-  1-1 mapping. 1-many and many-1. -- and code examples
-<h5>Ghost Records or Application Managed Indexes</h5>
+
+<p style="text-align: justify;">
+Ghost records or application managed indices.
+</p>
+
+<p style="text-align: justify;">
+UserId and FacebookId have a natural one-to-one mapping. Adding the
+FacebookId to the users table is not sufficient for our requirements.
+Since we would need to get the UserId based on a user's FacebookId
+let's say when the user signs in, this operation would still require a
+complete table scan. To model this in a way to avoid table scans,
+let's create a new ID table. The User table and the new ID table will
+look like:
+</p>
+
+<h3>IV) Minimizing Scan Operation Overhead </h3>
 
 <b>Reducing the overhead of Scan Operations</b>
    1) Perform "bulk" actions with single scans.
    2) Reducing page size
    3) Isolate scan operations -- duplicate tables: "shadow tables"
 
-<h5>If still not enough go with less performant SimpleDB which offers
-query flexibility -- DynamoDB is Not the right choice </h5>
+If still not enough go with less performant SimpleDB which offers
+query flexibility -- DynamoDB is Not the right choice.
 
 
-<h3><u>IV) Conclusion</u></h3>
+<h3>V) Conclusion</h3>
 
 <h3>External Links</h3>
 
