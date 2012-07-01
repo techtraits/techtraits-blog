@@ -183,6 +183,12 @@ table#related-posts
     background: #eee;
     font-size: 13px; }
 
+blockquote {
+	margin: 1em 3em 1em 1em;
+	color: #999;
+	border-left: 2px solid #999;
+	padding-left: 1em; }
+
 #footer {
   font-family: Lato;
   font-size: 16px;
