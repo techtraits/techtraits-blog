@@ -50,7 +50,7 @@ DynamoDB's data model and the QUERY and SCAN operations with some
 examples to better understand the strengths and limitations of DynamoDB. 
 </p>
 
-<h3><u>I) Quick Intro: Data Model, API and Provisioning</u></h3>
+<h3>I) Quick Intro: Data Model, API and Provisioning</h3>
 &nbsp;
 
 <b>Tables, Items and Attributes</b>
@@ -124,11 +124,10 @@ second. More detail regarding calculation of read and write units can
 be found <a href="http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/WorkingWithDDTables.html#CapacityUnitCalculations">here</a>. 
 
 
-<h3><u>II) Understanding Query and Scan Operations</u></h3>
+<h3>II) Understanding Query and Scan Operations</h3>
 &nbsp;
 
-A query operation as specified in <a
-href="http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/QueryAndScan.html">DynamoDb
+A query operation as specified in <a href="http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/QueryAndScan.html">DynamoDb
 documentation</a>: 
 <blockquote>
 <p>
@@ -213,7 +212,7 @@ public Map<String, AttributeValue> getFirstKPostVersions(long postId, int k, Ama
         }while(lastKeyEvaluated != null);
         
         return items;
-    }
+  }
 {% endhighlight %}
 </li>
 </ol>
@@ -256,16 +255,94 @@ the impact of scan operations on live response-time critical operations.</p>
 </ol>
 
 
-<h3><u>III) SocBlog: A Social Blogging App</u></h3>
+<h3>III) SocBlog: A Social Blogging App</h3>
 &nbsp;
 
 <p style="text-align: justify;">
 We want to build our hypothetical social blogging application where
-people are encouraged to blog by pitting them against their friends
-and give out achievements to users based on the feedback by friends.
-Let us start with only two tables: Users and Posts as described below.</p>
+people are encouraged to blog by peer feedback and achievements.
+Let us start with a very basic data model with only two tables: Users
+and Posts.</p>
 
 <b>Basic Data Model</b>
+
+{% highlight java %}
+
+Users
+=====
+"UserId"=1234
+"Name"="Bilal Sheikh"
+"City"="Waterloo"
+
+Posts
+=====
+"PostId"=345
+"DateTime"=1286751823
+"Title"="Jackson Optimization, Using Non-Default for fun and profit"
+
+{% endhighlight %}
+
+&nbsp;
+
+
+<b>Requirements</b>
+
+<ol>
+<li>
+<p style="text-align: justify;">For SocBlog people would login using
+Facebook only and thus we need to store the FacebookId for each
+user.</p>
+    <ol type="a">
+        <li>Get FacebookId given a userId. (<b>GET</b>).</li>
+        <li>Get user's info given FacebookId. (<b>SCAN</b>).</li>
+    </ol>
+</li>
+<li>
+<p style="text-align: justify;">SocBlog would connect people by making
+them buddies. We need to support addition and removal of buddies. </p>
+    <ol type="a">
+        <li>Get friends of a user given UserId. (<b>GET</b>).</li>
+        <li>Make two users friends. (<b>GET and PUT</b>).</li>
+    </ol>
+</li>
+<li>
+<p style="text-align: justify;">Most important features of
+SocBlog have to do with posts. For example, getting all new posts in
+the last k days and getting all posts in a certain category.</p>
+    <ol type="a">
+        <li>Get all posts in the last K days. (<b>SCAN</b>).</li> 
+        <li>Get all posts in a certain category. (<b>SCAN</b>).</li> 
+    </ol>
+</li>
+<li>
+<p style="text-align: justify;">Lastly, some user related requirements include
+getting all posts by a specific user and getting all users in a
+specific city. Ability to remove users is also important. </p>
+    <ol type="a">
+        <li>Get all users in a city. (<b>SCAN</b>)</li>
+        <li>Get all posts by a user. (<b>GET</b>).</li>
+        <li>Remove a user and all associations from our tables. (<b>SCAN</b>).</li>
+    </ol>
+</li>
+
+</ol>
+
+<p style="text-align: justify;">
+We will modify the above tables and add new ones as we work through
+our application requirements.</p> 
+
+<p style="text-align: justify;">
+We will look at all of the above requests and make modifications to
+our data model as needed. Getting the <b>FacebookId</b> of a user,
+given <b>UserId</b> is straight forward. Similarly, getting the list of
+friends or the list of post ids by a user (6) is also a single get operation. It is also easy
+to see that getting any attributes from Users table given FacebookId
+or City would require complete table scans because no index exists for
+these fields. Making two users involves getting the two users using a
+BatchGet request and then updating the two friend lists using a
+BatchPut request.
+</p>
+
 
 {% highlight java %}
 Users
@@ -288,36 +365,6 @@ Posts
 
 {% endhighlight %}
 
-&nbsp;
-
-<b>Operation Requirements</b>
-
-<p style="text-align: justify;">
-We will modify the above tables and add new ones as we work through
-our application requirements.</p> 
-
-<ol>
-<li>Get FacebookId given a userId. (<b>GET</b>).</li>
-<li>Get friends of a user given UserId. (<b>GET</b>).</li>
-<li>Get user's info given FacebookId. (<b>SCAN</b>).</li>
-<li>Get all users in a city. (<b>SCAN</b>)</li>
-<li>Make two users friends. (<b>GET and PUT</b>).</li>
-<li>Get all posts  by a user. (<b>GET</b>).</li>
-<li>Get all posts in a specific month. (<b>SCAN</b>).</li>
-<li>Remove a user and all associations from our tables. (<b>SCAN</b>).</li>
-</ol>
-
-<p style="text-align: justify;">
-We will look at all of the above requests and make modifications to
-our data model as needed. Getting the <b>FacebookId</b> of a user,
-given <b>UserId</b> is straight forward. Similarly, getting the list of
-friends or the list of post ids by a user (6) is also a single get operation. It is also easy
-to see that getting any attributes from Users table given FacebookId
-or City would require complete table scans because no index exists for
-these fields. Making two users involves getting the two users using a
-BatchGet request and then updating the two friend lists using a
-BatchPut request.
-</p>
 
 <b>Avoiding Scan Operations</b>
 
