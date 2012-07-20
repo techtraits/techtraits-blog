@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: Automated graphite cluster setup using cloud init
+title: Automated graphite server setup using cloud init
 date: 2012-07-20 17:05:41
 author: usman
 categories: 
