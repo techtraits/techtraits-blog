@@ -54,7 +54,7 @@ data store that best suites your application's needs. Let's take a look at Dynam
 DynamoDB's data model consists of tables, items and attributes. Each
 table is a collection of items and each item is a collection of
 attributes. An Attribute is simply a name-value pair, e.g.,
-<b>("userId"=1234)</b> in a users table. Consider for example a Users table where a user item may look like:</p>
+<b>("userId"=1234)</b>. Consider for example a Users table where a user item may look like:</p>
 
 {% highlight java %}
 Users
@@ -98,8 +98,7 @@ put operations.</p>
 
 <h5>Basic API and provisioning:</h5>
 <p style="text-align: justify;">
-DynamoDB offers a basic API for table creation, deletion and updating
-read/write provisioning for a table. Put, get, update and delete
+DynamoDB offers a basic API for table creation, deletion and setting the read/write provisioning for a table. Put, get, update and delete
 operations are supported for individual items. Updates can be
 conditional and can be used for optimistic concurrency control. DynamoDB also offers a query operation for searching based on the values of primary key attributes and a scan operation which as the name implies can be used to scan the entire table.</p>
 
