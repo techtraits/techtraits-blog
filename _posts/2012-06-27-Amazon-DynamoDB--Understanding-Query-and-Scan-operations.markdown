@@ -150,7 +150,7 @@ finishes. Looking at it another way, the total time required for the
 scan operation to complete can be approximated as atleast: T = S / (R * 2), where S
 is the total size of the table in kilobytes and R is the read units
 provisioned for a table. The reads for scan are eventually consistent
-and consume half the read units compared to consistent reads. For a 1GB table with a provisioning of 100 read units, it would take approximately 84 minutes. Note that one scan operation wouldn't last 84 minutes because DynamoDB will only evaluate <b>1MB<b> worth of data before filtering and returning the
+and consume half the read units compared to consistent reads. For a 1GB table with a provisioning of 100 read units, it would take approximately 84 minutes. Note that one scan operation wouldn't last 84 minutes because DynamoDB will only evaluate <b>1MB</b> worth of data before filtering and returning the
 results. The entire table scan would therefore require 1000 scan
 operations. </p>
 </li>
@@ -161,7 +161,7 @@ slow down other operations by starving them.</p>
 </li>
 </ol>
 
-When modeling data for DynamoDB, one must try to minimize any potential scan operations. And if some scan operations are necessary, special care must be taken to ensure that such operations can be isolated. Table design for performance and ways to minimize the impact of scan operations is covered in the next post: <a href="#">DynamoDB: Modeling data for performance</a>
+When modeling data for DynamoDB, one must try to minimize any potential scan operations. Designing tables for performance and ways to minimize the impact of scan operations is covered in my next post: <a href="#">DynamoDB: Modeling data for performance</a>
 
 <h3>External Links</h3>
 
