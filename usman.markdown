@@ -26,11 +26,12 @@ meta:
 
 </div>
 
-* [LinkedIn](http://ca.linkedin.com/in/usmanismail). 
+* [LinkedIn](http://ca.linkedin.com/in/usmanismail)
 * [Github](https://github.com/usmanismail)
 * [Stack Overflow](http://stackoverflow.com/users/706727/usman-ismail)
 * [MasterBranch](https://masterbranch.com/usmanismail)
-* [Pogo Games iPhone](http://itunes.apple.com/ca/app/pogo-games/id373416293?mt=8)
+* [Pogo Games iPhone](http://itunes.apple.com/ca/app/pogo-games/id373416293)
 * [Pogo Games Facebook](https://apps.facebook.com/pogogames)
-* [Wsop Poker](http://itunes.apple.com/ca/app/world-series-of-poker/id458792705?mt=8)
+* [Wsop Poker](http://itunes.apple.com/ca/app/world-series-of-poker/id458792705)
+* [The Simpsons: Tapped Out](https://itunes.apple.com/ca/app/the-simpsons-tapped-out/id497595276)
 
