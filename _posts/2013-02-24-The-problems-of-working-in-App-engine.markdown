@@ -37,6 +37,7 @@ Another design decision that has me pulling out my hair the complete disconnect 
 ## User Interface for Androids
 
 ![Backup](/assets/images/backup.jpg)
+
 The last thing I would like to highlight is the image above, for me it symbolizes what is wrong with GAE. Its a actual screen shot from a menu in GAE console for restoring backups. These backups were generated through google's standard tool and this is the User interface that allows you to select which up to restore from. The fact that some google developer somewhere wrote this UI looked at it and said "Sure, looks good you can select the backup you want lets ship it" scares me. It shows either an utter disregard for the usability of the server or more likely someone wrote the backup service which used random hashes as file names and assumed the restore code will look in the file for metadata and someone else wrote the restore code and assumed the file names would be human readable. Neither of these cases give me confidence that whats "under the hood" of google app engine has been thought through very well. This is important because you as a service developer are relying on GAE to have good plumbing under the hood as you have no control over it. If I had to write our service again I would probably go with Amazon Elastic Beanstalk or something less. For now it all kind of works and we are too far down this path so we will keep our fingers crossed. 
 
 
