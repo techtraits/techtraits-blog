@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: The pitfalls of building services using Google App Engine
+title: The pitfalls of building services using Google App Engine -- Part I
 date: 2013-02-24 08:18:17
 author: usman
 categories: 
@@ -10,17 +10,12 @@ tags:
 
 ---
 
-A lot has been written about the problems of working with [Google App Engine's](https://appengine.google.com/) for example [here](http://www.carlosble.com/2010/11/goodbye-google-app-engine-gae/), [here](http://3.14.by/en/read/why-google-appengine-sucks) and [here](http://www.zdnet.com/blog/google/the-problem-with-google-apps-engine/1002). The majority of the complaints are from people who used the platform experimentally for a few days, were frustrated by its intricacies and deviation from the typical LAMP and RDBMS paradigms. They wrote angry blogs and went back to their old platforms. The problem is that these complaints are easy to dismiss and hide some real issues in Google App Engine. We on the other hand did our due diligence and then some. We launched a back-end service for the [Simpsons Tapped Out](https://play.google.com/store/apps/details?id=com.ea.game.simpsons4_na) to production and have a hundred thousand concurrent users. We have used pretty much every service GAE has to offer from Data Store to Big Query to the Identity API. Below are the major hidden pitfalls you should know before using google app engine to author any service of non-trivial scale or complexity.  
+A lot has been written about the problems of working with [Google App Engine's](https://appengine.google.com/) for example [here](http://www.carlosble.com/2010/11/goodbye-google-app-engine-gae/), [here](http://3.14.by/en/read/why-google-appengine-sucks) and [here](http://www.zdnet.com/blog/google/the-problem-with-google-apps-engine/1002). The majority of the complaints are from people who used the platform experimentally for a few days, were frustrated by its intricacies and deviation from the typical LAMP and RDBMS paradigms. They wrote angry blogs and went back to their old platforms. The problem is that these complaints are easy to dismiss and hide some real issues in Google App Engine. We on the other hand did our due diligence and then some. We launched a back-end service for the [Simpsons Tapped Out](https://play.google.com/store/apps/details?id=com.ea.game.simpsons4_na) to production and have a hundred thousand concurrent users. We have used pretty much every service GAE has to offer from Data Store to Big Query to the Identity API. We have compiled some of the major pitfalls in a two part series. The next article in the series is found [here](http://techtraits.com/2013-02-24-The-problems-of-working-in-App-engine-II.html).
 
 ## Hidden Arbitrary Quota Limits
 
 After a few months of hard work we soft launched our application in a few countries and saw traffic gradually pick up. No surprises, we all patted ourselves on the back and did our global launch. The service performed as expected and we were happily chugging along. Part of that chugging was using the GAE App Identity service to sign authorization tokens. 
 One fine day we found out that all our logins were failing, apparently there is a quota limit of 1.84 millions requests per day to the App Identity service. After which google "helps you control your costs" by refusing all your requests to the API for the day. Let me step back and let that sink in. We have a paid account with google on the highest tier of service and fully expected millions of requests per day and are willing to pay for them. Google decided that we should save money by denying all requests for the remainder of the day. Now just to clarify its not that we weren't watching our quota closely enough, this quota of calls to the Identify API is not shown on the app stats page (or any page for that matter). None of the documentation mentions that there is a hard limit of 1.84 million requests to the API, and at no point over the past days when our call count was in the many hundreds of thousands of requests did someone at google decide to alert us that our app would suddenly stop working soon.   
-
-## Under-powered instances
-
-The reason we were using GAE's APP Identity API for signing was that google instances are are greatly under-powered. This is not always obvious because most requests are not very CPU intensive and google launches a whole lot of servers so each one is rarely handling more that a few requests at a time. However, we were using RSA cryptography to sign our authorization tokens. I grant you that this is a CPU intensive task and we are willing to take the performance hit. However a quick benchmark showed that the signature generation takes on average 10ms on my rather modest laptop. The same code on a google app engine server under no load takes 400-600ms. This time does not include network latency or any scheduler overhead, this is just the time time taken to compute the signature.   
-
 
 ## Hidden Arbitrary Library behaviour 
 
@@ -38,7 +33,5 @@ Another thing that has me pulling out my hair is the complete disconnect between
 
 ![Backup](/assets/images/backup.jpg)
 
-The last thing I would like to highlight is the image above, for me it symbolizes what is wrong with GAE. Its a actual screen shot from a menu in GAE console for restoring backups. These backups were generated through google's standard tool and this is the User interface that allows you to select which up to restore from. The fact that some google developer somewhere wrote this UI looked at it and said "Sure, looks good you can select the backup you want lets ship it" scares me. It shows either an utter disregard for the usability of the server or more likely someone wrote the backup service which used random hashes as file names and assumed the restore code will look in the file for metadata and someone else wrote the restore code and assumed the file names would be human readable. Neither of these cases give me confidence that whats "under the hood" of google app engine has been thought through very well. This is important because you as a service developer are relying on GAE to have good plumbing under the hood as you have no control over it. If I had to write our service again I would probably go with Amazon Elastic Beanstalk or something less. For now it all kind of works and we are too far down this path so we will keep our fingers crossed. 
-
-
-
+If you have made this far and I still haven't convinced you, checkout the next part of the series: 
+**[ The pitfalls of building services using Google App Engine -- Part II](http://techtraits.com/2013-02-24-The-problems-of-working-in-App-engine-II.html)**
