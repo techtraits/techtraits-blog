@@ -17,3 +17,9 @@ tmp
 _yardoc
 doc/
 _site/*
+
+# emacs
+
+*~
+*#
+.#*
