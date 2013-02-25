@@ -13,7 +13,7 @@ tags:
 Let us continue from where we [left off](http://techtraits.com/2013-02-24-The-problems-of-working-in-App-engine-I.html) and cover a few more major Google App Engine pitfalls when working with non-trivial applications at significant scale.
 
 # Under-powered application front-end instances
-The GAE instances are greatly under-powered. We had a simple use case where we used RSA cryptography to sign our authorization tokens. I grant you that it is a CPU intensive task and we are willing to take a performance hit. However, a quick benchmark showed that the signature generation takes on average 10ms on my Ubuntu VM with a couple of virutal cores on my rather modest laptop. The same code on Google App Engine under no load takes anywhere from 500 to 600ms. This time does not include network latency or any scheduler overhead, this is just the time time taken to compute the signature.    
+The GAE instances are greatly under-powered. We had a simple use case where we used RSA cryptography to sign our authorization tokens. I grant you that it is a CPU intensive task and we are willing to take a performance hit. However, a quick benchmark showed that the signature generation takes on average 10ms on my Ubuntu VM on my rather modest laptop. The same code on Google App Engine under no load takes anywhere from 500 to 600ms. This time does not include network latency or any scheduler overhead, this is just the time taken to compute the signature.    
 
 A small benchmark for computing an RSA signature: 
 
@@ -23,11 +23,12 @@ A small benchmark for computing an RSA signature:
     GAE F4 (2400MHz, 512MB)
     GAE F4 (2400MHz, 1GB)	
 
-If you scour through Google groups, you will find that the best approach for doing something like this is to offload this work to an external service with more computational resources and then make an HTTP call. In fact GAE's [APP Indentity API](https://developers.google.com/appengine/docs/java/appidentity/) offers exactly this. However, the API has an arbitrary daily hidden quota of 1.84 Million calls ([see this](http://techtraits.com)) and there is no way of increasing it at the moment. 
+If you scour through Google groups, you will find that the recommended approach for doing something like this is to offload this work to an external service with more computational resources and then make an HTTP call. In fact GAE's [APP Indentity API](https://developers.google.com/appengine/docs/java/appidentity/) offers exactly this. However, the API has an arbitrary daily hidden quota of 1.84 Million calls ([see this](http://techtraits.com)) and there is no way of increasing it at the moment. 
 
 # Under-performing Google Data Store and under-provisioned Cache
-It would be fair to argue that most applications are not CPU intensive and spend a significant amount of time waiting on cache and the backend data store. 
+It would be fair to argue that most web applications are not CPU intensive and spend a significant amount of time waiting on cache and the backend data store. It would be nice then to have a fast data store and cache layer. Unfortunately, the google data store is quite slow. Indexed reads take anywhere from 150ms to 250ms under modest load and writes range from 300ms to over 500ms on occasions. We have seen these latencies consistently when dealing with around 900 to 1500 requests per seocnd sent to one of our services by the [Simpsons Tapped Out](https://play.google.com/store/apps/details?id=com.ea.game.simpsons4_na). 
 
+With these latencies it is essential that everything that can be cached must be cached. Fortunately, Google Cache is reasonably fast and we have seen latencies ranging from as low as 10ms to a typical of 20-40ms. Here's the kicker: the cache is automatically scaled out/back by Google a number of times in a day for a service under load. What this essentially does is that it invalidates a good chunk of the cached data, generally resulting in response time spikes and leads to service instability.  I can't think of any reason why cache is being provisioned to exact fit. Cache provides a layer of stability for the service and often serve as the only safegaurd for protecting the less-elastic backend data stores. 
 
 ## Disconnect between services
 
