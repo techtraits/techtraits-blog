@@ -19,8 +19,7 @@ A small benchmark for computing an RSA signature:
     A VM on my laptop	 	 10ms
     GAE F1 (600MHz, 128MB)	 500-600ms
     GAE F2 (1200MHz, 256MB)	 450-500ms
-    GAE F4 (2400MHz, 512MB)
-    GAE F4 (2400MHz, 1GB)	
+    GAE F4 (2400MHz, 512MB)	 350-450ms
 
 If you scour through Google groups, you will find that the recommended approach for doing something like this is to offload this work to an external service with more computational resources and then make an HTTP call. In fact GAE's [APP Indentity API](https://developers.google.com/appengine/docs/java/appidentity/) offers exactly this. However, the API has an arbitrary daily hidden quota of 1.84 Million calls ([see this](http://techtraits.com)) and there is no way of increasing it at the moment. 
 
