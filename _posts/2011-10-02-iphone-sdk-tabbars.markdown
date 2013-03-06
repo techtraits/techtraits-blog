@@ -3,7 +3,8 @@ layout: post
 title: "IPhone SDK: TabBars"
 wordpress_id: 398
 wordpress_url: http://www.techtraits.ca/?p=398
-author: usman
+authors: 
+- usman
 date: 2011-10-02 20:54:40 +00:00
 ---
 This is a tutorial for beginners to the IPhone SDK and includes instructions on programatically creating a Tab Bar Controller with two Tabs and their associated views. As an illustration of how interface elements from one view can interact with those on other views I have placed a UITextField and Button on one view and a UILabel on the other. Anything typed in the text field will be copied to the label when the button is clicked. If you do now want to write all the code for the tutorial you can download it from [github](https://github.com/techtraits/tabbar-example/tree/master/TabBar).

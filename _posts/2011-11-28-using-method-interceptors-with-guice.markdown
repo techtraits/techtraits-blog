@@ -4,7 +4,8 @@ title: Using method interceptors with Guice
 wordpress_id: 664
 wordpress_url: http://www.techtraits.ca/?p=664
 date: 2011-11-28 01:20:04 +00:00
-author: usman
+authors: 
+- usman
 categories: 
 - Programming
 tags:

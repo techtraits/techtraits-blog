@@ -7,15 +7,21 @@ layout: page
 
 {% for post in site.posts offset:0 limit:5 %}
 
-{% assign author = site.authors[post.author] %}
-
 <div class="meta">
 <h3><a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></h3>
 
 <span class="author"> by 
-    <a href="/{{ author.name}}.html">
-        <strong>{{author.display_name }}</strong>
-    </a> on {{post.date | date_to_string }}
+	<strong>
+		{% for author in post.authors %}
+    		<a href="/{{ site.authors[author].name}}.html">
+        		{{site.authors[author].display_name }}
+	        </a>
+			{% if forloop.first and forloop.length > 1%}
+			 & 
+			{% endif %}
+    	{% endfor %}
+    </strong>
+     on {{post.date | date_to_string }}
 </span>
 
 <p></p>

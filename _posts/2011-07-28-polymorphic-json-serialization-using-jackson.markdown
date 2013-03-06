@@ -3,7 +3,8 @@ layout: post
 title: Polymorphic JSON Serialization using Jackson
 wordpress_id: 217
 wordpress_url: http://www.techtraits.ca/?p=217
-author: usman
+authors: 
+- usman
 date: 2011-07-28 03:32:28 +00:00
 categories: 
 - Programming

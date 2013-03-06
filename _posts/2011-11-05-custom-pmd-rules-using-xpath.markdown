@@ -4,7 +4,8 @@ title: Custom PMD Rules using XPath
 wordpress_id: 568
 wordpress_url: http://www.techtraits.ca/?p=568
 date: 2011-11-05 21:33:52 +00:00
-author: usman
+authors: 
+- usman
 categories: 
 - Programming
 tags:

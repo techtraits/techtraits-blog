@@ -2,7 +2,8 @@
 layout: post
 title: DynamoDB&#58; Understanding Query and Scan Operations
 date: 2012-06-27 20:20:05
-author: bilal
+authors:
+- bilal
 categories: 
 - cloud
 - nosql

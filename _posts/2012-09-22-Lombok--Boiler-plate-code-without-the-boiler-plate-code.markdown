@@ -2,7 +2,8 @@
 layout: post
 title: "Lombok: Boiler-plate code without the boiler plate code"
 date: 2012-09-22 04:42:18
-author: usman
+authors: 
+- usman
 categories: 
 - Programming
 tags:

@@ -2,7 +2,8 @@
 layout: post
 title: The pitfalls of building services using Google App Engine -- Part II
 date: 2013-02-24 17:09:00
-author: bilal
+authors: 
+- bilal
 categories: 
 - System Admin
 tags:

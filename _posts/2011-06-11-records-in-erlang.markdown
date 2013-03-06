@@ -2,7 +2,8 @@
 layout: post
 title: Records in erlang
 date: 2011-06-11 23:49:10 +00:00
-author: usman
+authors:
+- usman
 categories: 
 - Programming
 tags:

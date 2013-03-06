@@ -2,7 +2,8 @@
 layout: post
 title: Maven:Deploying multiple artifacts from one build
 date: 2012-06-24 09:43:03
-author: usman
+authors: 
+- usman
 categories: 
 - Build Management
 - Maven

@@ -3,7 +3,8 @@ layout: post
 title: Using cachedump to debug memcached
 wordpress_id: 451
 wordpress_url: http://www.techtraits.ca/?p=451
-author: usman
+authors: 
+- usman
 date: 2011-10-02 22:23:27 +00:00
 categories: 
 - Debugging

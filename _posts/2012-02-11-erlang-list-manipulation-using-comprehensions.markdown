@@ -4,7 +4,8 @@ title: "Erlang: List Manipulation using comprehensions"
 wordpress_id: 895
 wordpress_url: http://www.techtraits.com/?p=895
 date: 2012-02-11 23:06:06 +00:00
-author: usman
+authors: 
+- usman
 categories: 
 - Programming
 tags:

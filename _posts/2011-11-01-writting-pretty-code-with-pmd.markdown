@@ -4,7 +4,8 @@ title: Writing pretty code with PMD
 wordpress_id: 541
 wordpress_url: http://www.techtraits.ca/?p=541
 date: 2011-11-01 00:16:39 +00:00
-author: usman
+authors: 
+- usman
 categories: 
 - Programming
 tags:

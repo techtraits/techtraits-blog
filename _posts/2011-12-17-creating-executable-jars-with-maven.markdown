@@ -4,7 +4,8 @@ title: Creating executable jars with Maven
 wordpress_id: 703
 wordpress_url: http://www.techtraits.ca/?p=703
 date: 2011-12-17 06:48:03 +00:00
-author: usman
+authors: 
+- usman
 categories: 
 - Build Management
 - Maven

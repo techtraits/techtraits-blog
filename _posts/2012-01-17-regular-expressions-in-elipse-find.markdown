@@ -4,7 +4,8 @@ title: Regular Expressions in Eclipse Find
 wordpress_id: 761
 wordpress_url: http://www.techtraits.com/?p=761
 date: 2012-01-17 17:43:13 +00:00
-author: usman
+authors: 
+- usman
 categories: 
 - Software Management
 tags:

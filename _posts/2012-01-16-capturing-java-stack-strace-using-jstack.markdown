@@ -4,7 +4,8 @@ title: Capturing Java Stack Strace Using JStack
 wordpress_id: 749
 wordpress_url: http://www.techtraits.com/?p=749
 date: 2012-01-16 16:16:46 +00:00
-author: usman
+authors: 
+- usman
 categories: 
 - System Admin
 tags:

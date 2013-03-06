@@ -2,7 +2,8 @@
 layout: post
 title: Monitoring python servers with pyformance and graphite
 date: 2013-02-17 18:46:14
-author: usman
+authors: 
+- usman
 categories: 
 - Programming
 - Monitoring
@@ -76,7 +77,7 @@ Now we can import the pyformance metric classes and the MetricsRegistry into our
 
 &nbsp;
 &nbsp;
-{% highlight python linenos %}
+{% highlight python linenos hl_lines=6-8 %}
 #!/usr/bin/python
 from twisted.internet import reactor
 from twisted.web.server import Site

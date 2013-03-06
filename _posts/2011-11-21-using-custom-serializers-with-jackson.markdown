@@ -4,7 +4,8 @@ title: Using Custom Serializers with Jackson
 wordpress_id: 628
 wordpress_url: http://www.techtraits.ca/?p=628
 date: 2011-11-21 01:46:04 +00:00
-author: usman
+authors: 
+- usman
 categories: 
 - Programming
 tags:

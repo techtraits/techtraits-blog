@@ -2,7 +2,8 @@
 layout: post
 title: Automated graphite instance setup using cloud init
 date: 2012-07-20 17:05:41
-author: usman
+authors: 
+- usman
 categories: 
 - Automation
 tags:

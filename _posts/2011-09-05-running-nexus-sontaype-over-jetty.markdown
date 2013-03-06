@@ -3,7 +3,8 @@ layout: post
 title: Running Nexus Sontaype over Jetty
 wordpress_id: 315
 wordpress_url: http://www.techtraits.ca/?p=315
-author: usman
+authors: 
+- usman
 date: 2011-09-05 22:22:46 +00:00
 categories: 
 - Build Management

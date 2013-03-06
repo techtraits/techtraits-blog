@@ -1,7 +1,8 @@
 --- 
 layout: post
 title: Compiling Protocol Buffers from Maven
-author: usman
+authors: 
+- usman
 date: 2011-09-09 19:46:43 +00:00
 categories: 
 - Build Management
@@ -14,7 +15,7 @@ tags:
 
 <!--more-->
 
-As with all code generation frameworks the first problem we need to tackle is how to efficiently integrate the code generation into our build pipeline. There some important requirements for such an integration. First, the generated code should not be checked in manually or if possible it should not be checked in at all as this will lead to frustration later. Developers will forget to checking generated files, overwrite each others' changes as generate code tends to be verbose and unfamiliar to the user. Second, the generated code should be available for debugging otherwise development around the generated code will be frustrating and slow. Third, incompatible changes to the source IDL files should break the build. Last, people who do not need to edit the IDL files should not have to generate the code locally as this will be another piece of tech they will maintain.
+As with all code generation frameworks the first problem we need to tackle is how to efficiently integrate the code generation into our build pipeline. There some important requirements for such an integration. First, the generated code should not be checked in manually or if possible it should not be checked in at all as this will lead to frustration later. Developers will forget to check in generated files and overwrite each others' changes as generate code tends to be verbose and unfamiliar to the user. Second, the generated code should be available for debugging otherwise development around the generated code will be frustrating and slow. Third, incompatible changes to the source IDL files should break the build. Last, people who do not need to edit the IDL files should not have to generate the code locally as this will be another piece of tech they will maintain.
 
 To support all of these requirements I use a <a title="Maven" href="http://maven.apache.org/" target="_blank">Maven</a> based build pipeline with a <a title="Nexus Sonatype" href="http://nexus.sonatype.org/" target="_blank">Nexus Sonatype repository</a> for storing artifacts which can then be used for all developers in their local builds. This tutorial will give a step by step guide to setting up such a project. Note this tutorial is only compatible with Linix/Unix systems or cygwin if you are on windows
 
@@ -64,7 +65,7 @@ mvn clean install
 
 <h3>Creating maven project</h3>
 
-We will be keeping our protocol buffer IDL files in a maven project which will be deployed to the Nexus repository we just setup. We keep our IDL files a little maven project of its own so to ensure the four requirements for integration that we specified in the start of this tutorial. I will highlight how we fulfill each requirement as we go. To create a simple Maven java project run the following command:
+We will be keeping our protocol buffer IDL files in a maven project which will be deployed to the Nexus repository we just setup. We keep our IDL files a little maven project of its own to ensure the four requirements for integration that we specified in the start of this tutorial. I will highlight how we fulfill each requirement as we go. To create a simple Maven java project run the following command:
 
 
 {% highlight bash %}

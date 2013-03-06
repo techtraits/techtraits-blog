@@ -2,7 +2,8 @@
 layout: post
 title: Buidling fault-tolerant cloud services
 date: 2012-07-01 00:07:06
-author: usman
+authors: 
+- usman
 categories: 
 - System Admin
 - Programming

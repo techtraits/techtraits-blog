@@ -2,7 +2,8 @@
 layout: post
 title: DynamoDB&#58; Quick Introduction
 date: 2012-06-26 21:00:01
-author: bilal
+authors: 
+- bilal
 categories: 
 - cloud
 - nosql
