@@ -59,4 +59,5 @@
 .vg { color: #19177C } /* Name.Variable.Global */
 .vi { color: #19177C } /* Name.Variable.Instance */
 .il { color: #666666 } /* Literal.Number.Integer.Long */
-pre { white-space: pre; overflow: auto; }
+pre { white-space: pre; overflow: scroll; width:inherit;}
+
