@@ -77,7 +77,7 @@ Now we can import the pyformance metric classes and the MetricsRegistry into our
 
 &nbsp;
 &nbsp;
-{% highlight python linenos hl_lines=6-8 %}
+{% highlight python linenos %}
 #!/usr/bin/python
 from twisted.internet import reactor
 from twisted.web.server import Site
