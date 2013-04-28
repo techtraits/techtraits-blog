@@ -354,6 +354,10 @@ table.projects td.desc {
     text-decoration: underline;
 }
 
+.pimage {
+	padding:10px;
+}
+
 .avatar {
 	width: 60px;
 	height: 60px;
