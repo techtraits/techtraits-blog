@@ -22,11 +22,11 @@ This can sound very resource intensive, for example one of the systems I work wi
 Since this approach has been so useful to us I wanted to use a similar setup to report metrics out a Python based project I am working on. This article describes the steps necessary to implement efficient metrics collection in python using the [pyformance](https://github.com/usmanismail/pyformance) library.    
 
 
-# Create Test Server
+# Create Sample Server
 
 Before we add monitoring lets create a server which we are going to monitor. We are going to be using the [Twisted framework](http://twistedmatrix.com/trac/) to create a very simple HelloWorld server, code shown below. Run the server and point your browser to http://localhost:8001 and confirm that you get "HelloWorld" as the response.
 
-{% highlight python  linenos %}
+{% codeblock Sample Server lang:python %}
 #!/usr/bin/python
 from twisted.internet import reactor
 from twisted.web.server import Site
@@ -50,8 +50,7 @@ if __name__ == '__main__':
         reactor.run()
     except Exception as e:
         print(e)
-{% endhighlight %}
-&nbsp;
+{% endcodeblock %}
 
 
 
@@ -59,13 +58,12 @@ if __name__ == '__main__':
 
 Before we add metrics to our project we need to install the pyformance module. You can install the standard module from [pip](http://pypi.python.org/pypi/pip). However, I am going to be using [my fork](https://github.com/usmanismail/pyformance) of the project which adds support for connections to graphite. In order to compile and install pyformance,  clone the github repo at usmanismail/pyformance and run setup.py with the build and install commands as shown below. 
 
-{% highlight bash  linenos %}
+{% codeblock Installing Pyformance lang:bash %}
 git clone git://github.com/usmanismail/pyformance.git
 cd pyformance
 python setup.py build
 sudo python setup.py install
-{% endhighlight %}
-&nbsp;
+{% endcodeblock %}
 
 
 
@@ -75,7 +73,7 @@ Now we can import the pyformance metric classes and the MetricsRegistry into our
 
 
 
-{% highlight python linenos %}
+{% codeblock Basic Metrics lang:python %}
 #!/usr/bin/python
 from twisted.internet import reactor
 from twisted.web.server import Site
@@ -106,8 +104,7 @@ if __name__ == '__main__':
         reactor.run()
     except Exception as e:
         print(e)
-{% endhighlight %}
-&nbsp;
+{% endcodeblock %}
 
 
 # Complex Metrics
@@ -115,7 +112,7 @@ if __name__ == '__main__':
 
 Having a counter in code is useful but does not need a whole library. The real value of of pyformance is in more complex metrics such as histograms. Histograms calculate the distribution of a random event such as response times and packet sizes. In our example we will now accept a client side parameter "world_size" as a query string variable. Line 15,  16 and 17 in the code below show how we create and update a histogram metric. 
 
-{% highlight python linenos %}
+{% codeblock Complex Metrics lang:python %}
 #!/usr/bin/python
 from twisted.internet import reactor
 from twisted.web.server import Site
@@ -147,15 +144,14 @@ if __name__ == '__main__':
         reactor.run()
     except Exception as e:
         print(e)
-{% endhighlight %}
-&nbsp;
+{% endcodeblock %}
 
 
 
 
 Test the code by entering the following URL in your browser [http://localhost:8001?world_size=X](http://localhost:8001?world_size=X) where X is any number. In response you will now see something like:
 
-{% highlight javascript linenos %}
+{% codeblock Metrics Response lang:js %}
 {
 	'count': 3.0,
 	'999_percentile': 15,
@@ -167,8 +163,7 @@ Test the code by entering the following URL in your browser [http://localhost:80
 	'avg': 7.0,
 	'75_percentile': 15
 }	
-{% endhighlight %}
-&nbsp;
+{% endcodeblock %}
 
 
 # Getting Data to Graphite
@@ -182,7 +177,7 @@ Having access to metric values on a node is only marginally useful; we now need 
 
 In order to push the metrics to Hosted Graphite we need to import (Line 8) and create an instance of (Line 26) Hosted Graphite Reporter. The reporter needs an instance of the metrics registry, the time interval after which to report metrics to Graphite and your Hosted Graphite API Key. In the example below I am using an 10s interval between calls to push metrics. If you run your server again and send some requests to update the metrics, you should now see metrics values in Hosted Graphite under the Composer tab.
 
-{% highlight python linenos %}
+{% codeblock Reporting to graphite lang:python %}
 #!/usr/bin/python
 from twisted.internet import reactor
 from twisted.web.server import Site
@@ -216,5 +211,4 @@ if __name__ == '__main__':
         reactor.run()
     except Exception as e:
         print(e)
-{% endhighlight %}
-&nbsp;        
+{% endcodeblock %}        

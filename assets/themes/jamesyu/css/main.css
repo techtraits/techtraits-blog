@@ -180,8 +180,6 @@ table#related-posts
     	float: right;
     }
   .post .highlight {
-    border: 1px solid #ddd;
-    background: #eee;
     font-size: 13px; }
 
 blockquote {
@@ -343,7 +341,6 @@ table.projects td.desc {
 }
 
 .post .meta a.github {
-    background-image: url("/assets/images/buttons.png");
     display: block;
     float: right;
     height: 42px;
@@ -364,5 +361,3 @@ table.projects td.desc {
 	border: 1px solid black;
 	padding: 5px;
 }
-
-
