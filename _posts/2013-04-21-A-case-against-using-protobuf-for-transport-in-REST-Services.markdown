@@ -59,14 +59,15 @@ One of my pet peeves with protobuf and similar protocols is that they use IDLs t
 
 The prior section naturally begs the question of what should be used instead and in my opinion the answer is JSON. For our Simpsons and Poker Servers we use the [Jackson](http://jackson.codehaus.org/) library on the server side to map client requests directly to POJOs and server responses back to JSON. Using [Polymorphic Serialization](http://www.techtraits.com/Programming/2011/07/27/polymorphic-json-serialization-using-jackson/) we are able to create entire hierarchies of client requests which can be read from the wire without any prior knowledge of which object we were receiving. Using [Jackson Views](http://www.techtraits.com/Programming/2011/08/12/implementing-jackson-views/) we are able to have fields in the same object which are client visible but not stored in database, stored in the database but not client visible and in memory only. Lastly, as the incoming JSON is mapped to hand-crafted classes we can write code in them. This proved invaluable in writing concise and elegant code. We were able to reduce our servlets to 3 lines of code shown below. The rest is taken care of using polymorphism, each request object knows how to process the incoming data and generates a sub-type of the ServerResponse object. 
 
-{% highlight java %}
+{% codeblock Servlet Handler lang:java %}
 ClientRequest request = jackson.readValue(...);
 ServerResponse response = request.doProcessing();
 String response = jackson.writeValueAsString(response);
-{% endhighlight %}
+{% endcodeblock %}
 
 As an example I am see the layout of our Purchase Processing code. This small code snippets handles our entire purchase flow in conjunction with the 3 lines above. 
-{% highlight java %}
+
+{% codeblock Data Model (Jackson/JSON) lang:java %}
 
 public class ClientRequest  {
 	String sessionToken;
@@ -114,11 +115,11 @@ public class IOSPurchase extends PurchaseRequest {
 
 }
 
-{% endhighlight %}
+{% endcodeblock %}
 
 Protobuf code for a similar project would have been some similar to the snippet shown below. The difference in maintainability and clarity is stark even in such a small example. 
 
-{% highlight java %}
+{% codeblock Servlet Handler (Proto-buffer) lang:java %}
 
 	ClientRequest request = ClientRequest.parseFrom(...);
 	Session session = request.getSession();
@@ -142,7 +143,7 @@ Protobuf code for a similar project would have been some similar to the snippet 
 	} ...
 	
 
-{% endhighlight %}
+{% endcodeblock %}
 
 Using our approach we had no repeated code and were able to write very stable server despite tha fact that during this project our team grew from 1 person (me) to 5. Each was able to quickly ramp up and contribute to the project as there was a clear demarcation of object responsibility and all code relating to one feature was in one place. Furthermore dev testing was greatly improved because we could quickly hand craft client requests and see how the server behaved. Once we had our code stable the same hand-crafted JSON could be used as input to unit and integration tests. If there was a bug reported against the server, the client team could post the exact JSON which caused the problem and also quickly verify it was resolved without using any code. 
 

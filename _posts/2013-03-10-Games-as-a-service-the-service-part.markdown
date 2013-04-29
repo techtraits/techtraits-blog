@@ -11,6 +11,8 @@ tags:
 permalink: /gas
 
 ---
+{% image /assets/images/simpsons.png style="float:left" alt="Simpsons Tapped Out" class="pimage" %}
+
 Seth Sivak recently wrote an [article](http://www.gamasutra.com/blogs/SethSivak/20130305/187766/The_Future_of_Games_as_a_Service.php) covering some tips on how to design games as a service. While this article covers the game design side of making games as a service there is an equally import part, the Service design. As a member of EA's casual games' server engineering organization I have been part of and spectator to a number of social/casual game launches, some of which were a success and some of which were catastrophic failures.(From a service point of view). This article covers a few of the lessons learned and the major pitfalls from titles such as [The Simpsons Tapped Out](https://play.google.com/store/apps/details?id=com.ea.game.simpsons4_row&hl=en), [World Series of Poker](https://itunes.apple.com/us/app/world-series-of-poker/id458792705?mt=8), [Scrabble](https://itunes.apple.com/ca/app/scrabble/id284815117?mt=8) and [The Sims Social](https://www.facebook.com/TheSimsSocial).
 
 

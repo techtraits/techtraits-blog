@@ -11,8 +11,9 @@ tags:
 - GAE
 
 ---
-
 A lot has been written about the problems of working with [Google App Engine](https://appengine.google.com/) for example [here](http://www.carlosble.com/2010/11/goodbye-google-app-engine-gae/), [here](http://3.14.by/en/read/why-google-appengine-sucks) and [here](http://www.zdnet.com/blog/google/the-problem-with-google-apps-engine/1002). The majority of the complaints are from people who used the platform experimentally for a few days, were frustrated by its intricacies and deviation from the typical LAMP and RDBMS paradigms. They wrote angry blogs and went back to their old platforms. The problem is that these complaints are easy to dismiss and hide some real issues with Google App Engine. We on the other hand did our due diligence and then some. We launched a back-end service for the [Simpsons Tapped Out](https://play.google.com/store/apps/details?id=com.ea.game.simpsons4_na) to production and have over a hundred thousand concurrent users. We have used pretty much every service GAE has to offer from [Data Store](https://developers.google.com/appengine/docs/java/datastore/overview) to [Big Query](https://developers.google.com/bigquery/) to the [Identity API](https://developers.google.com/appengine/docs/java/appidentity/). We have compiled some of the major pitfalls in this article to help you make an educated decision as to whether Google App Engine is right for you and what you need to look out for.
+
+{% image /assets/images/gaeburn.png style="float:left" alt="Crash & Burn" class="pimage" %}
 
 ## Hidden Arbitrary Quota Limits
 

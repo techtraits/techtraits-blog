@@ -13,7 +13,7 @@ tags:
 - Graphite
 
 ---
-{% image /assets/images/monitor.jpg class="monitor_everything" style="float:left" alt="Monitor all the things" class="pimage" %}
+{% image /assets/images/monitor.jpg style="float:left" alt="Monitor all the things" class="pimage" %}
 
 I am a strong believer in the [Monitor Everything](http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/) Philosophy. There are a glut of tools which will monitor system health, many without requiring any code changes. However, these tools generally ignore the most important metrics of all: Application Specific metrics. Such tools can tell us that response times are slow or that a particular server instance is using too much memory but not why. This is where application specific metrics come in. To this end I have made extensive use of [Graphite](http://graphite.wikidot.com/) in conjunction with Coda Hale's [Metrics Library](https://github.com/codahale/metrics) for Java. This allows us to collect metrics about anything and everything the system is doing. We count, measure rate, measure delay and even look at distributions of events. 
 
