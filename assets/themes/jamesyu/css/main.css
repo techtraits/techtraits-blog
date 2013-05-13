@@ -6,7 +6,7 @@ html {
 body {
   text-align: justify;
   font-family: "chaparral-pro-1","chaparral-pro-2", Georgia, serif;
-  background: url("/assets/images/body.gif") repeat scroll 0 0 #F4F4F4;
+  background: repeat scroll 0 0 #F4F4F4;
   font-size: 100%;
   /*color: #333; */ }
 

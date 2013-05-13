@@ -13,6 +13,7 @@ tags:
 - Maven
 - Java
 - Code Quality
+alias: /custompmd/
 ---
 <p style="text-align: justify;">
 
