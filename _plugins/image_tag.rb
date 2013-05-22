@@ -69,9 +69,7 @@ module Jekyll
     end
 
     def render(context)
-      source = "<figure #{@class}>"
-      source += "<img src=#{@url} #{@style} #{@alt}>"
-      source += "</figure>"
+      source = "<img src=#{@url} #{@style} #{@alt}>"
     end
   end
 end
