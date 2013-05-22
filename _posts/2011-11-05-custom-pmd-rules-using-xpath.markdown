@@ -12,6 +12,7 @@ tags:
 - debugging
 - PMD
 - XPath
+alias: /custom-pmd-rules-using-xpath/
 ---
 As a follow-up to my earlier tutorial [Writing pretty code with PMD](Programming/2011/10/31/writting-pretty-code-with-pmd/) I am going to be discussing making custom PMD rules using <a title="XPath" href="http://www.w3schools.com/xpath/" target="_blank">XPath</a>. The first thing to note is that we use a <a title="Declarative Programming" href="http://en.wikipedia.org/wiki/Declarative_programming" target="_blank">declarative programming</a> paradigm to define our rules. We define or 'declare' what constitutes a PMD violation, but not what should be done about it, PMD takes care of that part.
 

@@ -13,7 +13,7 @@ tags:
 - code
 - Jackson
 - JSON
-
+alias: /jackson-optimization-using-non-default-for-fun-and-profit/
 ---
 <p style="text-align: justify;">
 

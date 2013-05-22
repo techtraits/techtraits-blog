@@ -10,6 +10,7 @@ categories:
 tags:
 - Maven
 - Protocol Buffers
+alias: /compiling-protocol-buffers-from-maven/
 ---
 <a title="Protocol Buffer" href="http://code.google.com/p/protobuf/" target="_blank">Protocol buffer</a> is a technology made by google for automatic serialization of data to and from a compressed binary format. Essentially you define your data in a <strong>I</strong>nterface <strong>D</strong>efinition <strong>L</strong>anguage <a title="IDL" href="http://en.wikipedia.org/wiki/IDL_%28programming_language%29" target="_blank">(IDL)</a> and then generate bindings for any language from which you want to generate the data or consume data. It is very similar to <a title="Thrift" href="http://thrift.apache.org/" target="_blank">Thrift</a> in philosophy and function except that Thrift provides network transport as well as serialization.
 
