@@ -13,7 +13,7 @@ tags:
 - nosql
 - key-value-store
 - Java
-- modeling
+- modelling
 
 ---
 
@@ -148,7 +148,7 @@ within a second). Since the scan operation is performed by going
 through each item in the table, for any reasonably sized table the
 scan operation will consume all the read units until the operation
 finishes. Looking at it another way, the total time required for the
-scan operation to complete can be approximated as atleast: T = S / (R * 2), where S
+scan operation to complete can be approximated as at least: T = S / (R * 2), where S
 is the total size of the table in kilobytes and R is the read units
 provisioned for a table. The reads for scan are eventually consistent
 and consume half the read units compared to consistent reads. For a 1GB table with a provisioning of 100 read units, it would take approximately 84 minutes. Note that one scan operation wouldn't last 84 minutes because DynamoDB will only evaluate <b>1MB</b> worth of data before filtering and returning the
@@ -162,7 +162,7 @@ slow down other operations by starving them.</p>
 </li>
 </ol>
 
-When modeling data for DynamoDB, one must try to minimize any potential scan operations. Designing tables for performance and ways to minimize the impact of scan operations is covered in my next post: <a href="#">DynamoDB: Modeling data for performance</a>
+When modelling data for DynamoDB, one must try to minimize any potential scan operations. Designing tables for performance and ways to minimize the impact of scan operations is covered in my next post: <a href="#">DynamoDB: Modelling data for performance</a>
 
 <h3>External Links</h3>
 

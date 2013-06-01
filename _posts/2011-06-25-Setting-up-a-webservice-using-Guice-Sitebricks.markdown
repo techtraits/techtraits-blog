@@ -89,7 +89,7 @@ After running this command you will see a lot of console output which is generat
 
 
 
-<h3>Step 2: Settings up the compiler</h3>
+<h3>Step 2: Setting up the compiler</h3>
 
 The first thing we want to tell maven is where we will put our source files which we will do using the pom file. The pom file (helloworld/pom.xml) is the mission control of your maven application, it contains all settings, dependencies and deployment details. Open the pom file in a text editor of your choice and look for the <strong>&lt;build&gt;</strong> element and add the sourceDirectory element. There are many other settings you can update in the pom (<a href="http://maven.apache.org/guides/introduction/introduction-to-the-pom.html#Super_POM">Details</a>) but for now we will not edit them.
 
@@ -100,9 +100,9 @@ The first thing we want to tell maven is where we will put our source files whic
 
 
 
-<h3>Step 3: Settings up the Jetty</h3>
+<h3>Step 3: Setting up Jetty</h3>
 
-Next we need to tell maven that we will be using the Jetty webserver to host our content using the jetty plugin. 
+Next we need to tell maven that we will be using the Jetty web-server to host our content using the jetty plugin. 
 
 We do that by adding a plugin tag with details of the jetty plugin in within the same build tag where put our source directory setting. A plugin definition for the current latest jetty plugin looks something like this:
 
@@ -119,7 +119,7 @@ We do that by adding a plugin tag with details of the jetty plugin in within the
 &nbsp;
 
 
-<h3>Step 4: Settings up the Jetty</h3>
+<h3>Step 4: Setting up Guice</h3>
 
 We have now setup the framework to build and deploy our web server but we still need to include the Guice and Sitebricks libraries. Look for the <strong>&lt;dependencies&gt;</strong> element which tells maven what are the dependencies of our project. We depend on guice, sitebricks and also http components so we add the following dependencies. Maven will download and setup these for us and add them to the class path. 
 
@@ -181,7 +181,7 @@ Now lets create the html front end for our sitebrick; all files that are to be d
 
 <h3>Step 7: Creating the sitebrick</h3>
 
-Now lets create the bick which provides the definition of the message tag in our Html code. I am using the <strong>com.flybynight.helloworld.sitebricks</strong> package for our sitebricks call so we will create a directory for the java file to live in. 
+Now lets create the brick which provides the definition of the message tag in our Html code. I am using the <strong>com.flybynight.helloworld.sitebricks</strong> package for our sitebricks call so we will create a directory for the java file to live in. 
 
 {% highlight bash %}
 mkdir -p src/main/java/com/flybynight/helloworld/sitebricks/
@@ -208,7 +208,7 @@ public class HelloWorld {
 &nbsp;
 
 
-<h3>Step 8: Injecting a named proerpty</h3>
+<h3>Step 8: Injecting a named property</h3>
 
 I would like to highlight the injection capabilities of Guice here; in your class create a property called messageString and annotate it with the <strong>Inject</strong> and <strong>named</strong> annotations. The named annotation takes a tag name as input, which is used to look up the value of the property. There are many other types of injection available See the <a href="http://code.google.com/p/google-guice/wiki/Injections">Guice Manual</a>. 
 
@@ -310,7 +310,7 @@ You should see more maven console output followed by
 {% endhighlight %}
 &nbsp;
 
-which means your server is running. Fireup a browser and hit <a href="http://localhost:8080/helloworld">http://localhost:8080/helloworld</a>
+which means your server is running. Fire up a browser and hit <a href="http://localhost:8080/helloworld">http://localhost:8080/helloworld</a>
 
 <h3>Further Reading</h3>
 

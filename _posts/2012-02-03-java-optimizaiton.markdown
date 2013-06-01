@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: Java Optimizaiton, Why is my application so slow?
+title: Java Optimization, Why is my application so slow?
 wordpress_id: 808
 wordpress_url: http://www.techtraits.com/?p=808
 date: 2012-02-03 19:57:36 +00:00
@@ -68,7 +68,7 @@ java $JAVA_OPTIONS YourApp.java
 
 <p style="text-align: justify;">
 
-Once your program runs (and exits) the hprof.txt file will contain a table CPU time details like the one shown below. This shows the methods where the CPU spends most of its execution time. The self coloumn marks the percentage of time used by the method and the accum column describes the total time accounted for so far starting at the top. So reading here thread.start accounts for 0.98% of the time and all methods up to here account for 23.96% of execution time. The trace coloumn allows you to look at the stack trace for that particular type of call. This table is important because it tells you which methods to optimize first and what kind of gains to expect. My trace is fairly innocuous because its from a jetty server coming up but its not uncommon for poorly performing applications to spend 90% of their time in just a handful of methods. One application I was working on with badly configured loggers was spending 90% in just logging, fixing that doubled our concurrent user cap.</p>
+Once your program runs (and exits) the hprof.txt file will contain a table CPU time details like the one shown below. This shows the methods where the CPU spends most of its execution time. The self column marks the percentage of time used by the method and the accum column describes the total time accounted for so far starting at the top. So reading here thread.start accounts for 0.98% of the time and all methods up to here account for 23.96% of execution time. The trace column allows you to look at the stack trace for that particular type of call. This table is important because it tells you which methods to optimize first and what kind of gains to expect. My trace is fairly innocuous because its from a jetty server coming up but its not uncommon for poorly performing applications to spend 90% of their time in just a handful of methods. One application I was working on with badly configured loggers was spending 90% in just logging, fixing that doubled our concurrent user cap.</p>
 
 
 

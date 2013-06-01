@@ -13,7 +13,7 @@ tags:
 - nosql
 - key-value store
 - Java
-- modeling
+- modelling
 
 ---
 

@@ -15,7 +15,7 @@ tags:
 ---
 <p style="text-align: justify;">
 
-One really useful task that one of my junior devs recently asked my help with was to create an executable jar from a maven project. He had mostly figured it out on his own but I still think this is a useful topic to cover. To achieve this we will be using the <a href="http://maven.apache.org/plugins/maven-assembly-plugin/" title="Maven assembley plugin" target="_blank">Maven Assembly plug-in</a> running in Maven 3.</p>
+One really useful task that one of my junior developers recently asked my help with was to create an executable jar from a maven project. He had mostly figured it out on his own but I still think this is a useful topic to cover. To achieve this we will be using the <a href="http://maven.apache.org/plugins/maven-assembly-plugin/" title="Maven assembly plugin" target="_blank">Maven Assembly plug-in</a> running in Maven 3.</p>
 
 
 

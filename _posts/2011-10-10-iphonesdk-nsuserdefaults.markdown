@@ -34,7 +34,7 @@ NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 {% endhighlight %}
 &nbsp;
 
-<h3> Retriving objects</h3>
+<h3> Retrieving objects</h3>
 
 <p style="text-align: justify;">
 To retrieve an object from NSUserDefaults just create a instance much like before with and then call the <em>foo</em>ForKey method where foo can be any one of; array, bool, data, dictionary, float, integer, object, stringArray, string, double, URL. </p>

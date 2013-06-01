@@ -12,20 +12,20 @@ tags:
 - iPhone SDK
 - code
 - PMD
-alias: /writting-pretty-code-with-pmd/
+alias: /writing-pretty-code-with-pmd/
 ---
-I recently found myself in the role of lead developer in my team and had to manage the work of several other junior developers. This is has been an interesting and rewarding experience and has taught me a lot about my self as a person and as a developer. I will leave the personal epiphanies for another time but as a developer I found that I have a lot of pet peeves about what code looks like and I want my juniors to cater to them. For example else must be written ...} else {... In addition some random preferences for code layout standards there are some genuine bugs that junior devs (who am I kidding, I am as bad as they are) leave in when writing code which are easily detectable and using a cursory review. That is were <a href="http://pmd.sourceforge.net/" title="PMD">PMD</a> comes in, with PMD you can force every one to following coding conventions otherwise fail the build. PMD comes with a nifty set of predefined rules and you can also easily add your own using <a href="http://www.w3schools.com/xpath/" title="xPath" target="_blank">xPath</a>.
+I recently found myself in the role of lead developer in my team and had to manage the work of several other junior developers. This is has been an interesting and rewarding experience and has taught me a lot about my self as a person and as a developer. I will leave the personal epiphanies for another time but as a developer I found that I have a lot of pet peeves about what code looks like and I want my juniors to cater to them. For example else must be written ...} else {... In addition some random preferences for code layout standards there are some genuine bugs that junior developers (who am I kidding, I am as bad as they are) leave in when writing code which are easily detectable and using a cursory review. That is were <a href="http://pmd.sourceforge.net/" title="PMD">PMD</a> comes in, with PMD you can force every one to following coding conventions otherwise fail the build. PMD comes with a nifty set of predefined rules and you can also easily add your own using <a href="http://www.w3schools.com/xpath/" title="xPath" target="_blank">xPath</a>.
 
 <!--more-->
 
-Don't ask me what PMD stands for, I have tried in vain to find that out using extensive googleing. <a href="http://pmd.sourceforge.net/meaning.html" title="What does PMD Mean" target="_blank">Here</a> is a list of possible answers. What it does is allow you to add a build phase to your project which checks your code against a predefined set of rules and generates a report on violations. Many tools (<a href="http://jenkins-ci.org/" title="Jenkins" target="_blank">Jenkins</a>, <a href="http://www.sonarsource.org/" title="Sonar" target="_blank">Sonar</a> etc) will integrate directly with PMD and provide UI to browse code easily. I will go into the tools in subsequent articles but for now a quick tutorial on how to integrate PMD with your build. 
+Don't ask me what PMD stands for, I have tried in vain to find that out using extensive google'ing. <a href="http://pmd.sourceforge.net/meaning.html" title="What does PMD Mean" target="_blank">Here</a> is a list of possible answers. What it does is allow you to add a build phase to your project which checks your code against a predefined set of rules and generates a report on violations. Many tools (<a href="http://jenkins-ci.org/" title="Jenkins" target="_blank">Jenkins</a>, <a href="http://www.sonarsource.org/" title="Sonar" target="_blank">Sonar</a> etc) will integrate directly with PMD and provide UI to browse code easily. I will go into the tools in subsequent articles but for now a quick tutorial on how to integrate PMD with your build. 
 
 
 As a starting point I will use code I wrote to go along with an earlier article [Setting up a webservice using Guice & Sitebricks](/Programming/Java/2011/06/25/Setting-up-a-webservice-using-Guice-Sitebricks/). The code is available [here](https://github.com/techtraits/guice-server-example/tree/master/helloworld). This is Java project build using maven, but PMD integration is available with other build systems and languages. Download and extract the code and compile using <a href="http://maven.apache.org/ref/3.0/" title="Maven 3" target="_blank">Maven</a> just to ensure everything is hunky dory.  
 
 {% highlight bash %}
 
-> cd ${WHEREEVER_YOU_EXTRACTED_IT}/helloworld
+> cd ${WHEREVER_YOU_EXTRACTED_IT}/helloworld
 > mvn clean install
 
 {% endhighlight %}

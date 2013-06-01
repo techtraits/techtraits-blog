@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: Running Nexus Sontaype over Jetty
+title: Running Nexus Sonatype over Jetty
 wordpress_id: 315
 wordpress_url: http://www.techtraits.ca/?p=315
 authors: 
@@ -63,7 +63,7 @@ Open a terminal instance at the jetty root directory and run the following comma
 
 	java -jar start.jar
 
-<p style="text-align: justify;">This should start your Nexus repository in the Jetty container. Fire up your favorite browser and go to http://[domain]:8080/nexus/ or http://localhost:8080/nexus/ if you are running Nexus on your local machine. You should be presented with the nexus front end and can start managing your repositories.</p>
+<p style="text-align: justify;">This should start your Nexus repository in the Jetty container. Fire up your favourite browser and go to http://[domain]:8080/nexus/ or http://localhost:8080/nexus/ if you are running Nexus on your local machine. You should be presented with the nexus front end and can start managing your repositories.</p>
 
 <p style="text-align: justify;">Note: The default admin user and password are "admin" and "admin123" respectively.</p>
 

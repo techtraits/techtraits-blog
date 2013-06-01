@@ -1,19 +1,19 @@
 --- 
 layout: post
-title: "IPhone SDK: TabBars"
+title: "iPhone SDK: TabBars"
 wordpress_id: 398
 wordpress_url: http://www.techtraits.ca/?p=398
 authors: 
 - usman
 date: 2011-10-02 20:54:40 +00:00
 ---
-This is a tutorial for beginners to the IPhone SDK and includes instructions on programatically creating a Tab Bar Controller with two Tabs and their associated views. As an illustration of how interface elements from one view can interact with those on other views I have placed a UITextField and Button on one view and a UILabel on the other. Anything typed in the text field will be copied to the label when the button is clicked. If you do now want to write all the code for the tutorial you can download it from [github](https://github.com/techtraits/tabbar-example/tree/master/TabBar).
+This is a tutorial for beginners to the iPhone SDK and includes instructions on programatically creating a Tab Bar Controller with two Tabs and their associated views. As an illustration of how interface elements from one view can interact with those on other views I have placed a UITextField and Button on one view and a UILabel on the other. Anything typed in the text field will be copied to the label when the button is clicked. If you do now want to write all the code for the tutorial you can download it from [Github](https://github.com/techtraits/tabbar-example/tree/master/TabBar).
 
 <!--more-->
 
 <h3>Step 1: Read the Hello World tutorial</h3>
 
-If you are are unfamiliar with developing in Objective C and IPhone SDK please take a moment to go through the earlier tutorial [IPhone SDK Hello World](/Programming/2011/06/12/iphone-sdk-hello-world). It also contains instructions on how to install XCode and the IPhone SDK.
+If you are are unfamiliar with developing in Objective C and iPhone SDK please take a moment to go through the earlier tutorial [iPhone SDK Hello World](/Programming/2011/06/12/iphone-sdk-hello-world). It also contains instructions on how to install Xcode and the iPhone SDK.
 
 
 
@@ -23,7 +23,7 @@ If you are are unfamiliar with developing in Objective C and IPhone SDK please t
 
 <h3>Step 2: Create a project</h3>
 
-Select File &gt; New Project or Apple Key + Shft + N to bring up the new project menu. Select the Applications item of the IPhone OS section from the menu on the left, and select Window Based Application from the icons on the right. When prompted enter a project name, I have used TabBar in the sample code. You should have two files TabBarAppDelegate.h and TabBarAppDelegate.m. (See Figure 1)
+Select File &gt; New Project or Apple Key + Shift + N to bring up the new project menu. Select the Applications item of the iPhone OS section from the menu on the left, and select Window Based Application from the icons on the right. When prompted enter a project name, I have used TabBar in the sample code. You should have two files TabBarAppDelegate.h and TabBarAppDelegate.m. (See Figure 1)
 
 
 
@@ -174,7 +174,7 @@ In the View2Controller.m file synthesize the properties and write and init metho
 
 <h3>Step 5: Setting Up the App Delegate</h3>
 
-In the TabBarAppDelegate.h header file we define instances of the UITabBarController as well as the two views we have just setup. We create properties for these variables an also declare he relevent classes and import the relevent header files. The final code should look something like this:
+In the TabBarAppDelegate.h header file we define instances of the UITabBarController as well as the two views we have just setup. We create properties for these variables an also declare he relevant classes and import the relevant header files. The final code should look something like this:
 
 
 
@@ -212,12 +212,12 @@ In the implementation file TabBarAppDelegate.m update the didFinishLaunchingWith
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    //Initilize objects
+    //Initialize objects
     tabBarController = [[UITabBarController alloc] init];
     view1Controller = [[View1Controller alloc] init];
     view2Controller = [[View2Controller alloc] init];  
 
-    //Add a refernce to self in the View1Controller so that it can reference View2Controller via this object
+    //Add a reference to self in the View1Controller so that it can reference View2Controller via this object
     view1Controller.delegateRef = self;
 
     //Add views to the TabBar
@@ -238,5 +238,5 @@ In the implementation file TabBarAppDelegate.m update the didFinishLaunchingWith
 ![Phone](/assets/images/phone1.png)
 ![Phone2](/assets/images/phone2.png)
 
-Click the Build an Go button to run your code and you should see the Tab Bar with the first view Loaded. Enter your teck and click the button on the screen. Now load the second view by clicking the right Tab and see your text updated there.
+Click the Build an Go button to run your code and you should see the Tab Bar with the first view Loaded. Enter your text and click the button on the screen. Now load the second view by clicking the right Tab and see your text updated there.
 

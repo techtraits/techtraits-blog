@@ -12,13 +12,13 @@ tags:
 - Protocol Buffers
 alias: /compiling-protocol-buffers-from-maven/
 ---
-<a title="Protocol Buffer" href="http://code.google.com/p/protobuf/" target="_blank">Protocol buffer</a> is a technology made by google for automatic serialization of data to and from a compressed binary format. Essentially you define your data in a <strong>I</strong>nterface <strong>D</strong>efinition <strong>L</strong>anguage <a title="IDL" href="http://en.wikipedia.org/wiki/IDL_%28programming_language%29" target="_blank">(IDL)</a> and then generate bindings for any language from which you want to generate the data or consume data. It is very similar to <a title="Thrift" href="http://thrift.apache.org/" target="_blank">Thrift</a> in philosophy and function except that Thrift provides network transport as well as serialization.
+<a title="Protocol Buffer" href="http://code.google.com/p/protobuf/" target="_blank">Protocol buffer</a> is a technology made by google for automatic serialization of data to and from a compressed binary format. Essentially you define your data in a <strong>I</strong>interface <strong>D</strong>definition <strong>L</strong>language <a title="IDL" href="http://en.wikipedia.org/wiki/IDL_%28programming_language%29" target="_blank">(IDL)</a> and then generate bindings for any language from which you want to generate the data or consume data. It is very similar to <a title="Thrift" href="http://thrift.apache.org/" target="_blank">Thrift</a> in philosophy and function except that Thrift provides network transport as well as serialization.
 
 <!--more-->
 
 As with all code generation frameworks the first problem we need to tackle is how to efficiently integrate the code generation into our build pipeline. There some important requirements for such an integration. First, the generated code should not be checked in manually or if possible it should not be checked in at all as this will lead to frustration later. Developers will forget to check in generated files and overwrite each others' changes as generate code tends to be verbose and unfamiliar to the user. Second, the generated code should be available for debugging otherwise development around the generated code will be frustrating and slow. Third, incompatible changes to the source IDL files should break the build. Last, people who do not need to edit the IDL files should not have to generate the code locally as this will be another piece of tech they will maintain.
 
-To support all of these requirements I use a <a title="Maven" href="http://maven.apache.org/" target="_blank">Maven</a> based build pipeline with a <a title="Nexus Sonatype" href="http://nexus.sonatype.org/" target="_blank">Nexus Sonatype repository</a> for storing artifacts which can then be used for all developers in their local builds. This tutorial will give a step by step guide to setting up such a project. Note this tutorial is only compatible with Linix/Unix systems or cygwin if you are on windows
+To support all of these requirements I use a <a title="Maven" href="http://maven.apache.org/" target="_blank">Maven</a> based build pipeline with a <a title="Nexus Sonatype" href="http://nexus.sonatype.org/" target="_blank">Nexus Sonatype repository</a> for storing artifacts which can then be used for all developers in their local builds. This tutorial will give a step by step guide to setting up such a project. Note this tutorial is only compatible with Linux/Unix systems or Cygwin if you are on windows
 
 
 
@@ -42,9 +42,9 @@ Apache Maven 3.X.X ....
 &nbsp;
 
 
-<strong>Nexus Repository.</strong> You will need to setup a nexus repository in order to share the packaged, generated sources between developers. I have created a simple tutorial on setting up a Nexus repository [Running Nexus Sontaype over Jetty](/Build%20Management/2011/09/05/running-nexus-sontaype-over-jetty)</a>
+<strong>Nexus Repository.</strong> You will need to setup a nexus repository in order to share the packaged, generated sources between developers. I have created a simple tutorial on setting up a Nexus repository [Running Nexus Sonatype over Jetty](/Build%20Management/2011/09/05/running-nexus-sontaype-over-jetty)</a>
 
-<strong>Protocol Buffer Compiler.</strong> You will need to install the protocol buffer compiler which can be downloaded <a title="http://protobuf.googlecode.com/files/protobuf-2.4.1.tar.bz2" href="http://protobuf.googlecode.com/files/protobuf-2.4.1.tar.bz2">here</a>. Detailed installation instructions for the protocol buffer compiler can be found <a title="http://code.google.com/p/protobuf/source/browse/trunk/INSTALL.txt" href="http://code.google.com/p/protobuf/source/browse/trunk/INSTALL.txt" target="_blank">here</a>. However, the basic steps are to untar the package, browse to the directory in the terminal or cygwin and run the following commands.
+<strong>Protocol Buffer Compiler.</strong> You will need to install the protocol buffer compiler which can be downloaded <a title="http://protobuf.googlecode.com/files/protobuf-2.4.1.tar.bz2" href="http://protobuf.googlecode.com/files/protobuf-2.4.1.tar.bz2">here</a>. Detailed installation instructions for the protocol buffer compiler can be found <a title="http://code.google.com/p/protobuf/source/browse/trunk/INSTALL.txt" href="http://code.google.com/p/protobuf/source/browse/trunk/INSTALL.txt" target="_blank">here</a>. However, the basic steps are to untar the package, browse to the directory in the terminal or Cygwin and run the following commands.
 
 
 {% highlight bash %}
@@ -55,7 +55,7 @@ protoc --version
 {% endhighlight %}
 &nbsp;
 
-<strong>Maven Protoc Plugin</strong> In order to compile protocol buffer you would need to compile and install the Maven Protoc Plugin (Full disclosure: I am a contributor to the plugin). The source is available on [github](https://github.com/usmanismail/maven-protoc-plugin). Once you have the source you can run the following commands to compile the plugin.
+<strong>Maven Protoc Plugin</strong> In order to compile protocol buffer you would need to compile and install the Maven Protoc Plugin (Full disclosure: I am a contributor to the plugin). The source is available on [Github](https://github.com/usmanismail/maven-protoc-plugin). Once you have the source you can run the following commands to compile the plugin.
 
 
 {% highlight bash %}

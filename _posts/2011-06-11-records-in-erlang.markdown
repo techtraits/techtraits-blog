@@ -19,7 +19,7 @@ When learning a new language its always difficult to google the meaning of opera
 &nbsp;
 <h3 style="text-align: left;">Defining Records</h3>
 <p style="text-align: justify;">
-Record is a compound data type in erlang which gives named access to the elements it contains similar to a struct in c. To use records we must fust define their structure:
+Record is a compound data type in erlang which gives named access to the elements it contains similar to a struct in c. To use records we must first define their structure:
 </p>
 {% highlight erlang %}
     -record(record_name, {element_mame=optional_default_value}).

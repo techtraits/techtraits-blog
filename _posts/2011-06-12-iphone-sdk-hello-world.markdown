@@ -1,6 +1,6 @@
 ---
 layout: post
-title: IPhone SDK Hello World
+title: iPhone SDK Hello World
 wordpress_id: 80
 wordpress_url: http://www.techtraits.ca/?p=80
 date: 2011-06-12 18:44:32 +00:00
@@ -16,7 +16,7 @@ tags:
 ---
 <hr />
 
-<p style="text-align: justify;">This is a tutorial for beginners to the IPhone SDK and includes instructions on creating a basic HelloWorld program. The program demonstrates the use of Views, Labels and UIButtons. I will be using the 4.3 SDK so some features may not be available in the earlier version.</p>
+<p style="text-align: justify;">This is a tutorial for beginners to the iPhone SDK and includes instructions on creating a basic HelloWorld program. The program demonstrates the use of Views, Labels and UIButtons. I will be using the 4.3 SDK so some features may not be available in the earlier version.</p>
 
 <!--more-->
 
@@ -27,15 +27,15 @@ tags:
 [HelloWorld Source Project](https://github.com/techtraits/iphone-sdk-helloworld)
 
 <p style="text-align: justify;"></p>
-<h3 style="text-align: justify;">Step 1: Download XCode and the SDK</h3>
+<h3 style="text-align: justify;">Step 1: Download Xcode and the SDK</h3>
 
-<p style="text-align: justify;">The first thing we need to do is to download the development tools namely <a href="http://developer.apple.com/tools/xcode/">XCode</a> and the <a href="http://developer.apple.com/devcenter/ios">SDK</a>. To download either of these you will need to register for the Apple ID and Apple developer Connection (ADC). Install both these tools, the procedure to do so is fairly trivial so I am not going into details.</p>
+<p style="text-align: justify;">The first thing we need to do is to download the development tools namely <a href="http://developer.apple.com/tools/xcode/">XCode</a> and the <a href="http://developer.apple.com/devcenter/iOS">SDK</a>. To download either of these you will need to register for the Apple ID and Apple developer Connection (ADC). Install both these tools, the procedure to do so is fairly trivial so I am not going into details.</p>
 
 
 
 <h3 style="text-align: justify;">Step 2: Create a new Project</h3>
 
-<p style="text-align: justify;">Now we have the tools we need to start coding but before we do we need to create a new project. <strong>Select File &gt; New Project</strong> or <strong>Apple Key + Shift + N</strong> to bring up the new project menu. Select the <strong>Applications </strong>item of the <strong>IPhone OS</strong> section from the menu on the left, and select <strong>View Based Application </strong>from the icons on the right. When prompted enter a project name, I have used HelloWorld in the sample code.</p>
+<p style="text-align: justify;">Now we have the tools we need to start coding but before we do we need to create a new project. <strong>Select File &gt; New Project</strong> or <strong>Apple Key + Shift + N</strong> to bring up the new project menu. Select the <strong>Applications </strong>item of the <strong>iPhone OS</strong> section from the menu on the left, and select <strong>View Based Application </strong>from the icons on the right. When prompted enter a project name, I have used HelloWorld in the sample code.</p>
 
 <p style="text-align: justify;"></p>
 
@@ -71,7 +71,7 @@ self.window.rootViewController = self.viewController;
 
 &nbsp;
 <p style="text-align: justify;">
-The IPhone SDK UI follows the <a href="http://en.wikipedia.org/wiki/Model-view-controller">Model View Controller (MVC)</a> design pattern and hence each <em>view </em>has a corrsponding View Controller Object. XCode has automatically created a view for us, (its defined in the HelloWorldViewController.xib file you can see it by double clicking it in the side menu) and linked it to HelloWorldViewController. We now need to add controls to the view handle the generated events. Note we can add controls via a GUI interface called the Interface Builder but I am using the programmatic way for this tutorial.
+The iPhone SDK UI follows the <a href="http://en.wikipedia.org/wiki/Model-view-controller">Model View Controller (MVC)</a> design pattern and hence each <em>view </em>has a corresponding View Controller Object. XCode has automatically created a view for us, (its defined in the HelloWorldViewController.xib file you can see it by double clicking it in the side menu) and linked it to HelloWorldViewController. We now need to add controls to the view handle the generated events. Note we can add controls via a GUI interface called the Interface Builder but I am using the programmatic way for this tutorial.
 </p>
 
 

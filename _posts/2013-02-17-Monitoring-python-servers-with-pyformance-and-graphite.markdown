@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
 # Compiling and installing Pyformance
 
-Before we add metrics to our project we need to install the pyformance module. You can install the standard module from [pip](http://pypi.python.org/pypi/pip). However, I am going to be using [my fork](https://github.com/usmanismail/pyformance) of the project which adds support for connections to graphite. In order to compile and install pyformance,  clone the github repo at usmanismail/pyformance and run setup.py with the build and install commands as shown below. 
+Before we add metrics to our project we need to install the pyformance module. You can install the standard module from [pip](http://pypi.python.org/pypi/pip). However, I am going to be using [my fork](https://github.com/usmanismail/pyformance) of the project which adds support for connections to graphite. In order to compile and install pyformance,  clone the Github repo at usmanismail/pyformance and run setup.py with the build and install commands as shown below. 
 
 {% codeblock Installing Pyformance lang:bash %}
 git clone git://github.com/usmanismail/pyformance.git

@@ -100,7 +100,7 @@ public class Child2 extends ParentClass {
 
 <p style="text-align: justify;">
 
-Finally lets create a driver class to test our serialization and deserialization. For this we use the <strong>ObjectMapper</strong> class which has a <strong>writeValueAsString</strong> method. We just pass an annotated class to ObjectMapper's writeValueAsString method and get an encoded JSON string. Similarly we can use the <strong>readValue</strong> method to deserialize JSON back to a java object. As the code below shows we pass the string representation of JSON as well as an Ancestor of the object we are deserializing. Notice how we pass <strong>ParentClass</strong> to the readValue method but when print the clss type out you will see it outputs "Child1" and "Child2" correctly.</p>
+Finally lets create a driver class to test our serialization and deserialization. For this we use the <strong>ObjectMapper</strong> class which has a <strong>writeValueAsString</strong> method. We just pass an annotated class to ObjectMapper's writeValueAsString method and get an encoded JSON string. Similarly we can use the <strong>readValue</strong> method to deserialize JSON back to a java object. As the code below shows we pass the string representation of JSON as well as an Ancestor of the object we are deserializing. Notice how we pass <strong>ParentClass</strong> to the readValue method but when print the class type out you will see it outputs "Child1" and "Child2" correctly.</p>
 
 {% highlight java %}
 import org.codehaus.jackson.map.ObjectMapper;
@@ -142,7 +142,7 @@ public class Driver {
 
 
 {% highlight bash %}
-#To compile the code fireup a terminal or the command line and enter the following command
+#To compile the code fire up a terminal or the command line and enter the following command
 javac -classpath jackson-all-1.8.4.jar:./ *.java
 
 #To run the code run the following command:
@@ -162,7 +162,7 @@ class Child2
 
 <p style="text-align: justify;">
 
-Notice the fact that the class name is added as a property to the output JSON, and how the dontSerializeMe feild of Child1 is ignored. Also note that the types of the objects generated from JSON are Child1 and Child2 respectively even though we told the mapper we were looking for a <strong>ParentClass</strong> type.</p>
+Notice the fact that the class name is added as a property to the output JSON, and how the dontSerializeMe field of Child1 is ignored. Also note that the types of the objects generated from JSON are Child1 and Child2 respectively even though we told the mapper we were looking for a <strong>ParentClass</strong> type.</p>
 
 <h3>Source Code</h3>
 

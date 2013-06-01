@@ -25,7 +25,7 @@ The <a href="http://code.google.com/p/google-guice/" title="Guice" target="_blan
 
 
 
-As a starting point of this implementation I will be using the sample code from an earlier article [Setting up a webservice using Guice & Sitebricks](/Programming/Java/2011/06/25/Setting-up-a-webservice-using-Guice-Sitebricks/)</strong> which can be downloaded from [github](https://github.com/techtraits/guice-server-example). The completed project code can also be downloaded from github [here](https://github.com/techtraits/guice-methodinterceptor-example).The source code for this project is released under the [BSD License](/assets/Licensing.txt).
+As a starting point of this implementation I will be using the sample code from an earlier article [Setting up a webservice using Guice & Sitebricks](/Programming/Java/2011/06/25/Setting-up-a-webservice-using-Guice-Sitebricks/)</strong> which can be downloaded from [Github](https://github.com/techtraits/guice-server-example). The completed project code can also be downloaded from Github [here](https://github.com/techtraits/guice-methodinterceptor-example).The source code for this project is released under the [BSD License](/assets/Licensing.txt).
 
 
 
@@ -61,7 +61,7 @@ public @interface NotNull {
 
 
 
-In order to create our method interceptor we create a class to implement the <font color="green">org.aopalliance.intercept.MethodInterceptor</font> interface and override the <font color="green">invoke</font> method. We get an instance of the <font color="green">org.aopalliance.intercept.MethodInvocation</font> class passed into the invoke method as a parameter. we can then query the getArguments method of the MethodInvocation class to retrieve all of the arguments. As shown in the code below we then traverse the list of arguments and check if they are null. We could implement any number of validation checks on the arguments at this point. If any of the validations fail we would throw an exception with details of the faliure. 
+In order to create our method interceptor we create a class to implement the <font color="green">org.aopalliance.intercept.MethodInterceptor</font> interface and override the <font color="green">invoke</font> method. We get an instance of the <font color="green">org.aopalliance.intercept.MethodInvocation</font> class passed into the invoke method as a parameter. we can then query the getArguments method of the MethodInvocation class to retrieve all of the arguments. As shown in the code below we then traverse the list of arguments and check if they are null. We could implement any number of validation checks on the arguments at this point. If any of the validations fail we would throw an exception with details of the failure. 
 
 
 

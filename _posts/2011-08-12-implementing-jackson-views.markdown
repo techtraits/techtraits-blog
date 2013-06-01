@@ -113,7 +113,7 @@ public class Driver {
 <h3>Compiling and running the code</h3>
 
 {% highlight bash %}
-# To compile the code fireup a terminal or the command line and enter the following command,
+# To compile the code fire up a terminal or the command line and enter the following command,
 javac -classpath jackson-all-1.8.4.jar:./ *.java
 
 # To run the code run the following command:
