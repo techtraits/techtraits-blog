@@ -12,16 +12,18 @@ TEMPLATE = "_template.markdown"
 TARGET_DIR = "_posts"
 
 # Check Argument count
-if ARGV.length != 4
-	abort "Usage: create_post.rb TITLE AUTHOR CATEGORY_1,CATEGORY_2 TAG_1,TAG_2"
+if ARGV.length != 5
+	abort "Usage: create_post.rb TITLE AUTHOR PERMALINK CATEGORY_1,CATEGORY_2 TAG_1,TAG_2"
 end
 	
 # Get the title which was passed as an argument
 title = ARGV[0]
-author = ARGV[1]
-categories = ARGV[2].dup
+authors = ARGV[1].dup
+authors.gsub!(',', "\n- ");
+permalink = ARGV[2]
+categories = ARGV[3].dup
 categories.gsub!(',', "\n- ");
-tags = ARGV[3].dup
+tags = ARGV[4].dup
 tags.gsub!(',', "\n- ");
 
 # Get the filename and remove some unsupported characters
@@ -36,8 +38,9 @@ filepath = File.join(TARGET_DIR, filename)
 # Create a copy of the template with the title replaced
 new_post = File.read(TEMPLATE)
 new_post.gsub!('TITLE', title);
+new_post.gsub!('PERMALINK', permalink);
 new_post.gsub!('DATE', "#{ Time.now.strftime('%Y-%m-%d %H:%M:%S') }");
-new_post.gsub!('AUTHOR', author);
+new_post.gsub!('AUTHORS', authors);
 new_post.gsub!('CATEGORIES', categories);
 new_post.gsub!('TAGS', tags);
 

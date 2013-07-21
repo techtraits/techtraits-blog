@@ -2,10 +2,11 @@
 layout: post
 title: TITLE
 date: DATE
-author: AUTHOR
+authors: 
+- AUTHORS
 categories: 
 - CATEGORIES
 tags:
 - TAGS
-
+permalink: /PERMALINK
 ---
