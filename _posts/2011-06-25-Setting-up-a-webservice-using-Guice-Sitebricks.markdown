@@ -65,7 +65,7 @@ mvn archetype:generate 								\
   -DartifactId=helloworld 							\
   -DarchetypeArtifactId=maven-archetype-webapp 	 	\
   -DarchetypeGroupId=org.apache.maven.archetypes 	\
-  -Dversion=1.0-SNAPSHOT</pre>
+  -Dversion=1.0-SNAPSHOT
 {% endhighlight %}
 &nbsp;
 
@@ -146,7 +146,7 @@ We have now setup the framework to build and deploy our web server but we still 
 
 <h3>Step 5: Hooking up Guice</h3>
 
-Now we must tell our application that we will be using Guice to intercept all http requests and manage all our content using google magic. For this open up the <strong>web.xml</strong> file (./src/main/webapp/WEB-INF/web.xml). In the <strong>&lt;web-app&gt; </strong>xml element add the code shown below. This creates a filter called <strong>webfilter</strong> which points to the google provided GuiceFilter class. We map the filter to "/*" which means all requests will go through guice. Lastly we tell guice to use the <strong>GuiceCreator</strong> class to figure out what to do with requests by setting the listener element to the fully qualified name of this class. In the nest section we will see how to implement this class so stay tuned. 
+Now we must tell our application that we will be using Guice to intercept all http requests and manage all our content using google magic. For this open up the <strong>web.xml</strong> file (./src/main/webapp/WEB-INF/web.xml). In the <strong>&lt;web-app&gt; </strong>xml element add the code shown below. This creates a filter called <strong>webfilter</strong> which points to the google provided GuiceFilter class. We map the filter to "/*" which means all requests will go through guice. Lastly we tell guice to use the <strong>GuiceCreator</strong> class to figure out what to do with requests by setting the listener element to the fully qualified name of this class. In the next section we will see how to implement this class so stay tuned. 
 
 {% highlight xml %}
 <filter>
@@ -238,7 +238,7 @@ public class HelloWorld {
 
 <h3>Step 9: Configuring Guice Injection</h3>
 
-In the <strong>src/main/java/com/flybynight/helloworld</strong> directory create a java file GuiceCreator.java and add the code shown below. The code tells Guice that we will be using sitebricks to host our content and that our sitebricks live in the package which contains the <strong>HelloWorld</strong> class. The scan call is telling Guice to ""scan" the classes in that package and look for the <Strong>@At</Strong> annotations to identify the brick classes. In addition we are providing the value of the property named <Strong>"message"</Strong> using the <Strong>bindConstant</Strong> method. 
+In the <strong>src/main/java/com/flybynight/helloworld</strong> directory create a java file GuiceCreator.java and add the code shown below. The code tells Guice that we will be using sitebricks to host our content and that our sitebricks live in the package which contains the <strong>HelloWorld</strong> class. The scan call is telling Guice to "scan" the classes in that package and look for the <Strong>@At</Strong> annotations to identify the brick classes. In addition we are providing the value of the property named <Strong>"message"</Strong> using the <Strong>bindConstant</Strong> method. 
 
 {% highlight java %}
 package com.flybynight.helloworld;
