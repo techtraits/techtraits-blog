@@ -3,9 +3,9 @@
 permalink: /:categories/:year/:month/:day/:title 
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
-auto: true
 # pygments: true
 markdown: rdiscount
+
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
@@ -16,7 +16,7 @@ authors:
   usman:
     name: usman
     display_name: Usman Ismail
-    gravatar: 73c6d33db42f2b31378fc2b56c53dc74
+    gravatar: 62b57726dde0fa4568fa73b135680bd5
     email: usman@techtraits.com
     github: usmanismail
     twitter: username
