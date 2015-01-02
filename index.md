@@ -5,52 +5,17 @@ layout: page
 {% include JB/setup %}
 
 
-{% for post in paginator.posts %}
+TODO 
 
-<div class="meta">
-<h3><a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></h3>
+* Fix formatting
+* Add a picture or 2 to break up text
+* Add paragraphs
+* Describe services
 
-<span class="author"> by 
-	<strong>
-		{% for author in post.authors %}
-    		<a href="/{{ site.authors[author].name}}.html">
-        		{{site.authors[author].display_name }}
-	        </a>
-			{% if forloop.first and forloop.length > 1%}
-			 & 
-			{% endif %}
-    	{% endfor %}
-    </strong>
-     on {{post.date | date_to_string }}
-</span>
 
-<p></p>
-<p>
-{{ post.content | strip_html | truncatewords: 100 }} 
-<a href="{{BASE_PATH }}{{ post.url }}">more</a>
-</p>
+<div class="about_head">
+    <p>Do your systems and applications run reliably, repeatably, efficiently and can they scale to millions of users without breaking the bank? Modern tools and practices allow small teams to manage large scale deployments by automating away many of the small frequent tasks required to monitor and manage systems. Tools like ElasticBean stalk, docker, Chef and rightscale will automate away most of your deployment headaches. In addition software development tools help you manage and monitor quality of your software as your team develops the latest features. Jenkins CI can monitor your projects' build state in real-time, TestNG can run test suites, emma can check whether your tests are covering enough code, PMD and findbugs can identify bad code practices and checkstyle can test and fix compliance with code standards. If you do not have all these systems in place or think you could be doing more, We can help with that. We have collectively over 20 years of experience managing servers and distributed systems that scale to millions of users and have elastic cost and very little manual maintenance. Between us we have full stack experience from UI and Web Development, to Service Design and maintenance as well as scalable distributed systems design.</p>
+
 </div>
-
-{% endfor %}
-
-<!-- Pagination links -->
-<div class="pagination">
-  {% if paginator.previous_page %}
-    <a href="{{ paginator.previous_page_path }}" class="previous">Previous</a>
-  {% else %}
-    <span class="previous">Previous</span>
-  {% endif %}
-  <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
-  {% if paginator.next_page %}
-    <a href="{{ paginator.next_page_path }}" class="next">Next</a>
-  {% else %}
-    <span class="next ">Next</span>
-  {% endif %}
-</div>
-
-
-
-
-
 
 
