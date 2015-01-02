@@ -22,16 +22,14 @@ meta:
 
 
 <div class="about_head">
-    <p>I am a Senior Software Engineer at Electronic Arts specializing in building cloud-based server infrastructure and platforms for mobile and social games. A lot of my work has been focused on writing scalable and distributed REST servers to support cross-platform games. This includes writing OAuth based authentication flows, and user management as well as content management and distribution systems. I have also worked on writing client-server communications layers using thrift and JSON/Jackson and Proto Buffers. Prior to my work at EA I received my M.Math from the Cheriton School of Computer Science at the University of Waterloo. During this time I was a member of the Networks and Distributed Systems (NDS) research group specializing in Wireless Networks and Voice Over IP. I enjoy working with and writing about a wide variety of platforms using a host of different technologies including erlang, java, maven, thrift, jackson to name a few. You can find my detailed resume on LinkedIn and links to some of my work below. </p>
+    <p><b>Usman Ismail</b> id a Senior Software Engineer specializing in building cloud-based scalable REST servers to support cross-platform systems. This includes writing OAuth based authentication flows, and user management as well as content management and distribution systems. Usman has built and managed large deployments on AWS ec2, and google cloud platform and have worked extensively with automation systems such as Rightscale, Docker, Elastic Beanstalk and Cloud Formation. He is one of the top contributors to the docker tag on StackOverflow.  
+    </p>
+	<p>
+    Usman received his M.Math from the Cheriton School of Computer Science at the University of Waterloo. During this time he was a member of the Networks and Distributed Systems (NDS) research group specializing in Wireless Networks and Voice Over IP. You can find a more detailed resume on LinkedIn and some of his work on github, see links below. </p>
 
 </div>
+
 
 * [LinkedIn](http://ca.linkedin.com/in/usmanismail)
 * [Github](https://github.com/usmanismail)
 * [Stack Overflow](http://stackoverflow.com/users/706727/usman-ismail)
-* [MasterBranch](https://masterbranch.com/usmanismail)
-* [Pogo Games iPhone](http://itunes.apple.com/ca/app/pogo-games/id373416293)
-* [Pogo Games Facebook](https://apps.facebook.com/pogogames)
-* [Wsop Poker](http://itunes.apple.com/ca/app/world-series-of-poker/id458792705)
-* [The Simpsons: Tapped Out](https://itunes.apple.com/ca/app/the-simpsons-tapped-out/id497595276)
-
