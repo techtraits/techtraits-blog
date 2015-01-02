@@ -8,6 +8,7 @@ categories:
 - Big Data
 tags:
 - hadoop
+- docker
 permalink: /hadoopjob
 ---
 {% image /assets/images/hadoop_elephant.png style="float:right" alt="Hadoop" class="pimage" height="221" width="310" %}
@@ -15,7 +16,7 @@ This article covers a very basic map reduce job which counts the occurrence of w
 
 # Project Setup
 
-We will be using [Apache Maven](http://maven.apache.org/) to help write our hadoop job and the job will be written in Java. Hence if you have not done so already install a recent JDK version as well as maven. Once you have these tools create the maven pom.xml create a project element and add the groupId, artifactId and version for your project. We have used com.techtraits.hadoop as our group id and wordcount as out artifact id. 
+We will be using [Apache Maven](http://maven.apache.org/) to help write our hadoop job and will be written in Java. Hence if you have not done so already install a recent JDK version as well as maven. Once you have these tools create the maven pom.xml create a project element and add the groupId, artifactId and version for your project. We have used com.techtraits.hadoop as our group id and wordcount as our artifact id. 
 
 {% codeblock  Maven Pom Project Element lang:xml %}
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -44,7 +45,7 @@ Next we add the build element within the project element and specify that we wan
 </build>
 {% endcodeblock %}
 
-We also add the dependencies element and include the hadoop dependency so that we will have access to the required library classes in our class path. The complete pom is should now look like [this](https://raw.githubusercontent.com/techtraits/hadoop-wordcount/master/pom.xml). 
+We also add the dependencies element and include the hadoop dependency so that we will have access to the required library classes in our class path. The complete pom should now look like [this](https://raw.githubusercontent.com/techtraits/hadoop-wordcount/master/pom.xml). 
 {% codeblock  Maven Pom Dependencies lang:xml %}
 <dependencies>
 	<!-- Hadoop Dependencies -->
@@ -59,7 +60,7 @@ We also add the dependencies element and include the hadoop dependency so that w
 
 # Mapping and Reducing
 
-Once we have our project setup lets write some code. The goal of our project is to create a simple MapReduce program can be written to determine how many times different words appear in a set of files. For example: if we had the files:
+Now that we have our project setup lets write some code. The goal of our project is to create a simple MapReduce program can be written to determine how many times different words appear in a set of files. For example: if we had the files:
 
 	foo.txt: This is the foo file
 	bar.txt: This is the bar file
@@ -97,7 +98,7 @@ public class Map extends MapReduceBase implements Mapper<LongWritable, Text, Tex
 }
 {% endcodeblock %}
 
-Our reduce setup takes all the emitted word, count pairs and adds the counts together for each word. All counts for the same word will go to a single reducer node so that we get the final count for the word in one location. The code for the reducer is shown below; we implement the Reducer interface's reduce method. This method gets called with a Key which is the word and an iterator over the values which are the counts. We then re-emit the same word with the summation of its counts. Initially all the counts will be 1 as this is what our Mappers emit but the reduce step works iteratively. The outputs of a set of reduce invocations are again reduced and emitted until each key is reduced to a single value. The need for this repeated reduction arises because the various mappers will complete their tasks at different times and send their result to the reducer. The reducer does not have a complete picture at this point and therefore just summarizes the data it has so far and relies on subsequent reductions to complete the algorithm. The source for the Reduce class can be found [here](https://raw.githubusercontent.com/techtraits/hadoop-wordcount/master/src/main/java/com/techtraits/hadoop/wordcount/map/Reduce.java).
+Our reduce setup takes all the emitted word, count pairs and adds the counts together for each word. All counts for the same word will go to a single reducer node so that we get the final count for that word in one location. The code for the reducer is shown below; we implement the Reducer interface's reduce method. This method gets called with a Key which is the word and an iterator over the values which are the counts. We then re-emit the same word with the summation of its counts. Initially all the counts will be 1 as this is what our Mappers emit but the reduce step works iteratively. The outputs of a set of reduce invocations are again reduced and emitted until each key is reduced to a single value. The need for this repeated reduction arises because the various mappers will complete their tasks at different times and send their result to the reducer. The reducer does not have a complete picture at this point and therefore just summarizes the data it has so far and relies on subsequent reductions to complete the algorithm. The source for the Reduce class can be found [here](https://raw.githubusercontent.com/techtraits/hadoop-wordcount/master/src/main/java/com/techtraits/hadoop/wordcount/map/Reduce.java).
 
 {% codeblock  Reduce Class lang:java %}
 public class Reduce extends MapReduceBase implements
@@ -163,7 +164,7 @@ target/WordCount-0.0.1-SNAPSHOT.jar
 
 
 # Testing your Hadoop Job
-Run your hadoop container by running the the docker run command as described in *[Setting up your first hadoop cluster](hadoopsetup)*. Once in the container change to the hadoop directory defined in the HADOOP_PREFIX environment variable. We will then create two test files foo.txt and bar.txt and copy them into HDFS. We now need to get the jar file into the hadoop docker container, the easiest way to get the file into your container is to download it. You can upload your jar to dropbox, s3 or any other service and use curl to download it into the container. You can also download the jar that compiled from [http://techtraits.com.s3.amazonaws.com/assets/wordcount.jar](http://techtraits.com.s3.amazonaws.com/assets/wordcount.jar). We can then run the hadoop job using the jar command. You will see a lot of logs ending with Bytes written.
+Run your hadoop container by running the the docker run command as described in *[Setting up your first hadoop cluster](hadoopsetup)*. Once in the container change to the hadoop directory defined in the HADOOP_PREFIX environment variable. We will then create two test files foo.txt and bar.txt and copy them into HDFS. We now need to get the jar file into the hadoop docker container, the easiest way to get the file into your container is to download it. You can upload your jar to dropbox, s3 or any other service and use curl to download it into the container. You can also download the jar that we compiled from [http://techtraits.com.s3.amazonaws.com/assets/wordcount.jar](http://techtraits.com.s3.amazonaws.com/assets/wordcount.jar). We can then run the hadoop job using the jar command. Running this command you will see a lot of log output ending with Bytes written.
 
 {% codeblock  Testing Hadoop Job lang:bash %}
 # Run the hadoop docker container
@@ -207,7 +208,7 @@ File Input Format Counters
 		Bytes Written=37
 {% endcodeblock %}	
 
-Now you can confirm the job was successful by checking the output folder in HDFS. Since this is a single node cluster there is only one part file with the results. If there were multiple nodes your would see more part files. You can cat the part file to see the word count result. There you have it, if you got this far you have run your first hadoop map-reduce job. You can now use this setup to experiment with writing more hadoop jobs. In future articles we will cover more complex jobs and using tools such as Flume to ingest larger data files to be processed. 
+Now you can confirm the job was successful by checking the output folder in HDFS. Since this is a single node cluster there is only one part file with the results. If there were multiple nodes you would see more part files. You can cat the part file to see the word count result. There you have it, if you got this far you have run your first hadoop map-reduce job. You can now use this setup to experiment with writing more hadoop jobs. In future articles we will cover more complex jobs and using tools such as Flume to ingest larger data files. 
 
 {% codeblock  Checking Output lang:bash %}
 bin/hdfs dfs -ls output/wordcount

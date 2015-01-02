@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: Setting up your first hadoop cluster
+title: Setting up your first Hadoop cluster
 date: 2014-07-06 14:38:45
 authors: 
 - usman
@@ -8,6 +8,7 @@ categories:
 - Big Data
 tags:
 - hadoop
+- docker
 permalink: /hadoopsetup
 ---
 
