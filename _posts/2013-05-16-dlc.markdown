@@ -1,10 +1,10 @@
---- 
+---
 layout: post
 title: How to build great downloadable content pipelines
 date: 2013-05-16 09:27:22
-authors: 
+authors:
 - usman
-categories: 
+categories:
 - System Design
 tags:
 - games
@@ -20,13 +20,13 @@ The gaming industry has entered a brave new world where the first launch is just
 
 ### Abstract vs Concrete Assets
 
-Before we start laying out our DLC pipeline we have to be clear in how we think about assets. We must differentiate between an abstract *Asset Concept* and a *Concrete Asset*. For example a "Loading Screen" is an asset concept whereas each of the various Simpsons Tapped Out loading screens you see in this article are Concrete Assets. This is an important distinction to make and will simplify a lot design decisions down the line. Additionally this distinction will allow you to formalize rules around how assets are managed. One of the first and most important rules is that Concepts should be client addressable but concrete assets should not. The client code should ask the asset loader module or library for the background image or loading screen but should never ask for the christmas themed background image. It should be the job of the asset loader to decide which asset to serve in response to the request. 
+Before we start laying out our DLC pipeline we have to be clear in how we think about assets. We must differentiate between an abstract *Asset Concept* and a *Concrete Asset*. For example a "Loading Screen" is an asset concept whereas each of the various Simpsons Tapped Out loading screens you see in this article are Concrete Assets. This is an important distinction to make and will simplify a lot design decisions down the line. Additionally this distinction will allow you to formalize rules around how assets are managed. One of the first and most important rules is that Concepts should be client addressable but concrete assets should not. The client code should ask the asset loader module or library for the background image or loading screen but should never ask for the christmas themed background image. It should be the job of the asset loader to decide which asset to serve in response to the request.
 
 
 
 For this reason we always create an index of all our assets, which is essentially a key-value mapping between a concept and its current concrete implementation. The client ships with a base asset index but on every startup asks the server for an updated copy. This way we can select which asset a user actually sees, on a per-user basis, without any client updates. Using this control we can run A/B Tests or temporarily apply a seasonal theme by just updating the index. Once the test or season is over we can revert the index to original state and without ever making any client changes. An example of an asset index  that a client may get from the server is shown below.
 
-{% codeblock Asset Index lang:json %}
+{% highlight json linenos %}
 [
     {
         "concept": "main-loading-screen",
@@ -41,28 +41,28 @@ For this reason we always create an index of all our assets, which is essentiall
         "concrete-asset": "/assets/config/{platform}/sale-item-list-test5-alpha.txt"
     }
 ]
-{% endcodeblock %}
+{% endhighlight %}
 
 ### Immutable Assets
 
-The primary reason for why we need to separate asset concepts from concrete implementations is so that we can make sure concrete assets are immutable. The loading screen for Simpsons Tapped out may look different from time to time but each concrete implementation of the concept never changes. For example the image in the  kwik-e-mart-v2.png file will always be identical, if we ever need a new Kwik-e-mart image we can create kwik-e-mart-v3.png. There are a number of reasons why its a good idea to have immutable asset files. 
+The primary reason for why we need to separate asset concepts from concrete implementations is so that we can make sure concrete assets are immutable. The loading screen for Simpsons Tapped out may look different from time to time but each concrete implementation of the concept never changes. For example the image in the  kwik-e-mart-v2.png file will always be identical, if we ever need a new Kwik-e-mart image we can create kwik-e-mart-v3.png. There are a number of reasons why its a good idea to have immutable asset files.
 
-First, once your game has been live for a while there will be a number of different versions of the client in the wild. Users are well known to be very slow about updating their clients and sometimes may not be able to if their device is too old. If you were replacing files you would have to ensure each change was compatible with all versions of your client still out in the wild. If however, all concrete implementations are immutable than we can make sure old clients get a version of the index that was released for them. Any new asset work will have no impact on deployed clients until we explicitly enable it by updating the index. 
+First, once your game has been live for a while there will be a number of different versions of the client in the wild. Users are well known to be very slow about updating their clients and sometimes may not be able to if their device is too old. If you were replacing files you would have to ensure each change was compatible with all versions of your client still out in the wild. If however, all concrete implementations are immutable than we can make sure old clients get a version of the index that was released for them. Any new asset work will have no impact on deployed clients until we explicitly enable it by updating the index.
 
 {% image /assets/images/simpsons_to_valentines.png style="float:right" alt="Simpsons Tapped Out" class="pimage" %}
 
-Second, sometimes code-changes and asset changes need to pushed out together. For example lets say you changed the format of the sale-item-list from xml to JSON. Let us assume you have control of client update schedule (for example in a Web/Facebook game) so the problem of out of date clients is not an issue. If you deploy your asset file before your client code your old-client will be broken until the new client is pushed out. If you push the client code first it will be broken until the new assets are available. This constraint on both the client code and assets being rolled out together makes rolling deployments more difficult and leads to planned downtime. 
+Second, sometimes code-changes and asset changes need to pushed out together. For example lets say you changed the format of the sale-item-list from xml to JSON. Let us assume you have control of client update schedule (for example in a Web/Facebook game) so the problem of out of date clients is not an issue. If you deploy your asset file before your client code your old-client will be broken until the new client is pushed out. If you push the client code first it will be broken until the new assets are available. This constraint on both the client code and assets being rolled out together makes rolling deployments more difficult and leads to planned downtime.
 
-Furthermore, if you use a content delivery network (CDN) such as [Akamai](http://www.akamai.com/) or [CloudFront](http://aws.amazon.com/cloudfront/), you have to wait until the old assets time-out before they are reloaded from the source and the changes are reflected. This time-out can be anything from minutes to hours. With immutable files we ensure that the client is always loading the assets it  supports. This also gives us the added advantage that we can cache assets infinitely on the client. Hence we never download the same asset twice and provide much shorter loading times to users. 
+Furthermore, if you use a content delivery network (CDN) such as [Akamai](http://www.akamai.com/) or [CloudFront](http://aws.amazon.com/cloudfront/), you have to wait until the old assets time-out before they are reloaded from the source and the changes are reflected. This time-out can be anything from minutes to hours. With immutable files we ensure that the client is always loading the assets it  supports. This also gives us the added advantage that we can cache assets infinitely on the client. Hence we never download the same asset twice and provide much shorter loading times to users.
 
 
 ### Localization and Tiered Assets
 
-Most modern games work on a verity of platforms and across many geographical and language boundaries. Hence it is important to plan for localization and performance tier support in your DLC pipeline. For example, mobile games are usually designed to run on a variety of iOS and Android devices each with their own performance profiles and screen resolutions. This highlights another important benefit of separating asset concepts from concrete implementations. Using our index we can easily support localization and tiered assets. In the example index shown earlier note that some parts of the path are parenthesized. We define variables in the concrete implementation path that are resolved at run time. When the asset loader is initialized it is given (or detects) parameters such as the language and asset quality or even platform (iOS, Android, PC etc). Before downloading assets the manager will replace these variables with the actual language, asset quality and platform on which the game is running on. 
+Most modern games work on a verity of platforms and across many geographical and language boundaries. Hence it is important to plan for localization and performance tier support in your DLC pipeline. For example, mobile games are usually designed to run on a variety of iOS and Android devices each with their own performance profiles and screen resolutions. This highlights another important benefit of separating asset concepts from concrete implementations. Using our index we can easily support localization and tiered assets. In the example index shown earlier note that some parts of the path are parenthesized. We define variables in the concrete implementation path that are resolved at run time. When the asset loader is initialized it is given (or detects) parameters such as the language and asset quality or even platform (iOS, Android, PC etc). Before downloading assets the manager will replace these variables with the actual language, asset quality and platform on which the game is running on.
 
-One subtle design choice to note is that we could have indexed all possible concrete assets and not used variables at all. In this scheme the asset loader would select the correct concrete asset by selecting the language and quality explicitly. However, this would have exploded the size for our index by many orders of magnitude (See example below). Furthermore, all assets may not change for each of the separations leading to unnecessary duplication. For example some images may be the same in all languages. Many config files will change based on screen resolution. 
+One subtle design choice to note is that we could have indexed all possible concrete assets and not used variables at all. In this scheme the asset loader would select the correct concrete asset by selecting the language and quality explicitly. However, this would have exploded the size for our index by many orders of magnitude (See example below). Furthermore, all assets may not change for each of the separations leading to unnecessary duplication. For example some images may be the same in all languages. Many config files will change based on screen resolution.
 
-{% codeblock  Index bloat with Language and Quality Tier lang:json %}
+{% highlight json linenos %}
 [
     {
         "concept": "main-loading-screen",
@@ -90,48 +90,48 @@ One subtle design choice to note is that we could have indexed all possible conc
         ]
     }
 ]
-{% endcodeblock %}
+{% endhighlight %}
 
 
 ### Lazy loaded assets
 
-In several of our projects we have seen the tendency of developers to group assets into a packs of related content and zip them. This comes from a notion that this will lead to better compression and hence lower load times. Another notion is that downloads will be faster with a single large file rather than many small files. I applaud the foresight of engineers who are mindful of minimizing download times as well as their proactive approach to the issue however, in practice zipping will lead to worse perceived load times. This is because of two factors. 
+In several of our projects we have seen the tendency of developers to group assets into a packs of related content and zip them. This comes from a notion that this will lead to better compression and hence lower load times. Another notion is that downloads will be faster with a single large file rather than many small files. I applaud the foresight of engineers who are mindful of minimizing download times as well as their proactive approach to the issue however, in practice zipping will lead to worse perceived load times. This is because of two factors.
 
-First, each gameplay session only requires a small subset of assets. For example in the Simpsons Tapped Out, before you play your first game you may have to download almost a hundred megabytes. Most of the assets being downloaded are not needed in the first gameplay session or probably the first dozen gaming sessions. However, since all the assets are in one game pack (or a few packs) the client has to download the whole thing. If the client loses connectivity during this massive download, D'oh start again. Instead, we can ship a minimal set of 'core' assets in the client binary. The rest of the assets can be downloaded lazily when they are needed. 
+First, each gameplay session only requires a small subset of assets. For example in the Simpsons Tapped Out, before you play your first game you may have to download almost a hundred megabytes. Most of the assets being downloaded are not needed in the first gameplay session or probably the first dozen gaming sessions. However, since all the assets are in one game pack (or a few packs) the client has to download the whole thing. If the client loses connectivity during this massive download, D'oh start again. Instead, we can ship a minimal set of 'core' assets in the client binary. The rest of the assets can be downloaded lazily when they are needed.
 {% image /assets/images/simpsons_to_halloween.png style="float:right" alt="Simpsons Tapped Out" class="pimage" %}
 
-The second reason why the smart proactive approach is not advised is because most DLC updates affect only a small portion of the assets. Hence, having large packs of files will mean that small changes to a few assets are impossible as whole packs will have to be re-downloaded. This makes teams much more reluctant to make rapid changes as the cost of pushing out a change is push higher in terms of user wait time. One approach that is used by the Simpsons Tapped out team to mitigate this problem is to use Delta based packs. i.e. A new pack only contains assets that are changed. Although this gives developers the ability to make smaller DLC updates it also has a drawback. Since the current state of the assets is only maintained as a base plus a set of deltas, a new user has to download the base as well as all deltas to get to the correct state. Some of those deltas may just adding assets that will be deleted by the next delta. For example if you download a game after the Christmas DLC has been added and then removed you must first download the christmas assets and then the next DLC which deletes all those assets. 
+The second reason why the smart proactive approach is not advised is because most DLC updates affect only a small portion of the assets. Hence, having large packs of files will mean that small changes to a few assets are impossible as whole packs will have to be re-downloaded. This makes teams much more reluctant to make rapid changes as the cost of pushing out a change is push higher in terms of user wait time. One approach that is used by the Simpsons Tapped out team to mitigate this problem is to use Delta based packs. i.e. A new pack only contains assets that are changed. Although this gives developers the ability to make smaller DLC updates it also has a drawback. Since the current state of the assets is only maintained as a base plus a set of deltas, a new user has to download the base as well as all deltas to get to the correct state. Some of those deltas may just adding assets that will be deleted by the next delta. For example if you download a game after the Christmas DLC has been added and then removed you must first download the christmas assets and then the next DLC which deletes all those assets.
 
-The approach I have found most successful is the simple, lazy and dumb one. We ship a client with the minimal set of assets that is needed to support the first game play session. In addition we give the game client an index of where all assets can be downloaded from. When an asset is required the game client first checks local store to see if it exists, if not it downloads the asset. An asset that is not needed will never be downloaded. If we need to update an asset we simply upload a new asset and then update the index to reference it. The index is a small text file and after the update only those assets which are changed are downloaded on an as needed basis. 
+The approach I have found most successful is the simple, lazy and dumb one. We ship a client with the minimal set of assets that is needed to support the first game play session. In addition we give the game client an index of where all assets can be downloaded from. When an asset is required the game client first checks local store to see if it exists, if not it downloads the asset. An asset that is not needed will never be downloaded. If we need to update an asset we simply upload a new asset and then update the index to reference it. The index is a small text file and after the update only those assets which are changed are downloaded on an as needed basis.
 
 
 ### Hosted Assets
 
-This one maybe a tad obvious but I have seen too many developers try host static assets out of application servers to not mention it. Do not serve your static assets out of application servers or even self-managed web-servers. One of the largest drain on server I/O resources is from having to large static assets to clients. Put all your assets in [Amazon S3](http://aws.amazon.com/s3/), [Google Cloud Store](https://cloud.google.com/products/cloud-storage) or any other cloud storage provider and let your clients download directly from there. This way your servers can focus on more critical and easier to manage game play logic. Both S3 and Cloud Store scale to massive loads with no intervention from your team. This also mitigates the risks of [DOS](http://en.wikipedia.org/wiki/Distributed_denial_of_service_attacks_on_root_nameservers) attacks as overloading the Amazon or Google infrastructure is much more difficult and expensive than taking out your specific server instances. 
+This one maybe a tad obvious but I have seen too many developers try host static assets out of application servers to not mention it. Do not serve your static assets out of application servers or even self-managed web-servers. One of the largest drain on server I/O resources is from having to large static assets to clients. Put all your assets in [Amazon S3](http://aws.amazon.com/s3/), [Google Cloud Store](https://cloud.google.com/products/cloud-storage) or any other cloud storage provider and let your clients download directly from there. This way your servers can focus on more critical and easier to manage game play logic. Both S3 and Cloud Store scale to massive loads with no intervention from your team. This also mitigates the risks of [DOS](http://en.wikipedia.org/wiki/Distributed_denial_of_service_attacks_on_root_nameservers) attacks as overloading the Amazon or Google infrastructure is much more difficult and expensive than taking out your specific server instances.
 
-In addition to hosting assets on a specialized service also consider using  a Content Distribution Network (CDN) such as [Cloud Front](http://aws.amazon.com/cloudfront/) or [Akami](http://www.akamai.com/). CDNs will distribute copies of your assets too many servers globally and serve the client from a nearby copy. This has two important advantages, first incase of spikes in traffic or sudden outages there are many separate sources for clients to fail-over too. Second, if you game is globally available downloading from a nearby server can be significantly faster. 
+In addition to hosting assets on a specialized service also consider using  a Content Distribution Network (CDN) such as [Cloud Front](http://aws.amazon.com/cloudfront/) or [Akami](http://www.akamai.com/). CDNs will distribute copies of your assets too many servers globally and serve the client from a nearby copy. This has two important advantages, first incase of spikes in traffic or sudden outages there are many separate sources for clients to fail-over too. Second, if you game is globally available downloading from a nearby server can be significantly faster.
 
 {% image /assets/images/simpsons_to_thanks.jpg style="float:right" alt="Simpsons Tapped Out" class="pimage" %}
 
 
 ### Locally and QA Testable Assets
 
-Another requirement for a DLC pipeline that is easy to neglect is the local testability of asset updates. Remotely hosted assets are downloaded at runtime and no longer available as part of the client package. This means that it is no longer possible to test the client in an offline mode from a local build before checking in. However, testing all changes to the project before checking in is an essential part of the development process. Hence, we must provide all developers and artists with a means of hosting their modified assets independently from the continuous build used by other team members and the QA team. This can be as simple as giving each team member their personal Amazon S3 bucket or the ability to run a web-server on their localhost. 
+Another requirement for a DLC pipeline that is easy to neglect is the local testability of asset updates. Remotely hosted assets are downloaded at runtime and no longer available as part of the client package. This means that it is no longer possible to test the client in an offline mode from a local build before checking in. However, testing all changes to the project before checking in is an essential part of the development process. Hence, we must provide all developers and artists with a means of hosting their modified assets independently from the continuous build used by other team members and the QA team. This can be as simple as giving each team member their personal Amazon S3 bucket or the ability to run a web-server on their localhost.
 
-A similar problem arises when QA is asked to verify a client build for release. Since the assets are hosted remotely we have to be very careful about what we are certifying. A build can be certified by QA as working but be broken if assets are changed, deleted or renamed on the server side at a later date. This is another reason why we prefer immutable assets. An index, which does ship with the client, is used to control exactly what the downloads. Thus when QA certifies a build then can guarantee that the given client package (with DLC index included) is acceptable for release. 
+A similar problem arises when QA is asked to verify a client build for release. Since the assets are hosted remotely we have to be very careful about what we are certifying. A build can be certified by QA as working but be broken if assets are changed, deleted or renamed on the server side at a later date. This is another reason why we prefer immutable assets. An index, which does ship with the client, is used to control exactly what the downloads. Thus when QA certifies a build then can guarantee that the given client package (with DLC index included) is acceptable for release.
 
 ### Pipelined Assets
 
-Now we have all of the building blocks of a DLC Pipeline that does not suck we have to put them together into a coherent pipeline. We will in fact build two pipelines; one for local builds to test changes and the second a shared pipeline for continuos integration. 
+Now we have all of the building blocks of a DLC Pipeline that does not suck we have to put them together into a coherent pipeline. We will in fact build two pipelines; one for local builds to test changes and the second a shared pipeline for continuos integration.
 
 + A DLC pipeline needs content so the first step is to create source content
-+ We then need to run a pre-processor to generate copies of the asset for each of the required quality tiers and localization regions. 
-+ We also need to select which *asset concepts* are not required by the client at all, which are in the minimal set that should bed baked into the client binary and which are needed but can be downloaded at runtime. This information is written into a file called and DLC Manifest. 
-+ With our manifest and localized, tiered assets we can now run the client build. This build will use the manifest to to copy all core assets into the binary. 
++ We then need to run a pre-processor to generate copies of the asset for each of the required quality tiers and localization regions.
++ We also need to select which *asset concepts* are not required by the client at all, which are in the minimal set that should bed baked into the client binary and which are needed but can be downloaded at runtime. This information is written into a file called and DLC Manifest.
++ With our manifest and localized, tiered assets we can now run the client build. This build will use the manifest to to copy all core assets into the binary.
 	++ Note that if we are building for multiple regions or devices we only need to package the assets for that location and quality tier respectively.
 	++ The build will also upload all other required assets to the personal CDN of the person running the build.
-	++ The build will also generate the DLC Index shown above and upload it to the CDN with other assets. 
-+ We are now ready to test our build and iterate as needed.  
+	++ The build will also generate the DLC Index shown above and upload it to the CDN with other assets.
++ We are now ready to test our build and iterate as needed.
 
 {% image /assets/images/dlc_pipe1.png style="float:centre" alt="Local DLC Pipeline" class="pimage" %}
 
@@ -139,10 +139,10 @@ The Continuos integration version of the pipeline is shown below. As you may not
 
 + The most noticeable change is that each step is now followed by a commit to source control. This means that if any team member is only concerned by a subset of the pipeline they will not need to run any preceding steps. For example a client engineer who only changes client code now only needs to build the client using the manifest and localized tiered assets already checked into source control.
 + The localization and tier processing step and the client build steps can now be automated on on a Continuos Integration server such as [Jenkins](http://jenkins-ci.org/).
-+ The upload is no longer to personal CDN server but to the shared bucket used for integration testing.  
-+ Lastly, since we have all versions of the assets checked into perforce we need to specify which version of the asset is included in each build. This is invaluable in having short-term changes which can be rolled back later. 
++ The upload is no longer to personal CDN server but to the shared bucket used for integration testing.
++ Lastly, since we have all versions of the assets checked into perforce we need to specify which version of the asset is included in each build. This is invaluable in having short-term changes which can be rolled back later.
 
 {% image /assets/images/dlc_pipe2.png style="float:centre" alt="Local DLC Pipeline" class="pimage" %}
 
-Asset management is a very important part any modern game and is a much more complex issue than a lot of game developers realize. A good pipeline can make the difference between a successful game that is able to remain fresh and release content rapidly, and a game which is discarded by a fickle audience. Although there a thousand subtle decisions and trade-offs that must be made in designing a DLC Pipeline hopefully this article has given you a rough blueprint to design a DLC Pipeline that suits the needs of your game.  
- 
+Asset management is a very important part any modern game and is a much more complex issue than a lot of game developers realize. A good pipeline can make the difference between a successful game that is able to remain fresh and release content rapidly, and a game which is discarded by a fickle audience. Although there a thousand subtle decisions and trade-offs that must be made in designing a DLC Pipeline hopefully this article has given you a rough blueprint to design a DLC Pipeline that suits the needs of your game.
+

@@ -1,5 +1,40 @@
 ---
 layout: default
 ---
-{% include JB/setup %}
-{% include themes/jamesyu/post.html %}
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <div class="meta">
+        {% for author in page.authors %}
+            <div class="title">
+                <div class="title-left">
+                    <h1 class="post-title" itemprop="name headline">
+                        <img
+                            class="avatar"
+                            href="/author/{{ site.authors[author].name }}.html"
+                            src="http://www.gravatar.com/avatar/{{ site.authors[author].gravatar }}.png"
+                            width="40"
+                            height="40"
+                        >
+                        <a href="{{ post.url }}">{{ page.title }}</a>
+                    </h1>
+                </div>
+                <span class="author">by
+                        <a href="https://github.com/{{site.authors[author].github}}"><strong>{{site.authors[author].display_name}}</a>
+                        </strong>
+
+                     on
+                </span>
+                <span class="date">{{ page.date | date_to_string }}</span>
+            </div>
+            <div style="clear:both;"></div>
+        {% endfor %}
+    </div>
+
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    {{ content }}
+  </div>
+  {% include disqus %}
+</article>

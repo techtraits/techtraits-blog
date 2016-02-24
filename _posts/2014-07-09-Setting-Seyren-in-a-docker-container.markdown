@@ -1,10 +1,10 @@
---- 
+---
 layout: post
 title: Setting up Seyren in a docker container
 date: 2014-07-09 12:51:26
-authors: 
+authors:
 - usman
-categories: 
+categories:
 - system design
 tags:
 - docker
@@ -15,21 +15,21 @@ We belive strongly in the measure everything philosophy of server management and
 
 ## MongoDB Setup
 
-Seyren uses MongoDB for datastore so before we setup Seyren we need to bring up a MongoDB container. The basic command for running a named mongo container is shown below. We specify the __-d__ switch to run in daemon mode so that it remains running when we bring up other containers. We also use the __--name__ switch to tag the container with a name of our choosing. Alternatively we can also the __-v__ switch to map a local directory to the /data/db directory. This allows you to easily backup and archive the alerts setup in your Seyren instance.  
+Seyren uses MongoDB for datastore so before we setup Seyren we need to bring up a MongoDB container. The basic command for running a named mongo container is shown below. We specify the __-d__ switch to run in daemon mode so that it remains running when we bring up other containers. We also use the __--name__ switch to tag the container with a name of our choosing. Alternatively we can also the __-v__ switch to map a local directory to the /data/db directory. This allows you to easily backup and archive the alerts setup in your Seyren instance.
 
-{% codeblock  Maven Pom Build lang:bash %}
+{% highlight bash linenos %}
 # Run MongoDB
 docker run -d --name mongodb dockerfile/mongodb
 
 # Alternatively Run MongoDB with specified volume
 docker run -d -v <local-data-dir>/db:/data/db --name mongodb dockerfile/mongodb
-{% endcodeblock %}
+{% endhighlight %}
 
 ## Setting up Seyren
 
-To run a basic Seyren instance we run the following command, which downloads and runs the __usman/docker-seyren__ container image. We expose the port 8080 using the __-p__ command, and use the __--link__ switch to link the MongoDB container with this new container. Linking allows the two containers to communicate over a virtual network securely such that no other machine or container can communicate with this MongoDB instance. Since this container is running in daemon mode you will need to use the docker logs command to see if Seyren came up successfully. 
+To run a basic Seyren instance we run the following command, which downloads and runs the __usman/docker-seyren__ container image. We expose the port 8080 using the __-p__ command, and use the __--link__ switch to link the MongoDB container with this new container. Linking allows the two containers to communicate over a virtual network securely such that no other machine or container can communicate with this MongoDB instance. Since this container is running in daemon mode you will need to use the docker logs command to see if Seyren came up successfully.
 
-{% codeblock  Maven Pom Build lang:bash %}
+{% highlight bash linenos %}
 # Run Seyren and link MongoDB
 docker run -d -p 8080:8080 --name seyren --link mongodb:mongodb -i -t usman/docker-seyren http://[GRAPHITE_URL]
 
@@ -53,9 +53,9 @@ Jul 07, 2014 9:24:57 AM org.apache.catalina.core.ApplicationContext log
 INFO: Initializing Spring root WebApplicationContext
 Jul 07, 2014 9:25:00 AM org.apache.coyote.AbstractProtocol start
 INFO: Starting ProtocolHandler ["http-bio-8080"]
-{% endcodeblock %}
+{% endhighlight %}
 
 You should now be able to access Seyren on [http://localhost:8080/](http://localhost:8080/) or if you are using boot2docker then on [http://192.168.59.103:8080/](http://192.168.59.103:8080/). On OSX you would need to forward traffic from the public interface to the internal docker VM to use this Seyren instance from other machines.
 
-{% image /assets/images/seyren.png style="float:center" alt="Docker Installer" class="pimage" height="220" width="500" %} 
+{% image /assets/images/seyren.png style="float:center" alt="Docker Installer" class="pimage" height="220" width="500" %}
 

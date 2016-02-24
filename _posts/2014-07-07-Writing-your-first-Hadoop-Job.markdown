@@ -1,10 +1,10 @@
---- 
+---
 layout: post
 title: Writing your first Hadoop Job
 date: 2014-07-07 11:16:46
-authors: 
+authors:
 - usman
-categories: 
+categories:
 - Big Data
 tags:
 - hadoop
@@ -16,22 +16,22 @@ This article covers a very basic map reduce job which counts the occurrence of w
 
 # Project Setup
 
-We will be using [Apache Maven](http://maven.apache.org/) to help write our hadoop job and will be written in Java. Hence if you have not done so already install a recent JDK version as well as maven. Once you have these tools create the maven pom.xml create a project element and add the groupId, artifactId and version for your project. We have used com.techtraits.hadoop as our group id and wordcount as our artifact id. 
+We will be using [Apache Maven](http://maven.apache.org/) to help write our hadoop job and will be written in Java. Hence if you have not done so already install a recent JDK version as well as maven. Once you have these tools create the maven pom.xml create a project element and add the groupId, artifactId and version for your project. We have used com.techtraits.hadoop as our group id and wordcount as our artifact id.
 
-{% codeblock  Maven Pom Project Element lang:xml %}
+{% highlight xml linenos %}
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.techtraits.hadoop</groupId>
 	<artifactId>wordcount</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
-</project> 
 
-{% endcodeblock %}
+</project>
 
-Next we add the build element within the project element and specify that we want to compile the source as Java 6 and also generate Java 6 byte code in our Jar file. 
-{% codeblock  Maven Pom Build lang:xml %}
+{% endhighlight %}
+
+Next we add the build element within the project element and specify that we want to compile the source as Java 6 and also generate Java 6 byte code in our Jar file.
+{% highlight xml linenos %}
 <build>
 	<plugins>
 		<plugin>
@@ -43,10 +43,10 @@ Next we add the build element within the project element and specify that we wan
 		</plugin>
 	</plugins>
 </build>
-{% endcodeblock %}
+{% endhighlight %}
 
-We also add the dependencies element and include the hadoop dependency so that we will have access to the required library classes in our class path. The complete pom should now look like [this](https://raw.githubusercontent.com/techtraits/hadoop-wordcount/master/pom.xml). 
-{% codeblock  Maven Pom Dependencies lang:xml %}
+We also add the dependencies element and include the hadoop dependency so that we will have access to the required library classes in our class path. The complete pom should now look like [this](https://raw.githubusercontent.com/techtraits/hadoop-wordcount/master/pom.xml).
+{% highlight xml linenos %}
 <dependencies>
 	<!-- Hadoop Dependencies -->
 	<dependency>
@@ -55,7 +55,7 @@ We also add the dependencies element and include the hadoop dependency so that w
 		<version>1.2.1</version>
 	</dependency>
 </dependencies>
-{% endcodeblock %}
+{% endhighlight %}
 
 
 # Mapping and Reducing
@@ -76,9 +76,9 @@ then the output would be:
 
 To achieve this our map step involves tokening the file, traversing the words, and emitting a count of one for each word that is found. The code for this is shown below. We implement the Mapper interface's map method. When this method is called the value parameter of the method will contain a chunk of the file to be processed and the output parameter is used to emit word instances. This method will be run on many nodes in parallel with small chunks of the input file. Each node will collect its own counts and then send them to one of the reducers to combine the results. The complete Map class can be found [here](https://raw.githubusercontent.com/techtraits/hadoop-wordcount/master/src/main/java/com/techtraits/hadoop/wordcount/map/Map.java).
 
-{% codeblock  Map Class lang:java %}
+{% highlight java linenos %}
 public class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {
-	
+
 	private final static IntWritable one = new IntWritable(1);
 
 	private Text word = new Text();
@@ -96,11 +96,11 @@ public class Map extends MapReduceBase implements Mapper<LongWritable, Text, Tex
 		}
 	}
 }
-{% endcodeblock %}
+{% endhighlight %}
 
 Our reduce setup takes all the emitted word, count pairs and adds the counts together for each word. All counts for the same word will go to a single reducer node so that we get the final count for that word in one location. The code for the reducer is shown below; we implement the Reducer interface's reduce method. This method gets called with a Key which is the word and an iterator over the values which are the counts. We then re-emit the same word with the summation of its counts. Initially all the counts will be 1 as this is what our Mappers emit but the reduce step works iteratively. The outputs of a set of reduce invocations are again reduced and emitted until each key is reduced to a single value. The need for this repeated reduction arises because the various mappers will complete their tasks at different times and send their result to the reducer. The reducer does not have a complete picture at this point and therefore just summarizes the data it has so far and relies on subsequent reductions to complete the algorithm. The source for the Reduce class can be found [here](https://raw.githubusercontent.com/techtraits/hadoop-wordcount/master/src/main/java/com/techtraits/hadoop/wordcount/map/Reduce.java).
 
-{% codeblock  Reduce Class lang:java %}
+{% highlight java linenos %}
 public class Reduce extends MapReduceBase implements
 		Reducer<Text, IntWritable, Text, IntWritable> {
 
@@ -115,11 +115,11 @@ public class Reduce extends MapReduceBase implements
 		output.collect(key, new IntWritable(sum));
 	}
 }
-{% endcodeblock %}
+{% endhighlight %}
 
 Now that we have the map and reduce steps available we need to complete our job by creating a 'Driver' class with a main function to setup up the job configuration and run the job. The code for this is shown below and complete class can be found [here](https://raw.githubusercontent.com/techtraits/hadoop-wordcount/master/src/main/java/com/techtraits/hadoop/wordcount/map/WordCount.java).
 
-{% codeblock  Word Count Class lang:java %}
+{% highlight java linenos %}
 public class WordCount {
 	public static void main(String[] args) throws Exception {
 		JobConf conf = new JobConf(WordCount.class);
@@ -142,13 +142,13 @@ public class WordCount {
 
 	}
 }
-{% endcodeblock %}
+{% endhighlight %}
 
 #Compiling the code
 
 We can now build our code into a jar by running the mvn package command to generate the __WordCount-0.0.1-SNAPSHOT.jar__ file.
 
-{% codeblock  Testing Hadoop Job lang:bash %}
+{% highlight bash linenos %}
 mvn package
 #....
 [INFO] ------------------------------------------------------------------------
@@ -160,13 +160,13 @@ mvn package
 [INFO] ------------------------------------------------------------------------
 ls target/WordCount-0.0.1-SNAPSHOT.jar
 target/WordCount-0.0.1-SNAPSHOT.jar
-{% endcodeblock %}	
+{% endhighlight %}
 
 
 # Testing your Hadoop Job
 Run your hadoop container by running the the docker run command as described in *[Setting up your first hadoop cluster](hadoopsetup)*. Once in the container change to the hadoop directory defined in the HADOOP_PREFIX environment variable. We will then create two test files foo.txt and bar.txt and copy them into HDFS. We now need to get the jar file into the hadoop docker container, the easiest way to get the file into your container is to download it. You can upload your jar to dropbox, s3 or any other service and use curl to download it into the container. You can also download the jar that we compiled from [http://techtraits.com.s3.amazonaws.com/assets/wordcount.jar](http://techtraits.com.s3.amazonaws.com/assets/wordcount.jar). We can then run the hadoop job using the jar command. Running this command you will see a lot of log output ending with Bytes written.
 
-{% codeblock  Testing Hadoop Job lang:bash %}
+{% highlight bash linenos %}
 # Run the hadoop docker container
 docker run -p 50070:50070 -i -t sequenceiq/hadoop-docker /etc/bootstrap.sh -bash
 
@@ -206,11 +206,11 @@ File Input Format Counters
 		Bytes Read=42
 	File Output Format Counters
 		Bytes Written=37
-{% endcodeblock %}	
+{% endhighlight %}
 
-Now you can confirm the job was successful by checking the output folder in HDFS. Since this is a single node cluster there is only one part file with the results. If there were multiple nodes you would see more part files. You can cat the part file to see the word count result. There you have it, if you got this far you have run your first hadoop map-reduce job. You can now use this setup to experiment with writing more hadoop jobs. In future articles we will cover more complex jobs and using tools such as Flume to ingest larger data files. 
+Now you can confirm the job was successful by checking the output folder in HDFS. Since this is a single node cluster there is only one part file with the results. If there were multiple nodes you would see more part files. You can cat the part file to see the word count result. There you have it, if you got this far you have run your first hadoop map-reduce job. You can now use this setup to experiment with writing more hadoop jobs. In future articles we will cover more complex jobs and using tools such as Flume to ingest larger data files.
 
-{% codeblock  Checking Output lang:bash %}
+{% highlight bash linenos %}
 bin/hdfs dfs -ls output/wordcount
 Found 2 items
 -rw-r--r--   1 root supergroup          0 2014-07-06 22:03 output/wordcount/_SUCCESS
@@ -223,4 +223,4 @@ file	2
 foo	1
 is	2
 the	2
-{% endcodeblock %}	
+{% endhighlight %}
