@@ -47,7 +47,7 @@ No one in the panel was comfortable enough with their micro-service system to pr
 
 ### Build/Use a Platform
 
-We have hinted this earlier but with micro-services you will need to setup a lot of infrastructure, if you do this for each of your services the overhead be prohibitive. It is only possible to run micro-services deployments if you have automated all your infrastructure creation and management tasks. In other words, you must build or use a micro-services platform before you start writing micro-services. [Kubernetees](http://kubernetes.io/), [Swarm](https://docs.docker.com/swarm/), [Mesos](http://mesos.apache.org/) and their ilk will get you lot of the way there but you still need to unify your monitoring, debugging and continuous pipelines.
+We have hinted this earlier but with micro-services you will need to setup a lot of infrastructure, if you do this for each of your services the overhead be prohibitive. It is only possible to run micro-services deployments if you have automated all your infrastructure creation and management tasks. In other words, you must build or use a micro-services platform before you start writing micro-services. [Kubernetees](http://kubernetes.io/), [Swarm](https://docs.docker.com/swarm/), [Mesos](http://mesos.apache.org/) and their ilk will get you lot of the way there but you still need to unify your monitoring, debugging, continuous pipelines and service discovery mechanisms.
 
 ### Everything must be code-defined
 
@@ -62,4 +62,6 @@ Before you write your first micro-service you need to have a central system to i
 
 Monitoring and managing a large micro-services deployment is very similar to managing a network system. We need to make sure that requests do not infinitely loop in the services, maybe we can use the concept of TTLs to limit the number of hops. We need detect and respond to failures at edges, if a service deep down in the call hierarchy is down do we need to do all the calls to get to that service or can we shed load by preempting the request early. We need to make sure that services are not overloaded by calls from other services, maybe we can use concepts from congestion control work on networks, [Heka](https://github.com/mozilla-services/heka) and [Hystrix](https://github.com/Netflix/Hystrix) may be useful in this area.
 
+
+Micro-services are a huge step forward in defining scalable, manageable and maintainable deployments and is a natural progression of the service oriented architecture. However, they are not a magic bullet to solve the fundamental problems of building and running distributed software at scale. A micro-services architecture does force you to be more conscientious about following best practices and automating workflows. The big take away from the discussion is that unless you are willing to divert a lot of time and resources from feature work into building and maintaining a service framework, its better avoid taking the plunge into the micro-services world. If however, you can invest the time to build a great service framework and workflow then you will come out of the transition as a more agile and productive organization.
 
