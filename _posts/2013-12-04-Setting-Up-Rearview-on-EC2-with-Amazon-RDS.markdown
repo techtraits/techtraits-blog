@@ -17,7 +17,7 @@ tags:
 - rds
 - ses
 - amazon
-permalink: /rearview-ec2-rds
+permalink: /rearview-ec2-rds.html
 ---
 
 My team at EA loves [Graphite](http://graphite.wikidot.com/), and as a rule, all services we write must be instrumented to report metrics to Graphite. We rely on the excellent [Codahale metrics](http://metrics.codahale.com/) library for all Java projects. Reporting metrics to Graphite is only the first step. To enable round-the-clock monitoring and incident detection, monitors are set up which are triggered when certain criteria are met. For example, when the 95th percetile response time exceeds a pre-defined threshold. For such incidents, an email is sent and an incident is created with [PagerDuty](http://www.pagerduty.com/). So far we have been using [Seyren](https://github.com/scobal/seyren) for alerting. The good thing about Seyren is it's straightforward dashboard for setting up alerts on Graphite metrics. Unfortunately, Seyren has a lot of stability issues which makes it less than ideal for production use. We ended up spending quite a bit of time automating Seyren deployments for game teams and found ourselves fire fighting often when Seyren crashed or stopped triggering alerts or when MongoDB process died.

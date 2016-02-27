@@ -9,7 +9,7 @@ categories:
 tags:
 - docker
 - Seyren
-permalink: /Seyrendocker
+permalink: /Seyrendocker.html
 ---
 We belive strongly in the measure everything philosophy of server management and because of this we have a lot of metrics about our system. One of the ways we make use of this data is to create real time alerts that allow us quickly identify and respond to production issues. For this we make extensive use of a tool called [Seyren](https://github.com/scobal/seyren) to create and manage real-time alerts for our server deployments. This article walks you through setting up a Seyren instance using the [docker](https://docker.com/) platform. We use docker because it provides us a way of repeatably deploying a Seyren instance and requisite MongoDB quickly.
 

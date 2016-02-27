@@ -8,7 +8,7 @@ categories:
 - System Design
 tags:
 - jetty
-permalink: /jetty9install
+permalink: /jetty9install.html
 ---
 
 Jetty is a light weight, flexible and feature rich Java server alternative to apache tomcat. Jetty 6 is available for installation through apt-get on debian systems however Jetty 6 is getting a bit long in the tooth. Several key features such as native support for continuations, support for the SPDY protocol and servlet 3 are missing in Jetty 6. This article covers the installation of [Jetty 9](http://www.eclipse.org/jetty/) on Linux.

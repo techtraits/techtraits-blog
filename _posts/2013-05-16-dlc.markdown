@@ -11,7 +11,7 @@ tags:
 - dlc
 - s3
 - cloudfront
-permalink: /dlchowto
+permalink: /dlchowto.html
 ---
 
 The gaming industry has entered a brave new world where the first launch is just the start. Games are now services that need to be maintained for years. During this time you will need to make frequent content updates to keep users engaged. This is where a good Downloadable Content (DLC) pipeline is invaluable and bad one can kill the best of games. I have built, worked on and worked with a number of such pipelines including ones for [Pogo](https://itunes.apple.com/us/app/id373416293), [World Series of Poker](https://itunes.apple.com/us/app/world-series-of-poker/id458792705), [The Simpsons Tapped Out](https://itunes.apple.com/us/app/the-simpsons-tapped-out/id497595276). This article discusses the lessons learnt and best practices that have worked for us.

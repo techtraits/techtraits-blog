@@ -9,7 +9,7 @@ categories:
 tags:
 - hadoop
 - docker
-permalink: /hadoopjob
+permalink: /hadoopjob.html
 ---
 {% image /assets/images/hadoop_elephant.png style="float:right" alt="Hadoop" class="pimage" height="221" width="310" %}
 This article covers a very basic map reduce job which counts the occurrence of words in a document. The code for the job is adapted from the example which comes with Hadoop. This article is a follow up to an earlier article which walks through setting up a single node hadoop cluster. If you don't already have a running cluster please follow the steps in *[Setting up your first hadoop cluster](hadoopsetup)*. The source code that accompanies this article is available on github at [techtraits/hadoop-wordcount](https://github.com/techtraits/hadoop-wordcount).

@@ -12,7 +12,7 @@ tags:
 - Protobuf
 - jackson
 - smile
-permalink: /noproto
+permalink: /noproto.html
 ---
 
 As a server engineer in EA's All Play label I have worked on building a number of REST services to support mobile and social games. These include [The Simpsons Tapped Out](https://itunes.apple.com/ca/app/the-simpsons-tapped-out/id497595276), [WSOP Poker](https://itunes.apple.com/us/app/world-series-of-poker/id458792705?mt=8), Pogo Facebook and Pogo iPhone. One common consideration that came up in all of these projects is the choice of a transport protocol. The choice of protocol is specially important for cross-platform games as they use multiple languages (Objective C, Java and As3 in our case), may use spotty mobile networks, are supported for years and have un-controlled client update cycles. This means we need a protocol which is well supported, concise and backwards compatible. In my various projects I have used several protocols including XML, JSON, [Thrift](http://thrift.apache.org/) and [Protobuf](http://code.google.com/p/Protobuf/). Protobuf has become a popular choice among server engineers for its speedy serialization and compact output. While I think Protobuf is very useful protocol in certain situations I would like to argue that REST services are not among those situations. Specially if they have to be developed rapidly, need to be maintainable and easy to change. Most game servers are built on tight schedules, have to be live for years with little or no down time and have constant feature updates.

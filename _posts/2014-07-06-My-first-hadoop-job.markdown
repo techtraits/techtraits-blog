@@ -9,7 +9,7 @@ categories:
 tags:
 - hadoop
 - docker
-permalink: /hadoopsetup
+permalink: /hadoopsetup.html
 ---
 
 Big Data is a common term thrown about in tech circles these days, almost every mid to large size company wants to use Big Data analysis to solve all their problems. Although proclamations of the omnipotent of Big Data analysis should be treated with some skepticism, however, there are use-cases where such a system is invaluable. This article covers the basics of setting up [Apache Hadoop](http://hadoop.apache.org/) cluster, Hadoop is one of the most popular big data platforms out there and familiarity with it will give you a good overview of working with Big Data. In a subsequent article we will go through writing a simple Word-Count map-reduce job to run on the cluster. In future articles we will cover setting up multi-node clusters. In addition we will also focus on Hadoop tooling such as [Apache Hive](https://hive.apache.org/) for data warehousing, [Apache Flume](http://flume.apache.org/) and [Apache Sqoop](http://sqoop.apache.org/) for data ingest and lastly [Apache Oozie](http://oozie.apache.org/) for workflow management.

@@ -8,7 +8,7 @@ categories:
 - System Design
 tags:
 - GAE
-permalink: /gaehelloworld
+permalink: /gaehelloworld.html
 ---
 
 This is a tutorial for Java developers with some background in web technologies who want to learn how to bring up a web server in GAE. At the end of this tutorial you should not only have a functioning web service in GAE but also a base for building a maintainable GAE based service. To this end of building a maintainable system we will be using [Maven](http://maven.apache.org/) as our underlying build system. If you are not familiar with maven, you owe it to yourself to get familiar with it as it will make your life much easier, and we will help you do that in this tutorial.

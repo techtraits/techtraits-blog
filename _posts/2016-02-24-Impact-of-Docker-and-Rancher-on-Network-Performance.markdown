@@ -9,9 +9,9 @@ categories:
 tags:
 - docker
 - network
-permalink: /dockerperf
+permalink: /dockerperf.html
 ---
-One of the concerns that is expressed with using Docker in production is the impact on network performance. In today's article we present the results of our study of network performance on Ec2 platform. We compare the performance between: stock AWS Linux AMI, docker with ports exposed, Rancher's overlay network.
+One of the concerns that is expressed with using Docker in production is the impact on network performance. In today's article we present the results of our study of network performance on Ec2 platform. We compare the performance between: stock AWS Linux AMI, docker with ports exposed, Rancher's overlay network and the recently released Swarm overlay network.
 
 Before we get into the test results I would like to quickly cover our testing setup. For the network throughput tests we will be using iperf 3.0.1 running on AWS C4.XLarge instances. We are using those instances as they provide a "high" level of network I/O and are sufficiently provisioned with CPU and memory that factors other than network performance should not interfere with test results.
 
@@ -21,7 +21,7 @@ As mentioned we compare four network scenarios, for a base line we ran iperf tes
 
 {% image /assets/images/docker_net_sc1.png alt="Scenario 1" class="pimage" %}
 
-Next, we installed docker on the same instances and brought up the iperf Server on one of the hosts inside a docker container. Note the container image we use can be found on docker hub at techtraits/iperf:3.0.1. While running the container we expose 2105, iperf's default port, on both TCP and UDP protocols using the -P switch so that it is addressable on the host network. This will use docker's bridged networking and provides our second test scenario. Note for completeness we also run the iperf client in a docker container on its own amazon host.
+Next, we installed docker on the same instances and brought up the iperf Server on one of the hosts inside a docker container. Note the container image we use can be found on docker hub at [techtraits/iperf:3.0.1](https://hub.docker.com/r/techtraits/iperf/). While running the container we expose 2105, iperf's default port, on both TCP and UDP protocols using the -P switch so that it is addressable on the host network. This will use docker's bridged networking and provides our second test scenario. Note for completeness we also run the iperf client in a docker container on its own amazon host.
 
 {% image /assets/images/docker_net_sc2.png alt="Scenario 2" class="pimage" %}
 
@@ -29,15 +29,20 @@ For the third test scenario we ran a Rancher Server and two Rancher Compute node
 
 {% image /assets/images/docker_net_sc3.png alt="Scenario 3" class="pimage" %}
 
-## Results
+For our final scenario we setup a Swarm cluster using Consl for service discover. We launch the Consl instance and Swarm Master on their own AWS instances to make sure their processing workload does not impact our results and also to more closely resemble a production deployment. We create an overlay network using the new network driver support to allow our iPerf client and server to communicate.
 
-The first set of tests we ran for each of our four scenario were to measure the maximum TCP throughput. We open fifty concurrent TCP streams from the iperf client to the server and let them each run for 60 seconds and measured the total throughput of the steams averaged across the 60 seconds. We than ran this entire experiment 10 times in order to get greater confidence that our results were repeatable. The aggregate through put in our four scenarios is shown below with the 95% confidence interval. As you can see using stock docker has a negligible impact on through put reducing the value from 745 Mb/s to 739 Mb/s. This is not statistically significant as its within the margin of error.
+{% image /assets/images/swarm-setup.png alt="Scenario 4" class="pimage" %}
 
-Even when using Rancher's overlay network there was statistically significant but fairly minor drop in throughput to 708 Mb/s. We note that none of the AWS instances seemed to be under CPU or Memory pressure during the test hence the likely culprits are inefficiencies in the rancher overlay networking driver.
+## TCP  Results
 
-However, when using Swarms overlay network driver we see a large hit on network performance. Our throughput is reduced to ~400 Mb/s which is a hit of almost 45%. We do not see memory or CPU pressure on these instance and again suspect driver issues as the cause of the performance hit.
+The first set of tests we ran for each of our four scenario were to measure the maximum TCP throughput. We open fifty concurrent TCP streams from the iperf client to the server, let them each run for 120 seconds. We discard the first 60s to account let the system get into a steady state and then measured the total throughput of the steams averaged across the remaining 60 seconds.  We than ran this entire experiment 10 times in order to get greater confidence that our results were repeatable. The aggregate throughput in our four scenarios is shown below with the 95% confidence intervals. As you can see using stock docker has a negligible impact on through put reducing the value from 745 Mb/s to 739 Mb/s. This is not statistically significant as it is within the margin of error.
 
 {% image /assets/images/docker-net-tcp.png alt="TCP Results" class="pimage" width="450" height="340" %}
+
+Even when using Rancher's overlay network there was statistically significant but fairly minor drop in throughput to 708 Mb/s. We note that none of the AWS instances seemed to be under CPU or Memory pressure during the test hence the likely culprits are inefficiencies in the rancher overlay networking driver. However, when using Swarms overlay network driver we see a large hit on network performance. Our throughput is reduced to ~400 Mb/s which is a hit of almost 45%. We do not see memory or CPU pressure on these instance and again suspect driver issues as the cause of the performance hit.
+
+
+## UDP  Results
 
 To measure the performance of UDP protocol we send packets at a fix rate and then measure the percentage which they are lost on route. When then increase the transmission rate and see how to loss rate grows with transmission rate. Note the experiment is repeated ten times for each transmission rate to make sure we get representative results.
 
