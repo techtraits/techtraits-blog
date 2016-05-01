@@ -49,7 +49,7 @@ No one in the panel was comfortable enough with their micro-service system to pr
 
 ### Build/Use a Platform
 
-We have hinted this earlier but with micro-services you will need to setup a lot of infrastructure, if you do this for each of your services the overhead be prohibitive. It is only possible to run micro-services deployments if you have automated all your infrastructure creation and management tasks. In other words, you must build or use a micro-services platform before you start writing micro-services. [Kubernetees](http://kubernetes.io/), [Swarm](https://docs.docker.com/swarm/), [Mesos](http://mesos.apache.org/) and their ilk will get you lot of the way there but you still need to unify your monitoring, debugging, continuous pipelines and service discovery mechanisms.
+We have hinted this earlier but with micro-services you will need to setup a lot of infrastructure, if you do this for each of your services the overhead be prohibitive. It is only possible to run micro-services deployments if you have automated all your infrastructure creation and management tasks. In other words, you must build or use a micro-services platform before you start writing micro-services. [Kubernetes](http://kubernetes.io/), [Swarm](https://docs.docker.com/swarm/), [Mesos](http://mesos.apache.org/) and their ilk will get you lot of the way there but you still need to unify your monitoring, debugging, continuous pipelines and service discovery mechanisms.
 
 ### Everything must be code-defined
 
