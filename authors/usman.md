@@ -11,7 +11,7 @@ title: Usman Ismail
 
 
 <div class="about_head">
-    <p><b>Usman Ismail</b> is a Senior Software Engineer specializing in building cloud-based scalable REST servers to support cross-platform systems. This includes writing OAuth based authentication flows, and user management as well as content management and distribution systems. Usman has built and managed large deployments on AWS ec2, and google cloud platform and have worked extensively with automation systems such as Rightscale, Docker, Elastic Beanstalk and Cloud Formation. He is one of the top contributors to the docker tag on StackOverflow.
+    <p><b>Usman Ismail</b> is a Senior Software Engineer specializing in building scalable services and distribution systems. Usman has built and managed large deployments for Electronic Arts, Kik Interactive, Amazon and Wealthsimple.
     </p>
 	<p>
     Usman received his M.Math from the Cheriton School of Computer Science at the University of Waterloo. During this time he was a member of the Networks and Distributed Systems (NDS) research group specializing in Wireless Networks and Voice Over IP. You can find a more detailed resume on LinkedIn and some of his work on github, see links below. </p>
